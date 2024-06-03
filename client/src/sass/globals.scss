@@ -1,0 +1,62 @@
+@use "sass:map";
+/************************************
+    Variables
+*************************************/
+$colors : (
+    '50': #F7FAFA, 
+    '100': #F2F7F7, 
+    '200': #DDE8EB, 
+    '300': #C8DADE, 
+    '400': #A5BFC7, 
+    '500': #84a2ad, 
+    '600': #6A8D9C, 
+    '700': #4A6E82, 
+    '800': #305169, 
+    '900': #1B374F, 
+    '950': #0B1E33
+);
+
+/*************************************
+    General Styles 
+**************************************/
+* {
+    padding: 0;
+    margin: 0;
+}
+  
+html, body {
+    max-width: 100vw;
+    overflow-x: hidden;
+    background-color: map.get($colors, "900");
+}
+
+body{
+    font-family:"Nunito Sans", sans-serif;
+    font-optical-sizing: auto;
+    font-style:normal;
+    font-size:1em;
+    line-height:1.3;
+}
+
+nav {
+    background-color: map.get($colors, "950");
+    padding: 20px;
+    box-shadow: 0px 5px 5px rgba($color: #000000, $alpha: 0.25);
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    ul {
+        width: 20%;
+        justify-content: space-between;
+    }
+
+    li {
+        display: inline-block;
+    }
+
+    li, a {
+        color: map.get($colors, "50");
+    }
+}
