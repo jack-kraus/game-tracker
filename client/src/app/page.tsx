@@ -3,7 +3,7 @@ import Post from "@/components/Post";
 const post = {
   title: "An okay experience",
   game: "The Messenger",
-  review: "This game sucks ass",
+  review: "This game isn't very good",
   rating: 3,
   author: "Steve",
   timestamp: new Date().toDateString()
