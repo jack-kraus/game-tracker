@@ -1,10 +1,13 @@
 import type { Metadata } from "next";
-import "../css/globals.css";
-import { Navbar } from "@/components/navbar";
+import { Inter } from "next/font/google";
+import Navbar from "@/components/Navbar";
+import "./globals.css";
+
+const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: "Leveler",
-  description: "The gaming social media",
+  description: "A gaming social site",
 };
 
 export default function RootLayout({
@@ -14,11 +17,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body>
+      <body className={inter.className}>
         <Navbar/>
-        <main>
-          {children}
-        </main>
+        {children}
       </body>
     </html>
   );

@@ -1,0 +1,30 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html {
+  box-sizing: border-box;
+  @apply bg-scale-900;
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+}
+
+@layer components {
+  .sidebar-icon {
+    @apply relative flex items-center justify-center h-12 w-12 mt-2 mb-2 my-auto bg-scale-800 text-primary font-extrabold
+    hover:text-gray-950 hover:bg-scale-0 hover:rounded-xl transition-all;
+  }
+}
+
+.purple {
+  fill: rgb(60, 148, 224);
+}
+
+h1 {
+  font-size: larger;
+  font-weight: bold;
+}
