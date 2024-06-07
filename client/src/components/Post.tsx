@@ -20,7 +20,7 @@ export default function Post({ title,game, review, rating, author, timestamp } :
                 <a href="/" className="hover:text-primary active:text-white"><h1>{title}</h1></a>
                 <p className="h-full">{review}</p>
                 <span className="inline-flex">
-                    {[...Array(5)].map((_, ind) => ind < rating ? <BsStarFill className="text-primary size-6"/> :  <BsStarFill className="size-6"/>)}
+                    {[...Array(5)].map((_, ind) => ind < rating ? <BsStarFill key={ind} className="text-primary size-6"/> :  <BsStarFill key={ind} className="size-6"/>)}
                 </span>
             </div>
             <cite className="flex flex-col justify-between items-end text-right">
