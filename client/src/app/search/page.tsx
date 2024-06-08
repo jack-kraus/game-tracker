@@ -24,7 +24,7 @@ export default function Search({searchParams} : any) {
     else if (error) content = <p>Error: {error.message}</p>;
     else if (!data.success) content = <p>{data.error}</p>;
     else content = <>
-        {data.results.slice(page*10,page*10+10).map((item:any) => <GameResult {...item}/> )}
+        {data.results.slice(page*10,page*10+10).map((item:any, index:number) => <GameResult key={index} {...item}/> )}
         <select value={page} onChange={(e : any) => {
             setPage(e.target.value);
             window.scrollTo(0,0);
@@ -35,7 +35,7 @@ export default function Search({searchParams} : any) {
 
     return (
         <main className="flex flex-col w-1/2 items-center mt-4 gap-3 pt-24 pb-4 mx-auto">
-            <h1 className="text-scale-0 underline">Search for "{query}"</h1>
+            <h1 className="text-scale-0 underline">Search for &quot;{query}&quot;</h1>
             {content}
         </main>
     );
