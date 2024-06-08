@@ -9,9 +9,9 @@ interface postProps {
     game: string
 }
 
-export default function Post({ title,game, review, rating, author, timestamp } : postProps) {
+export default function Post({ title, game, review, rating, author, timestamp } : postProps) {
     return (
-        <article className="w-1/2 rounded-xl bg-scale-800 text-scale-0 p-3 flex flex-row gap-3 drop-shadow-md">
+        <article className="w-full rounded-xl bg-scale-800 text-scale-0 p-3 flex flex-row gap-3 drop-shadow-md">
             <div>
                 <img className="w-32 rounded-md hover:brightness-150" src="/images/messenger.jpg"/>
                 <a href="/"><i className="text-center text-xs hover:text-primary">{game}</i></a>
