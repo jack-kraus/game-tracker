@@ -23,7 +23,7 @@ export default function Search({searchParams} : any) {
     if (isPending) content = <p>Pending...</p>;
     else if (error) content = <p>Error: {error.message}</p>;
     else if (!data.success) content = <p>{data.error}</p>;
-    else content = <>
+    else { content = <>
         {data.results.slice(page*10,page*10+10).map((item:any, index:number) => <GameResult key={index} {...item}/> )}
         <select value={page} onChange={(e : any) => {
             setPage(e.target.value);
@@ -32,6 +32,8 @@ export default function Search({searchParams} : any) {
             {range(0,Math.floor(data.results.length/10)-1).map(i => <option key={i} value={i}>{i+1}</option>)}
         </select>
     </>;
+    console.log(data);
+    }
 
     return (
         <main className="flex flex-col w-1/2 items-center mt-4 gap-3 pt-24 pb-4 mx-auto">

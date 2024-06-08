@@ -2,11 +2,12 @@ import Post from "@/components/Post";
 
 const post = {
   title: "An okay experience",
-  game: "The Messenger",
-  review: "This game isn't very good",
+  game_title: "The Messenger",
+  content: "This game isn't very good",
   rating: 3,
   author: "Steve",
-  timestamp: new Date().toDateString()
+  created_at: new Date().toDateString(),
+  game_cover: "/images/messenger.jpg"
 };
 
 export default function Home() {
