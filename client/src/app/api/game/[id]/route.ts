@@ -1,15 +1,9 @@
-"use client";
-
 // export const dynamic = 'force-dynamic' // defaults to auto
 import axios from "axios";
 import { headers } from "@/data/api";
-import { useParams } from 'next/navigation';
+import { NextApiRequest } from "next";
 
-export async function GET() {
-  // get id from url
-  const params = useParams<{ id: string }>();
-  return Response.json(params);
-
+export async function GET(_request : NextApiRequest, {params} : {params : {id: string}}) {
   // get game by id 
   let response, cover_response;
   try {
@@ -26,13 +20,10 @@ export async function GET() {
   } catch(e) {
     return Response.json({success: false, error: e});
   }
-
-  console.log()
-
+  
   // cover from image_id
   const cover = `https://images.igdb.com/igdb/image/upload/t_cover_big/${cover_response.data[0].image_id}.jpg`;
   
-
   let ret = response.data[0];
   ret.cover=cover;
   const date = new Date(ret.first_release_date);
