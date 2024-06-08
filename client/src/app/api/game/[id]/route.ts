@@ -1,9 +1,9 @@
 // export const dynamic = 'force-dynamic' // defaults to auto
 import axios from "axios";
 import { headers } from "@/data/api";
-import { NextApiRequest } from "next";
+import { NextRequest } from "next/server";
 
-export async function GET(_request : NextApiRequest, {params} : {params : {id: string}}) {
+export async function GET(_request : NextRequest , {params} : {params : {id: string}}) {
   // get game by id 
   let response, cover_response;
   try {
