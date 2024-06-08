@@ -29,7 +29,7 @@ export default function Search({searchParams} : any) {
             setPage(e.target.value);
             window.scrollTo(0,0);
         }}>
-            {range(0,Math.floor(data.results.length/10)-1).map(i => <option key={i} value={i}>{i+1}</option>)}
+            {range(0,Math.floor(data.results.length/10)-1).map(i => <option value={i}>{i+1}</option>)}
         </select>
     </>;
 
