@@ -20,11 +20,15 @@ html {
   }
 
   .box-item {
-    @apply w-full rounded-xl bg-scale-800 text-scale-0 p-3 flex flex-row gap-3 drop-shadow-md
+    @apply w-full rounded-xl bg-scale-800 text-scale-0 p-3 m-0 flex flex-row drop-shadow-md
   }
 
   .primary-button {
-    @apply bg-primary p-2.5 rounded-xl m-4 px-6 font-bold text-base text-white
+    @apply bg-primary p-2.5 rounded-xl px-6 font-bold text-base text-white
+  }
+
+  .input-box {
+    @apply grow p-2 rounded-lg text-scale-1000 text-base focus:border-black
   }
 }
 
