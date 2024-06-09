@@ -15,7 +15,7 @@ export default function Navbar() {
             <ul className="flex flex-row gap-5">
                 <li className="sidebar-icon"><BsPlusLg/></li>
             </ul>
-            <span className="w-10 h-10 ml-10 bg-scale-500 rounded-full"/>
+            <a href="/profile" className="w-10 h-10 ml-10 bg-scale-500 rounded-full"/>
         </nav>
     );
 }

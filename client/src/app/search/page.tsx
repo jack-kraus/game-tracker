@@ -36,9 +36,9 @@ export default function Search({searchParams} : any) {
     }
 
     return (
-        <main className="flex flex-col w-1/2 items-center mt-4 gap-3 pt-24 pb-4 mx-auto">
+        <>
             <h1 className="text-scale-0 underline">Search for &quot;{query}&quot;</h1>
             {content}
-        </main>
+        </>
     );
 }
