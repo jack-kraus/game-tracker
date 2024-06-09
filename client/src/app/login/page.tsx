@@ -14,7 +14,7 @@ export default function Login() {
 
     const form_content = state === FormState.Login ? <LoginForm/> : <SignupForm/>;
     return <>
-        <div className="m-0">
+        <div>
             <div className="pl-3">
                 <button className={`primary-button rounded-b-none ${state !== FormState.Login ? "bg-scale-1000 text-primary" : ""}`} onClick={() => setState(FormState.Login)}>Login</button>
                 <button className={`primary-button rounded-b-none ${state !== FormState.SignUp ? "bg-scale-1000 text-primary" : ""}`} onClick={() => setState(FormState.SignUp)}>Sign-Up</button>
