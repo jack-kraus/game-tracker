@@ -18,6 +18,14 @@ html {
     @apply relative flex items-center justify-center h-12 w-12 mt-2 mb-2 my-auto bg-scale-800 text-primary font-extrabold
     hover:text-gray-950 hover:bg-scale-0 hover:rounded-xl transition-all;
   }
+
+  .box-item {
+    @apply w-full rounded-xl bg-scale-800 text-scale-0 p-3 flex flex-row gap-3 drop-shadow-md
+  }
+
+  .primary-button {
+    @apply bg-primary p-2.5 rounded-xl m-4 px-6 font-bold text-base text-white
+  }
 }
 
 .purple {

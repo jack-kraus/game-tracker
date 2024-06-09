@@ -1,16 +1,25 @@
 'use client';
-import { login, logout, signup } from "./actions";
+import { useState } from "react";
+import { login, signup } from "../../data/actions";
+import { LoginForm, SignupForm } from "@/components/LoginForm";
+
+enum FormState {
+    Login,
+    SignUp
+}
 
 export default function Login() {
-    return <form className='flex flex-col gap-5 w-40'>
-        <label htmlFor='username'>Username</label>
-        <input id="username" name="username" className='text-black'/>
-        <label htmlFor='email'>Email</label>
-        <input id="email" name="email" type="email" className='text-black'/>
-        <label  htmlFor='password'>Password</label>
-        <input id="password" name="password" type="password" className='text-black'/>
-        <button formAction={login} className='bg-primary'>Login</button>
-        <button formAction={signup} className='bg-primary'>Sign-Up</button>
-        <button formAction={logout} className='bg-primary'>Log-Out</button>
-    </form>;
+    const [state, setState] = useState(FormState.Login);
+    
+
+    const form_content = state === FormState.Login ? <LoginForm/> : <SignupForm/>;
+    return <>
+        <div className="gap-0 m-0">
+            <div>
+                <button className={`primary-button rounded-b-none ${state !== FormState.Login ? "bg-scale-1000 text-primary" : ""}`} onClick={() => setState(FormState.Login)}>Login</button>
+                <button className={`primary-button rounded-b-none ${state !== FormState.SignUp ? "bg-scale-1000 text-primary" : ""}`} onClick={() => setState(FormState.SignUp)}>Sign-Up</button>
+            </div>
+            {form_content}
+        </div>
+    </>;
 }
