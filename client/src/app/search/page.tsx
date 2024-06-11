@@ -14,7 +14,7 @@ export default function Search({searchParams} : any) {
     const { isPending, error, data } = useQuery({
         queryKey: ['repoData'],
         queryFn: () =>
-          fetch(`http://localhost:3000/api/game/search?query=${query}`).then((res) =>
+          fetch(`http://${window.location.hostname}/api/game/search?query=${query}`).then((res) =>
             res.json(),
           ),
     })
@@ -24,15 +24,15 @@ export default function Search({searchParams} : any) {
     else if (error) content = <p>Error: {error.message}</p>;
     else if (!data.success) content = <p>{data.error}</p>;
     else { content = <>
-        {data.results.slice(page*10,page*10+10).map((item:any, index:number) => <GameResult key={index} {...item}/> )}
-        <select value={page} onChange={(e : any) => {
-            setPage(e.target.value);
-            window.scrollTo(0,0);
-        }}>
-            {range(0,Math.floor(data.results.length/10)-1).map(i => <option key={i} value={i}>{i+1}</option>)}
-        </select>
-    </>;
-    console.log(data);
+            {data.results.slice(page*10,page*10+10).map((item:any, index:number) => <GameResult key={index} {...item}/> )}
+            <select value={page} onChange={(e : any) => {
+                setPage(e.target.value);
+                window.scrollTo(0,0);
+            }}>
+                {range(0,Math.floor(data.results.length/10)-1).map(i => <option key={i} value={i}>{i+1}</option>)}
+            </select>
+        </>;
+        console.log(data);
     }
 
     return (

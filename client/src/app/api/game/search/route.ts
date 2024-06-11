@@ -11,9 +11,13 @@ export async function GET(request : NextRequest) {
   try { query = checkIsProperString(query, 1, true, "query"); }
   catch (error : any) { return Response.json({success: false, error:`${error}`}); }
 
+  let limit = request.nextUrl.searchParams.get("limit");
+  let limit_num = 100;
+  if (limit) limit_num = parseInt(limit);
+
   // get search results
   let results;
-  try { results = await searchGames(query, 100); }
+  try { results = await searchGames(query, limit_num); }
   catch (error : any) { return Response.json({success: false, error:`${error}`}); }
 
   return Response.json({success:true, results});
