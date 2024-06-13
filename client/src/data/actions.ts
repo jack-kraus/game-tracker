@@ -5,44 +5,63 @@ import { redirect } from 'next/navigation';
 
 import { createClient } from '@/utils/supabase/server';
 
-export async function login(formData: FormData) {
+interface LoginData {
+  email : string,
+  password : string,
+}
+
+export async function login(formData: LoginData) {
   const supabase = createClient()
 
   // type-casting here for convenience
   // in practice, you should validate your inputs
+  
+  const { email, password } = formData;
   const data = {
-    email: formData.get('email') as string,
-    password: formData.get('password') as string,
+    email: email,
+    password: password,
   }
 
-  const { error } = await supabase.auth.signInWithPassword(data)
+  const { error } = await supabase.auth.signInWithPassword(data);
 
   if (error) {
-    redirect('/error')
+    throw error;
   }
 
   revalidatePath('/', 'layout')
-  redirect('/')
+  redirect('/profile')
 }
 
-export async function signup(formData: FormData) {
+interface RegisterData {
+  email : string,
+  password : string,
+  username : string
+}
+
+export async function signup(formData: RegisterData) {
   const supabase = createClient();
 
   // type-casting here for convenience
   // in practice, you should validate your inputs
+  const { email, password, username } = formData;
   const data = {
-    email: formData.get('email') as string,
-    password: formData.get('password') as string,
+    email: email,
+    password: password,
+    options: {
+      data: {
+        username: username
+      }
+    }
   }
 
   const { error } = await supabase.auth.signUp(data)
 
   if (error) {
-    redirect('/error')
+    throw error;
   }
 
   revalidatePath('/', 'layout')
-  redirect('/')
+  redirect('/profile')
 }
 
 export async function logout() {
