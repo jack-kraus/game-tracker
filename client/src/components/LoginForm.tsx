@@ -27,7 +27,7 @@ export function LoginForm() {
                 id="password"
                 type="password"
                 placeholder="Password"
-                hookOptions={{required:true}}
+                hookOptions={hook.required_validation("Password")}
             />
             <button type="submit" className='primary-button'>Login</button>
         </form>

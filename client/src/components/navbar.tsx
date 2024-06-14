@@ -13,7 +13,7 @@ export default function Navbar() {
                 <button type="submit" className="w-150 bg-primary p-2.5 rounded-r-xl ml-0 mr-4 px-6 font-bold text-base">Search</button>
             </form>
             <ul className="flex flex-row gap-5">
-                <li className="sidebar-icon"><BsPlusLg/></li>
+                <li className="sidebar-icon"><a href="/post"><BsPlusLg/></a></li>
             </ul>
             <a href="/profile" className="w-10 h-10 ml-10 bg-scale-500 rounded-full"/>
         </nav>

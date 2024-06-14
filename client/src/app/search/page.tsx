@@ -17,7 +17,7 @@ export default function Search({searchParams} : any) {
           fetch(`http://${window.location.hostname}/api/game/search?query=${query}`).then((res) =>
             res.json(),
           ),
-    })
+    });
 
     let content;
     if (isPending) content = <p>Pending...</p>;
