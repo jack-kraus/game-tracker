@@ -22,17 +22,19 @@ async function searchGames(query : string, limit : number) {
 }
 
 async function searchGameById(id : string) {
-    
     let response;
-    response = await axios.post(
+    response = await fetch(
         "https://api.igdb.com/v4/games/",
-        `fields id, name, summary, cover.image_id, first_release_date; where id = "${id}"; limit 1;`,
-        {headers:headers}
-    );
+        {
+            method: "POST",
+            body: `fields id, name, summary, cover.image_id, first_release_date; where id = ${id}; limit 1;`,
+            headers: headers
+        }
+    ).then((res) => res.json());
 
-    if (response.data.length === 0) throw "No Results found";
+    if (response.length === 0) throw "No Results found";
     
-    const result = response.data[0];
+    const result = response[0];
     if (result.cover) result.cover = `https://images.igdb.com/igdb/image/upload/t_cover_big/${result.cover.image_id}.jpg`;
 
     return result;

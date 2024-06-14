@@ -8,6 +8,8 @@ import { FormProvider, useForm } from "react-hook-form";
 import { BsStarFill } from "react-icons/bs";
 import hook from "@/data/hook_options";
 import { useRouter } from 'next/navigation';
+import { signup } from "@/data/actions";
+import axios from "axios";
 
 export default function Post({searchParams} : any) {
     const methods = useForm();
@@ -26,17 +28,23 @@ export default function Post({searchParams} : any) {
     const router = useRouter();
 
     async function postForm(form_data : any) {
-        const supabase = createClient();
-        
-        const { data:user, error:user_error } = await supabase.auth.getUser();
-        form_data = {...form_data, game:value?.id, game_cover:value.cover, game_title:value.name, author:user.user.id};
-        console.log(form_data);
+        if (!value || !value.id) { return setError("rating", { message: "Game must be supplued" }); }
+        let response : any = {};
+        try {
+            const url = `/api/game/${value.id}/reviews`;
+            console.log(url);
+            const data = await fetch(url, {
+                method: "POST",
+                body: JSON.stringify({...form_data, game: value.id}),
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            }).then((res) => res.json());
+            response = data;
+        } catch (e) { return setError("rating", { message: `${e}` }); }
 
-        const { error } = await supabase.from('post').insert(form_data);
-
-        if (error) {
-            router.push("/profile");
-            setError("content", { type:"server", message:`${error}`});
+        if (!response.success) {
+            setError("content", { type:"server", message:`${response.error}`});
         }
         else {
             router.push("/profile");
@@ -54,8 +62,6 @@ export default function Post({searchParams} : any) {
         <GameSearch val={[value, setValue]}/>
         <FormProvider {...methods}>
             <form className='flex flex-col gap-3 box-item' onSubmit={handleSubmit(postForm)}>
-                <PurpleGradient/>
-
                 <Input
                     id="title"
                     label="Title"
@@ -80,7 +86,8 @@ export default function Post({searchParams} : any) {
                     min="0"
                     max="10"
                 />
-            
+
+                <PurpleGradient/>            
                 <div className="flex flex-row p-0">{[...Array(5)].map((_, ind) => starClass(ind))}</div>
                 <button type="submit" className='primary-button'>Submit</button>
             </form>

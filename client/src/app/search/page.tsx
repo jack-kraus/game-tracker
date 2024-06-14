@@ -14,7 +14,7 @@ export default function Search({searchParams} : any) {
     const { isPending, error, data } = useQuery({
         queryKey: ['repoData'],
         queryFn: () =>
-          fetch(`http://${window.location.hostname}/api/game/search?query=${query}`).then((res) =>
+          fetch(`/api/game/search?query=${query}`).then((res) =>
             res.json(),
           ),
     });

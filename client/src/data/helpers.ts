@@ -1,10 +1,12 @@
+import * as yup from 'yup';
+
 const valuePassed = function(val : any, variableName : string) {
     if (val === undefined) {
         throw new Error(`${variableName || 'Provided variable'} must be passed in`);
     }
 }
 
-export const checkIsProperString = function(val : any, min_length : number, to_trim : boolean, variableName : string) {
+export const checkIsProperString = function(val : string, min_length : number, to_trim : boolean, variableName : string) {
     valuePassed(val, variableName);
     if (typeof val !== 'string') {
         throw new Error(`${variableName || 'Provided variable'} must be a string`);
@@ -51,4 +53,15 @@ const checkIsFilledString = function(val : any, variableName : string) {
     return val;
 }
 
+const reviewSchema = yup.object({
+    title: yup.string().trim().required(),
+    content: yup.string().trim().required(),
+    rating: yup.number().min(0).max(10).required(),
+    game: yup.string().trim().required(),
+    game_cover: yup.string().trim().url().required(),
+    game_title: yup.string().trim().required(),
+    author: yup.string().trim().required(),
+});
+
 export const validation = { checkIsProperString, checkIsProperEmail, checkIsProperPassword, checkIsFilledString };
+export const schema = { reviewSchema };

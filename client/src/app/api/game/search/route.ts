@@ -7,7 +7,7 @@ import { searchGames } from "@/data/games";
 
 export async function GET(request : NextRequest) {
   // get query text
-  let query = request.nextUrl.searchParams.get("query");
+  let query = request.nextUrl.searchParams.get("query") as string;
   try { query = checkIsProperString(query, 1, true, "query"); }
   catch (error : any) { return Response.json({success: false, error:`${error}`}); }
 

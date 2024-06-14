@@ -19,8 +19,10 @@ export default async function Profile() {
     return <>
         <h1 className="text-scale-0 underline">Hello {data.user.email}</h1>
         <form>
-            <button formAction={logout} className='bg-primary'>Log-Out</button>
-            {posts ? posts.map((item, index:number) => <Post key={index} {...{...item, author:"Steve"}}/>) : <p>Pending...</p>}
+            <button formAction={logout} className='primary-button'>Log-Out</button>
+            <div className="flex flex-col gap-3">
+                {posts ? posts.map((item, index:number) => <Post key={index} {...{...item, author:"Steve"}}/>) : <p>Pending...</p>}
+            </div>
         </form>
     </>;
 }
