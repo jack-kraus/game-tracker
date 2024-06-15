@@ -2,6 +2,8 @@
 
 import { useRouter } from "next/navigation";
 import { BsStarFill } from "react-icons/bs";
+import Dropdown from "./Dropdown";
+import Stars from "./Stars";
 
 interface postProps {
     title: string,
@@ -17,8 +19,7 @@ interface postProps {
 export default function Post({ id, title, game_title, game_cover, content, rating, author, created_at } : postProps) {
     const router = useRouter();
 
-    async function deletePost(e : Event) {
-        e.preventDefault();
+    async function deletePost() {
         if (!confirm("Are you sure you want to delete this post?")) { return; }
         await fetch(`/api/review/${id}`, {
             method: "DELETE"
@@ -29,6 +30,8 @@ export default function Post({ id, title, game_title, game_cover, content, ratin
         });
     }
     
+    const date = new Date(created_at).toDateString();
+
     return (
         <article className="w-full rounded-xl bg-scale-800 text-scale-0 p-3 flex flex-row gap-3 drop-shadow-md">
             <div>
@@ -36,19 +39,20 @@ export default function Post({ id, title, game_title, game_cover, content, ratin
                 <a href="/"><i className="text-center text-xs hover:text-primary">{game_title}</i></a>
             </div>
             <div className="h-full w-full">
-                <a href="/" className="hover:text-primary active:text-white"><h1>{title}</h1></a>
+                <a href={`/review/${id}`} className="hover:text-primary active:text-white"><h1>{title}</h1></a>
                 <p className="h-full">{content}</p>
-                <span className="inline-flex">
-                    {[...Array(5)].map((_, ind) => ind < rating ? <BsStarFill key={ind} className="text-primary size-6"/> :  <BsStarFill key={ind} className="size-6"/>)}
-                </span>
+                <Stars rating={rating}/>
             </div>
             <cite className="flex flex-col justify-between items-end text-right">
                 <p className="bg-scale-200 w-12 h-12 rounded-full"/>
                 {author}
                 <br/>
-                {created_at}
+                {date}
             </cite>
-            <button type="submit" className="primary-button" onClick={deletePost}>Delete</button>
+            <Dropdown options={[
+                { label : "Edit Post", onClick : () => alert("Edit!") },
+                { label : "Delete Post", onClick : deletePost }
+            ]}/>
         </article>
     );
 }
