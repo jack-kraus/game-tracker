@@ -1,27 +1,12 @@
-import Post from "@/components/Post";
+import Post from '@/components/Post';
+import { createClient } from '@/utils/supabase/server';
 
-const post = {
-  title: "An okay experience",
-  game_title: "The Messenger",
-  content: "This game isn't very good",
-  rating: 3,
-  author: "Steve",
-  created_at: new Date().toDateString(),
-  game_cover: "/images/messenger.jpg"
-};
+export default async function Posts() {
+    const supabase = createClient();
+    const { data } = await supabase.from("post").select("*").order("created_at", { ascending: false });
 
-export default function Home() {
-  return (
-    <>
-      <h1 className="text-scale-0 underline">Feed</h1>
-      <Post {...post}/>
-      <Post {...post}/>
-      <Post {...post}/>
-      <Post {...post}/>
-      <Post {...post}/>
-      <Post {...post}/>
-      <Post {...post}/>
-      <Post {...post}/>
-    </>
-  );
+    return  <>
+        <h1 className="text-scale-0 underline">Feed</h1>
+        {data ? data.map((item, index:number) => <Post key={index} {...{...item, author:"Steve"}}/>) : <p>Pending...</p>}
+    </>;
 }

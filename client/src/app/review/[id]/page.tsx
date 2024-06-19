@@ -6,7 +6,7 @@ let review_id = params.id;
     catch (error : any) { return Response.json({success: false, step: "Validate ID", error:`${error}`}); }
 
 */
-import React, { FormEvent } from "react";
+import React, { FormEvent, useState } from "react";
 import { useQuery } from '@tanstack/react-query';
 import Stars from "@/components/Stars";
 import { BsHeart, BsHeartFill } from "react-icons/bs";
@@ -14,11 +14,14 @@ import { createClient } from "@/utils/supabase/client";
 import Comment from "@/components/Comment";
 
 export default function ReviewPage({params} : any) {
+    const [updated, setUpdated] = useState(0);
+    const update = () => setUpdated(updated + 1);
+    
     let { id } = params;
     if (!id) return <h1>Improper ID</h1>;
 
     let { isPending, error, data } = useQuery({
-        queryKey: ['repoData'],
+        queryKey: ['repoData', updated],
         queryFn: () =>
           fetch(`/api/review/${id}`).then((res) =>
             res.json()
@@ -31,8 +34,9 @@ export default function ReviewPage({params} : any) {
         const content = event.target.content.value;
         const { error } = await supabase
             .from('comment')
-            .insert({ post:id, content:content })
+            .insert({ post:id, content:content });
         if (error) console.log(error);
+        else update();
     }
     
     
