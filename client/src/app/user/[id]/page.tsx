@@ -5,6 +5,7 @@ import { redirect } from "next/navigation";
 import Post from '@/components/items/Post';
 import { useQuery } from '@tanstack/react-query';
 import React from "react";
+import FollowButton from "@/components/ui/FollowButton";
 
 export default function Profile({params} : any) {
     let { id } = params;
@@ -17,7 +18,6 @@ export default function Profile({params} : any) {
             res.json()
           ),
     });
-    
 
     if (isPending) return <h1>Pending...</h1>;
     else if (error) return <h1>{`${error}`}</h1>;
@@ -25,9 +25,9 @@ export default function Profile({params} : any) {
 
     return <>
         <h1 className="text-scale-0 underline">{data.username}'s Page</h1>
-        <button type="button" className="primary-button" onClick={()=>alert("hello")}>Follow</button>
+        <FollowButton id={id} following={data.following}/>
         <div className="flex flex-col gap-3">
-                {data.posts ? data.posts.map((item : any, index:number) => <Post key={index} {...{...item, author:"Steve"}}/>) : <p>No posts</p>}
+            {data.posts ? data.posts.map((item : any, index:number) => <Post key={index} {...{...item, author:"Steve"}}/>) : <p>No posts</p>}
         </div>
     </>;
 }

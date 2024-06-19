@@ -1,5 +1,5 @@
 import { BsStarFill } from "react-icons/bs";
-import PurpleGradient from "./PurpleGradient";
+import PurpleGradient from "@/components/other/PurpleGradient";
 
 export default function Stars({rating} : {rating:number}) {
     return <>

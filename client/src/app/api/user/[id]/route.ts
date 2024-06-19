@@ -9,7 +9,7 @@ export async function GET(_request : NextRequest , {params} : {params : {id: str
     try { id = checkIsProperString(id, 1, true, "Id"); }
     catch (error : any) { return Response.json({success: false, error:`${error}`}); }
 
-    // get admin client
+    // get admin andf regular client
     const supabase = cc2(
         process.env.NEXT_PUBLIC_SUPABASE_URL!,
         process.env.NEXT_PUBLIC_SUPABASE_ADMIN_KEY!, {
@@ -18,26 +18,41 @@ export async function GET(_request : NextRequest , {params} : {params : {id: str
           persistSession: false
         }
     });
+    const supabase_ = createClient();
 
+    // get current user
+    const { data: { user } } = await supabase_.auth.getUser();
+    console.log(user);
+    let user_id;
+    if (user && user.id) user_id = user.id;
+    
     // user object define
-    let user : any = {};
+    let info : any = { user_id:user_id||"none" };
 
     // get user attributes
     try {
         const { data, error } = await supabase.auth.admin.getUserById(id);
         if (error) return Response.json({success: false, error:`User not found: ${error}`});
-        user.username = data.user.user_metadata.username;
+        info.username = data.user.user_metadata.username;
     } catch (error : any) { return Response.json({ success: false, error:`User not found: ${error}` }); }
-
 
     // get posts
     try {
-        const supabase = createClient();
-        const {data} = await supabase.from("post").select("*").eq("author", id);
-        user.posts = data;
+        const {data} = await supabase_.from("post").select("*").eq("author", id);
+        info.posts = data;
     }
     catch (error : any) { return Response.json({success: false, error:`${error}`}); }
+
+    // get is following 
+    try {  
+        const { count, error } = await supabase
+            .from('follower')
+            .select('*', { count: 'exact', head: true })
+            .eq('user_id', user_id);
+        if (error) throw error;
+        info.following = !!count;
+    } catch (error : any) { return Response.json({success: false, error:`${error}`}); }
     
     // return success
-    return Response.json({success:true, data:user});
+    return Response.json({success:true, data:info});
 }
