@@ -19,14 +19,20 @@ export default function Dropdown({ options } : { options : DropdownOption[] }) {
         }
     }
 
+    function roundClass(ind : number, len : number) {
+        if (ind === 0 && ind === len - 1) return "rounded-lg";
+        else if (ind === 0) return "rounded-t-lg";
+        else if (ind === len - 1) return "rounded-b-lg"
+    }
+
     return <div>
         <button type="button" onClick={() => setOpen(!open)}><TbDotsVertical/></button>
-        {open ? <ul className="absolute z-10 flex flex-col">
+        {open ? <ul className="z-0 flex flex-col absolute">
             {options.map((item : DropdownOption, ind : number) => <li key={ind}>
                 <button 
                     onClick={closeWrap(item.onClick)}
                     type="button"
-                    className={"whitespace-nowrap w-full bg-scale-0 hover:bg-scale-300 flex flex-row text-scale-1000 p-2 items-center " + (ind === 0 ? "rounded-t-lg " : " ") + (ind === options.length-1 ? "rounded-b-lg" : "")}
+                    className={"whitespace-nowrap w-full bg-scale-0 relative hover:bg-scale-300 flex flex-row text-scale-1000 p-2 items-center " + roundClass(ind, options.length)}
                 >
                     {item.label}
                 </button>

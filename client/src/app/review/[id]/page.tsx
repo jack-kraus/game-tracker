@@ -11,6 +11,7 @@ import { useQuery } from '@tanstack/react-query';
 import Stars from "@/components/Stars";
 import { BsHeart, BsHeartFill } from "react-icons/bs";
 import { createClient } from "@/utils/supabase/client";
+import Comment from "@/components/Comment";
 
 export default function ReviewPage({params} : any) {
     let { id } = params;
@@ -60,9 +61,6 @@ export default function ReviewPage({params} : any) {
             <textarea name="content" className="w-full input-box rounded-r-none min-h-12" rows={3} required/>
             <button className="primary-button rounded-l-none">Submit</button>
         </form>
-        {data.comments ? data.comments.map((item : any) => <div className="box-item flex-col">
-            <cite>{item.author}</cite>
-            <p>{item.content}</p>
-        </div>) : <></>}
+        {data.comments ? data.comments.map((item : any) => <Comment {...item}/>) : <></>}
     </>;
 }
