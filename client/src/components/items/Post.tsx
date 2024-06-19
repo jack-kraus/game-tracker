@@ -1,9 +1,8 @@
 'use client';
 
 import { useRouter } from "next/navigation";
-import { BsStarFill } from "react-icons/bs";
-import Dropdown from "./Dropdown";
-import Stars from "./Stars";
+import Dropdown from "@/components/ui/Dropdown";
+import Stars from "@/components/ui/Stars";
 
 interface postProps {
     title: string,

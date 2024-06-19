@@ -2,7 +2,7 @@
 import { login, signup } from "@/data/actions"
 import { useForm, FormProvider } from "react-hook-form";
 import hook from "@/data/hook_options";
-import Input from "./Input";
+import Input from "./form/Input";
 
 export function LoginForm() {
     const methods = useForm();

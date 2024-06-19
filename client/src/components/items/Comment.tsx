@@ -1,5 +1,5 @@
 import { useState } from "react";
-import Dropdown from "./Dropdown";
+import Dropdown from "../ui/Dropdown";
 import { createClient } from "@/utils/supabase/client";
 
 interface CommentProps {

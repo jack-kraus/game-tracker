@@ -1,7 +1,7 @@
 import { createClient } from "@/utils/supabase/server";
 import { redirect } from "next/navigation";
 import { logout } from "../../data/actions";
-import Post from '@/components/Post';
+import Post from '@/components/items/Post';
 
 export default async function Profile() {
     const supabase = createClient();

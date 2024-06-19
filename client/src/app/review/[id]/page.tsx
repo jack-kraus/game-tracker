@@ -8,10 +8,10 @@ let review_id = params.id;
 */
 import React, { FormEvent, useState } from "react";
 import { useQuery } from '@tanstack/react-query';
-import Stars from "@/components/Stars";
+import Stars from "@/components/ui/Stars";
 import { BsHeart, BsHeartFill } from "react-icons/bs";
 import { createClient } from "@/utils/supabase/client";
-import Comment from "@/components/Comment";
+import Comment from "@/components/items/Comment";
 
 export default function ReviewPage({params} : any) {
     const [updated, setUpdated] = useState(0);

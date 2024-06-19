@@ -2,7 +2,7 @@
 
 import { createClient } from "@/utils/supabase/server";
 import { redirect } from "next/navigation";
-import Post from '@/components/Post';
+import Post from '@/components/items/Post';
 import { useQuery } from '@tanstack/react-query';
 import React from "react";
 
@@ -25,6 +25,7 @@ export default function Profile({params} : any) {
 
     return <>
         <h1 className="text-scale-0 underline">{data.username}'s Page</h1>
+        <button type="button" className="primary-button" onClick={()=>alert("hello")}>Follow</button>
         <div className="flex flex-col gap-3">
                 {data.posts ? data.posts.map((item : any, index:number) => <Post key={index} {...{...item, author:"Steve"}}/>) : <p>No posts</p>}
         </div>

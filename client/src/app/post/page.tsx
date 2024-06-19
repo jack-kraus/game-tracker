@@ -1,15 +1,13 @@
 'use client';
-import GameSearch from "@/components/GameSearch";
-import Input from "@/components/Input";
-import PurpleGradient from "@/components/PurpleGradient";
-import { createClient } from "@/utils/supabase/client";
+import GameSearch from "@/components/form/GameSearch";
+import Input from "@/components/form/Input";
+import PurpleGradient from "@/components/other/PurpleGradient";
 import { useState } from "react";
 import { FormProvider, useForm } from "react-hook-form";
 import { BsStarFill } from "react-icons/bs";
 import hook from "@/data/hook_options";
 import { useRouter } from 'next/navigation';
 import { signup } from "@/data/actions";
-import axios from "axios";
 
 export default function Post({searchParams} : any) {
     const methods = useForm();
