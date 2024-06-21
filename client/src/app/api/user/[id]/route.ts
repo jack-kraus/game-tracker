@@ -22,28 +22,28 @@ export async function GET(_request : NextRequest , {params} : {params : {id: str
 
     // get current user
     const { data: { user } } = await supabase_.auth.getUser();
-    console.log(user);
     let user_id;
     if (user && user.id) user_id = user.id;
     
     // user object define
-    let info : any = { user_id:user_id||"none" };
+    let info : any = { user_id:user_id || "none" };
 
     // get user attributes
     try {
-        const { data, error } = await supabase.auth.admin.getUserById(id);
-        if (error) return Response.json({success: false, error:`User not found: ${error}`});
-        info.username = data.user.user_metadata.username;
+        const { data, error } = await supabase_.from("profile_follow").select("*").eq("id", id);
+        if (error || !data) return Response.json({success: false, error:`User not found: ${error}`});
+        info = {...info, ...data[0]};
+        console.log(data);
     } catch (error : any) { return Response.json({ success: false, error:`User not found: ${error}` }); }
 
     // get posts
     try {
-        const {data} = await supabase_.from("post").select("*").eq("author", id);
+        const { data } = await supabase_.from("post").select("*").eq("author", id);
         info.posts = data;
     }
     catch (error : any) { return Response.json({success: false, error:`${error}`}); }
 
-    // get is following 
+    // get is following
     try {  
         const { count, error } = await supabase
             .from('follower')

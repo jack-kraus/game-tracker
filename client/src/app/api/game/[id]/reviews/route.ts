@@ -34,3 +34,27 @@ export async function POST(request : NextRequest, {params} : {params : {id: stri
     // return success
     return Response.json({success:true});
 }
+
+export async function GET(_request : NextRequest, {params} : {params : {id: string}}) {
+    // check param
+    let game_id = params.id;
+    try { game_id = checkIsProperString(game_id, 1, true, "query"); }
+    catch (error : any) { return Response.json({success: false, error:`${error}`}); }
+
+    // get user
+    const supabase = createClient();
+
+    // get reviews table
+    let reviews;
+    try{
+        const { data, error } = await supabase
+            .from('post_user_like')
+            .select('*')
+            .eq("game", game_id);
+        if (!data || error) return Response.json({success: false, error:`Server Error`, object:error});
+        reviews = data;
+    } catch (error : any) { return Response.json({success: false, error:`1: ${error}`}); }
+
+    // return success
+    return Response.json({success:true, data:reviews});
+}

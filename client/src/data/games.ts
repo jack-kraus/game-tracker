@@ -1,4 +1,4 @@
-import { headers } from "./api";
+import { header_func, headers } from "./api";
 import axios from 'axios';
 import { checkIsProperString } from "./helpers";
 
@@ -27,8 +27,8 @@ async function searchGameById(id : string) {
         "https://api.igdb.com/v4/games/",
         {
             method: "POST",
-            body: `fields id, name, summary, cover.image_id, first_release_date; where id = ${id}; limit 1;`,
-            headers: headers
+            body: `fields id, name, summary, cover.image_id, first_release_date, genres.name, platforms.name; where id = ${id}; limit 1;`,
+            headers: header_func()
         }
     ).then((res) => res.json());
 
@@ -36,7 +36,9 @@ async function searchGameById(id : string) {
     
     const result = response[0];
     if (result.cover) result.cover = `https://images.igdb.com/igdb/image/upload/t_cover_big/${result.cover.image_id}.jpg`;
-
+    if (result.genres) result.genres = result.genres.map((item : {id: number, name: string}) => item.name).filter((item : string | undefined) => item);
+    if (result.platforms) result.platforms = result.platforms.map((item : {id: number, name: string}) => item.name).filter((item : string | undefined) => item);
+    
     return result;
 }
 

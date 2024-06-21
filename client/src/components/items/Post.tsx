@@ -4,6 +4,7 @@ import { useRouter } from "next/navigation";
 import Dropdown from "@/components/ui/Dropdown";
 import Stars from "@/components/ui/Stars";
 import LikeButton from "../ui/LikeButton";
+import moment from 'moment';
 
 interface postProps {
     title: string,
@@ -11,13 +12,14 @@ interface postProps {
     rating: number,
     author: string,
     created_at: string,
+    game: number,
     game_title: string,
     game_cover: string,
     id : number,
     username : string
 }
 
-export default function Post({ id, title, game_title, game_cover, content, rating, created_at, username, author } : postProps) {
+export default function Post({ id, title, game, game_title, game_cover, content, rating, created_at, username, author } : postProps) {
     const router = useRouter();
 
     async function deletePost() {
@@ -35,7 +37,7 @@ export default function Post({ id, title, game_title, game_cover, content, ratin
         <article className="w-full rounded-xl bg-scale-800 text-scale-0 p-3 flex flex-row gap-3 drop-shadow-md">
             <div>
                 <img className="w-32 rounded-md hover:brightness-150" src={game_cover}/>
-                <a href="/"><i className="text-center text-xs hover:text-primary">{game_title}</i></a>
+                <a href={`/game/${game}`}><i className="text-center text-xs hover:text-primary">{game_title}</i></a>
             </div>
             <div className="h-full w-full">
                 <a href={`/review/${id}`} className="hover:text-primary active:text-white"><h1>{title}</h1></a>
@@ -46,7 +48,7 @@ export default function Post({ id, title, game_title, game_cover, content, ratin
                 <p className="bg-scale-200 w-12 h-12 rounded-full"/>
                 <a className="hover:text-primary active:text-white" href={`/user/${author}`}>{username}</a>
                 <br/>
-                {created_at}
+                {moment(created_at).format("MM/DD/YY h:mm")}
             </cite>
             <Dropdown options={[
                 { label : "Edit Post", onClick : () => alert("Edit!") },

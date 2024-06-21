@@ -19,6 +19,7 @@ export const checkIsProperString = function(val : string, min_length : number, t
 }
 
 export function range(start : number, end : number) {
+    if (end - start + 1 <= 0 || isNaN(end - start + 1)) return [];
     return (new Array(end - start + 1)).fill(undefined).map((_, i) => i + start);
 }
 

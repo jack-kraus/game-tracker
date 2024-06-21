@@ -1,18 +1,11 @@
 "use client";
-/*
-
-let review_id = params.id;
-    try { review_id = checkIsProperString(review_id, 1, true, "query"); }
-    catch (error : any) { return Response.json({success: false, step: "Validate ID", error:`${error}`}); }
-
-*/
 import React, { FormEvent, useState } from "react";
 import { useQuery } from '@tanstack/react-query';
 import Stars from "@/components/ui/Stars";
-import { BsHeart, BsHeartFill } from "react-icons/bs";
 import { createClient } from "@/utils/supabase/client";
 import Comment from "@/components/items/Comment";
 import LikeButton from "@/components/ui/LikeButton";
+import LoadingHandler from "@/components/ui/LoadingHandler";
 
 export default function ReviewPage({params} : any) {
     const [updated, setUpdated] = useState(0);
@@ -21,13 +14,14 @@ export default function ReviewPage({params} : any) {
     let { id } = params;
     if (!id) return <h1>Improper ID</h1>;
 
-    let { isPending, error, data } = useQuery({
+    const query = useQuery({
         queryKey: ['repoData', updated],
         queryFn: () =>
           fetch(`/api/review/${id}`).then((res) =>
             res.json()
           ),
     });
+    let { data } = query;
 
     const supabase = createClient();
     async function addReview(event : any) {
@@ -39,32 +33,27 @@ export default function ReviewPage({params} : any) {
         if (error) console.log(error);
         else update();
     }
-    
-    if (isPending) return <h1>Pending...</h1>;
-    else if (error) return <h1>{error.message}</h1>;
 
-    if (data.success) data = data.data;
-    else return <h1>Hello{data.message}</h1>;
-
-    return  <>
+    if (data) data = data.data;
+    return  <LoadingHandler {...query}>
         <div className="text-white box-item gap-3">
             <div>
-                <img className="w-48" src={data.game_cover} alt={data.game_title + " cover"}/>
-                <cite>{data.game_title}</cite>
+                <img className="w-48" src={data?.game_cover} alt={data?.game_title + " cover"}/>
+                <cite>{data?.game_title}</cite>
             </div>
             <div className="grow">
-                <h1>{data.title}</h1>
-                <cite>by {data.username} at {data.created_at}</cite>
-                <p>{data.content}</p>
-                <Stars rating={data.rating}/>
+                <h1>{data?.title}</h1>
+                <cite>by <a href={`/user/${data?.author}`}>{data?.username}</a> at {data?.created_at}</cite>
+                <p>{data?.content}</p>
+                <Stars rating={data?.rating}/>
             </div>
-            <LikeButton id={id} liked={data.liked} likes={data.likes}/>
+            <LikeButton id={id} liked={data?.liked} likes={data?.likes}/>
         </div>
         <h2 className="text-xl text-scale-100 font-bold">Comments</h2>
         <form className="flex w-full" onSubmit={addReview}>
             <textarea name="content" className="w-full input-box rounded-r-none min-h-12" rows={3} required/>
             <button className="primary-button rounded-l-none">Submit</button>
         </form>
-        {data.comments ? data.comments.map((item : any) => <Comment {...item}/>) : <></>}
-    </>;
+        {data?.comments ? data.comments.map((item : any) => <Comment {...item}/>) : <></>}
+    </LoadingHandler>;
 }
