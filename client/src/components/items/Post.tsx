@@ -3,6 +3,7 @@
 import { useRouter } from "next/navigation";
 import Dropdown from "@/components/ui/Dropdown";
 import Stars from "@/components/ui/Stars";
+import LikeButton from "../ui/LikeButton";
 
 interface postProps {
     title: string,
@@ -12,10 +13,11 @@ interface postProps {
     created_at: string,
     game_title: string,
     game_cover: string,
-    id : number
+    id : number,
+    username : string
 }
 
-export default function Post({ id, title, game_title, game_cover, content, rating, author, created_at } : postProps) {
+export default function Post({ id, title, game_title, game_cover, content, rating, created_at, username, author } : postProps) {
     const router = useRouter();
 
     async function deletePost() {
@@ -28,8 +30,6 @@ export default function Post({ id, title, game_title, game_cover, content, ratin
             else if (error) alert(error);
         });
     }
-    
-    const date = new Date(created_at).toDateString();
 
     return (
         <article className="w-full rounded-xl bg-scale-800 text-scale-0 p-3 flex flex-row gap-3 drop-shadow-md">
@@ -44,9 +44,9 @@ export default function Post({ id, title, game_title, game_cover, content, ratin
             </div>
             <cite className="flex flex-col justify-between items-end text-right">
                 <p className="bg-scale-200 w-12 h-12 rounded-full"/>
-                {author}
+                <a className="hover:text-primary active:text-white" href={`/user/${author}`}>{username}</a>
                 <br/>
-                {date}
+                {created_at}
             </cite>
             <Dropdown options={[
                 { label : "Edit Post", onClick : () => alert("Edit!") },

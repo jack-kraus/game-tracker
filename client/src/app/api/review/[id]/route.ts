@@ -2,62 +2,54 @@
 import { NextRequest } from "next/server";
 import { checkIsProperString, schema } from "@/data/helpers";
 import { createClient } from "@/utils/supabase/server";
-import { createClient as cc2 } from '@supabase/supabase-js'
+import { createClient as cc2 } from '@supabase/supabase-js';
+import moment from 'moment';
 
 export async function GET(_request : NextRequest, {params} : {params : {id: string}}) {
     // check param
     let review_id = params.id;
     try { review_id = checkIsProperString(review_id, 1, true, "query"); }
-    catch (error : any) { return Response.json({success: false, step: "Validate ID", error:`${error}`}); }
+    catch (error : any) { return Response.json({success: false, error:`${error}`}); }
 
-    // get admin client
-    const supabase = cc2(
-        process.env.NEXT_PUBLIC_SUPABASE_URL!,
-        process.env.NEXT_PUBLIC_SUPABASE_ADMIN_KEY!, {
-        auth: {
-          autoRefreshToken: false,
-          persistSession: false
-        }
-    });
+    // get client
+    const supabase = createClient();
 
     // check if review exists
     let review;
     try{
-        const { data } = await supabase
-        .from('post')
+        const { data, error } = await supabase
+        .from('post_user_like')
         .select('*')
         .eq('id', review_id);
-        if (!data || data.length !== 1) return Response.json({success: false, error:`Review not found`});
+        if (!data || data.length !== 1) return Response.json({success: false, message:`Review not found`, error:error});
         review = data[0];
     } catch (error : any) { return Response.json({success: false, error:`1: ${error}`}); }
 
-    // get author info
-    try {
-        const { data, error } = await supabase.auth.admin.getUserById(review.author);
-        if (error) return Response.json({success: false, error:`2: ${error}`});
-        review.author = data.user.user_metadata.username;
-    } catch (error : any) { return Response.json({success: false, error:`3: ${error}`}); }
-
     // edit date info
-    review.created_at = new Date(review.created_at).toDateString();
+    review.created_at = moment(review.created_at).format('MM/DD/YYYY h:mm a');
 
     // get comments
-    try{
-        const { data } = await supabase
-        .from('comment')
+    try {
+        const { data, error } = await supabase
+        .from('comment_user')
         .select('*')
         .eq('post', review_id);
+        if (error) review.error = error;
         review.comments = data;
     } catch (error : any) {}
 
-    // get likes
-    try{
-        let { count, error } = await supabase
-        .from('like')
-        .select('*', { count: 'exact', head: true })
-        .eq('post', review_id);
-        if (count && !error) review.likes = count;
-    } catch (error : any) {}
+    // get is liked
+    const { data } = await supabase.auth.getUser();
+    let user_id;
+    if (data.user && data.user.id) {
+        user_id = data.user.id;
+        const { count, error } = await supabase
+            .from('like')
+            .select('*', { count: 'exact', head: true })
+            .eq('post_id', review_id)
+            .eq('user_id', user_id);
+        if (!error) review.liked = !!count;
+    }
 
     return Response.json({success:true, data:review});
 }

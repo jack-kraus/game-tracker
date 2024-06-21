@@ -5,10 +5,11 @@ import { createClient } from "@/utils/supabase/client";
 interface CommentProps {
     author : string,
     content : string,
-    id : string
+    id : string,
+    username : string
 }
 
-export default function Comment({author, content, id} : CommentProps) {
+export default function Comment({author, content, id, username} : CommentProps) {
     const [editing, setEditing] = useState<boolean>(false);
     const [text, setText] = useState<string>(content);
     const supabase = createClient();
@@ -45,9 +46,8 @@ export default function Comment({author, content, id} : CommentProps) {
     }
 
     let section = <div className="w-full">
-        <cite>{author}</cite>
+        <a href={`/user/${author}`}>{username}</a>
         <p>{text}</p>
-        <p>{id}</p>
     </div>;
     if (editing) {
         section = <form onSubmit={submitEdit} className="flex flex-row w-full">

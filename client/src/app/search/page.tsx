@@ -1,6 +1,6 @@
 "use client"
 
-import GameResult from '@/components/GameResult';
+import GameResult from '@/components/items/GameResult';
 import { range } from '@/data/helpers';
 import {
     useQuery,

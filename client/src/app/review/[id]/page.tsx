@@ -12,6 +12,7 @@ import Stars from "@/components/ui/Stars";
 import { BsHeart, BsHeartFill } from "react-icons/bs";
 import { createClient } from "@/utils/supabase/client";
 import Comment from "@/components/items/Comment";
+import LikeButton from "@/components/ui/LikeButton";
 
 export default function ReviewPage({params} : any) {
     const [updated, setUpdated] = useState(0);
@@ -39,7 +40,6 @@ export default function ReviewPage({params} : any) {
         else update();
     }
     
-    
     if (isPending) return <h1>Pending...</h1>;
     else if (error) return <h1>{error.message}</h1>;
 
@@ -52,13 +52,13 @@ export default function ReviewPage({params} : any) {
                 <img className="w-48" src={data.game_cover} alt={data.game_title + " cover"}/>
                 <cite>{data.game_title}</cite>
             </div>
-            <div>
+            <div className="grow">
                 <h1>{data.title}</h1>
-                <cite>by {data.author} at {data.created_at}</cite>
+                <cite>by {data.username} at {data.created_at}</cite>
                 <p>{data.content}</p>
                 <Stars rating={data.rating}/>
             </div>
-            <div className="flex flex-row justify-end gap-2"><BsHeartFill className={data.liked ? "text-primary" : "text-scale-1000"}/> <p>{data.likes}</p></div>
+            <LikeButton id={id} liked={data.liked} likes={data.likes}/>
         </div>
         <h2 className="text-xl text-scale-100 font-bold">Comments</h2>
         <form className="flex w-full" onSubmit={addReview}>

@@ -2,6 +2,7 @@
 
 import { useState } from "react"
 import { TbDotsVertical } from "react-icons/tb";
+import ClickAwayListener from 'react-click-away-listener';
 
 interface DropdownOption {
     onClick : () => void,
@@ -25,7 +26,7 @@ export default function Dropdown({ options } : { options : DropdownOption[] }) {
         else if (ind === len - 1) return "rounded-b-lg"
     }
 
-    return <div>
+    return <ClickAwayListener onClickAway={() => setOpen(false)}><div>
         <button type="button" onClick={() => setOpen(!open)}><TbDotsVertical/></button>
         {open ? <ul className="z-0 flex flex-col absolute">
             {options.map((item : DropdownOption, ind : number) => <li key={ind}>
@@ -38,5 +39,5 @@ export default function Dropdown({ options } : { options : DropdownOption[] }) {
                 </button>
             </li>)}
         </ul> : <></>}
-    </div>;
+    </div></ClickAwayListener>;
 }

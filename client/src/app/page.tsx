@@ -1,12 +1,20 @@
+"use client";
 import Post from '@/components/items/Post';
-import { createClient } from '@/utils/supabase/server';
+import LoadingHandler from '@/components/ui/LoadingHandler';
+import { useQuery } from '@tanstack/react-query';
 
-export default async function Posts() {
-    const supabase = createClient();
-    const { data } = await supabase.from("post").select("*").order("created_at", { ascending: false });
+export default function Posts() {
+    let query = useQuery({
+        queryKey: ['repoData'],
+        queryFn: () =>
+          fetch(`/api/review`).then((res) =>
+            res.json(),
+          ),
+    });
+    let { data } = query;
 
-    return  <>
+    return  <LoadingHandler {...query}>
         <h1 className="text-scale-0 underline">Feed</h1>
-        {data ? data.map((item, index:number) => <Post key={index} {...{...item, author:"Steve"}}/>) : <p>Pending...</p>}
-    </>;
+        {data ? data.data.map((item : any, index:number) => <Post key={index} {...item}/>) : <></>}
+    </LoadingHandler>;
 }
