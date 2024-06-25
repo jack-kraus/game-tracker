@@ -17,7 +17,7 @@ interface postProps {
     game_cover: string,
     id : number,
     username : string,
-    mine :boolean
+    mine : boolean
 }
 
 export default function Post({ id, title, game, game_title, game_cover, content, rating, created_at, username, author, mine } : postProps) {

@@ -1,4 +1,4 @@
-import { BsPlusLg, BsSearch } from "react-icons/bs";
+import { BsPlusLg } from "react-icons/bs";
 
 export default function Navbar() {
     return (
@@ -8,7 +8,7 @@ export default function Navbar() {
                 <input id="query" name="query" type="text" className="w-100 grow p-2.5 rounded-l-xl ml-4 text-scale-1000 text-base focus:border-black"/>
                 <select name="type" className="bg-scale-800 text-scale-0 p-2.5">
                     <option value="game">Game</option>
-                    <option value="post">Post</option>
+                    <option value="user">User</option>
                 </select>
                 <button type="submit" className="w-150 bg-primary p-2.5 rounded-r-xl ml-0 mr-4 px-6 font-bold text-base">Search</button>
             </form>

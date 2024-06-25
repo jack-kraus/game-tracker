@@ -9,7 +9,7 @@ export default function Profile() {
     const query = useQuery({
         queryKey: ['userProfile'],
         queryFn: () =>
-          fetch(`/api/user/`).then((res) =>
+          fetch(`/api/user/current`).then((res) =>
             res.json()
           ),
     });
