@@ -1,7 +1,5 @@
 "use client";
 
-import { createClient } from "@/utils/supabase/server";
-import { redirect } from "next/navigation";
 import Post from '@/components/items/Post';
 import { useQuery } from '@tanstack/react-query';
 import React from "react";

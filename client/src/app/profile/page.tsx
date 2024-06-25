@@ -1,28 +1,26 @@
-import { createClient } from "@/utils/supabase/server";
-import { redirect } from "next/navigation";
+"use client";
+
 import { logout } from "../../data/actions";
 import Post from '@/components/items/Post';
+import { useQuery } from "@tanstack/react-query";
+import LoadingHandler from "@/components/ui/LoadingHandler";
 
-export default async function Profile() {
-    const supabase = createClient();
-    const { data, error } = await supabase.auth.getUser();
-    let posts;
+export default function Profile() {
+    const query = useQuery({
+        queryKey: ['userProfile'],
+        queryFn: () =>
+          fetch(`/api/user/`).then((res) =>
+            res.json()
+          ),
+    });
+    let { data } = query;
+    if (data) data = data.data;
 
-    if (error || !data?.user) {
-        redirect('/login');
-    }
-    else {
-        posts = await supabase.from("post").select("*").eq("author", data.user.id);
-        posts = posts.data;
-    }
-
-    return <>
-        <h1 className="text-scale-0 underline">Hello {data.user.email}</h1>
-        <form>
-            <button formAction={logout} className='primary-button'>Log-Out</button>
-            <div className="flex flex-col gap-3">
-                {posts ? posts.map((item, index:number) => <Post key={index} {...{...item, author:"Steve"}}/>) : <p>Pending...</p>}
-            </div>
-        </form>
-    </>;
+    return <LoadingHandler {...query}>
+        <h1 className="text-scale-0 underline">{data?.username}'s Page</h1>
+        <button formAction={logout} className='primary-button'>Log-Out</button>
+        <div className="flex flex-col gap-3">
+            {data?.posts ? data.posts.map((item : any, index:number) => <Post key={index} {...item}/>) : <p>No posts</p>}
+        </div>
+    </LoadingHandler>;
 }

@@ -14,7 +14,6 @@ export async function GET(_request : NextApiRequest) {
         const { data, error } = await supabase
             .from('post_user_like')
             .select('*');
-        console.log(data)
         if (!data || error ) return Response.json({success: false, error:`Server Error`, object:error});
         reviews = data;
     } catch (error : any) { return Response.json({success: false, error:`1: ${error}`}); }

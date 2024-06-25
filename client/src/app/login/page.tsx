@@ -1,7 +1,6 @@
 'use client';
 import { useState } from "react";
-import { login, signup } from "../../data/actions";
-import { LoginForm, SignupForm } from "@/components/LoginForm";
+import { LoginForm, SignupForm } from "@/components/form/LoginForm";
 
 enum FormState {
     Login,
@@ -11,7 +10,6 @@ enum FormState {
 export default function Login() {
     const [state, setState] = useState(FormState.Login);
     
-
     const form_content = state === FormState.Login ? <LoginForm/> : <SignupForm/>;
     return <>
         <div>

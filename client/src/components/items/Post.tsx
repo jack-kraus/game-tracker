@@ -16,10 +16,11 @@ interface postProps {
     game_title: string,
     game_cover: string,
     id : number,
-    username : string
+    username : string,
+    mine :boolean
 }
 
-export default function Post({ id, title, game, game_title, game_cover, content, rating, created_at, username, author } : postProps) {
+export default function Post({ id, title, game, game_title, game_cover, content, rating, created_at, username, author, mine } : postProps) {
     const router = useRouter();
 
     async function deletePost() {
@@ -50,10 +51,10 @@ export default function Post({ id, title, game, game_title, game_cover, content,
                 <br/>
                 {moment(created_at).format("MM/DD/YY h:mm")}
             </cite>
-            <Dropdown options={[
+            {mine ? <Dropdown options={[
                 { label : "Edit Post", onClick : () => alert("Edit!") },
                 { label : "Delete Post", onClick : deletePost }
-            ]}/>
+            ]}/> : <></>}
         </article>
     );
 }

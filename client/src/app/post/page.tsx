@@ -26,7 +26,7 @@ export default function Post({searchParams} : any) {
     const router = useRouter();
 
     async function postForm(form_data : any) {
-        if (!value || !value.id) { return setError("rating", { message: "Game must be supplued" }); }
+        if (!value || !value.id) { return setError("rating", { message: "Game must be supplied" }); }
         let response : any = {};
         try {
             const url = `/api/game/${value.id}/reviews`;

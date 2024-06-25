@@ -2,7 +2,6 @@
 import { NextRequest } from "next/server";
 import { checkIsProperString, schema } from "@/data/helpers";
 import { createClient } from "@/utils/supabase/server";
-import { createClient as cc2 } from '@supabase/supabase-js';
 import moment from 'moment';
 
 export async function GET(_request : NextRequest, {params} : {params : {id: string}}) {
@@ -50,6 +49,9 @@ export async function GET(_request : NextRequest, {params} : {params : {id: stri
             .eq('user_id', user_id);
         if (!error) review.liked = !!count;
     }
+
+    // get is mine
+    review.mine = review_id == user_id;
 
     return Response.json({success:true, data:review});
 }
