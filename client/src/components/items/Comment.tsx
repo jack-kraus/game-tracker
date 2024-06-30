@@ -1,6 +1,7 @@
 import { useState } from "react";
 import Dropdown from "../ui/Dropdown";
 import { createClient } from "@/utils/supabase/client";
+import { useUser } from "@/context/AuthProvider";
 
 interface CommentProps {
     author : string,
@@ -9,39 +10,49 @@ interface CommentProps {
     username : string
 }
 
+enum CommentState {
+    normal,
+    editing,
+    loading
+}
+
 export default function Comment({author, content, id, username} : CommentProps) {
-    const [editing, setEditing] = useState<boolean>(false);
+    const [state, setState] = useState(CommentState.normal);
     const [text, setText] = useState<string>(content);
     const supabase = createClient();
+    const {session} = useUser();
 
     async function submitDelete() {
+        setState(CommentState.loading);
         const { error, data } = await supabase
             .from('comment')
             .delete()
-            .eq('id', 1).select();
-        if (error || !data.length) alert("Error Deleting");
+            .eq('id', id).select();
+        setState(CommentState.normal);
+        if (error || !data.length) {
+            alert("Error Deleting");
+        }
         else alert("Success");
     }
 
     async function submitEdit(e : any) {
+        setState(CommentState.loading);
         e.preventDefault();
         
         const old_content = text;
         const new_content = e.target.content.value;
-        
-        setText(new_content);
-        setEditing(false);
 
         const { error, data } = await supabase
             .from('comment')
             .update({ content: new_content })
-            .eq('id', 1).select();
-        if (error) {
+            .eq('id', id).select();
+        if (error || !data.length) {
             setText(old_content);
             alert(`Error performing update: ${error}`);
         }
         else {
-            console.log(data);
+            setText(new_content);
+            setState(CommentState.normal);
         }
     }
 
@@ -49,18 +60,18 @@ export default function Comment({author, content, id, username} : CommentProps) 
         <a href={`/user/${author}`}>{username}</a>
         <p>{text}</p>
     </div>;
-    if (editing) {
+    if (state === CommentState.editing || state === CommentState.loading) {
         section = <form onSubmit={submitEdit} className="flex flex-row w-full">
-            <textarea name="content" className="w-full input-box rounded-r-none" defaultValue={text}/>
-            <button type="submit" className="h-full rounded-l-none primary-button">Submit</button>
+            <textarea name="content" className="w-full input-box rounded-r-none" disabled={state === CommentState.loading} defaultValue={text}/>
+            <button type="submit" className="h-full rounded-l-none primary-button" disabled={state === CommentState.loading}>Submit</button>
         </form>;
     }
 
     return <div className="w-full rounded-xl bg-scale-800 text-scale-0 p-3 flex flex-row gap-3 drop-shadow-md">
         {section}
-        <Dropdown options={[
-            { label : "Edit Comment", onClick : () => setEditing(!editing) },
+        {session?.user?.id === author && <Dropdown options={[
+            { label : "Edit Comment", onClick : () => setState(CommentState.editing) },
             { label : "Delete Comment", onClick : submitDelete }
-        ]}/>
+        ]}/>}
     </div>;
 }

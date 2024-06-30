@@ -54,6 +54,6 @@ export default function ReviewPage({params} : any) {
             <textarea name="content" className="w-full input-box rounded-r-none min-h-12" rows={3} required/>
             <button className="primary-button rounded-l-none">Submit</button>
         </form>
-        {data?.comments ? data.comments.map((item : any) => <Comment {...item}/>) : <></>}
+        {data?.comments && data.comments.map((item : any) => <Comment {...item}/>)}
     </LoadingHandler>;
 }

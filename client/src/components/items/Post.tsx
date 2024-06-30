@@ -3,7 +3,7 @@
 import { useRouter } from "next/navigation";
 import Dropdown from "@/components/ui/Dropdown";
 import Stars from "@/components/ui/Stars";
-import LikeButton from "../ui/LikeButton";
+import React from "react";
 import moment from 'moment';
 
 interface postProps {
@@ -17,10 +17,10 @@ interface postProps {
     game_cover: string,
     id : number,
     username : string,
-    mine : boolean
+    user_id : string
 }
 
-export default function Post({ id, title, game, game_title, game_cover, content, rating, created_at, username, author, mine } : postProps) {
+export default function Post({ id, title, game, game_title, game_cover, content, rating, created_at, username, author, user_id } : postProps) {
     const router = useRouter();
 
     async function deletePost() {
@@ -51,8 +51,8 @@ export default function Post({ id, title, game, game_title, game_cover, content,
                 <br/>
                 {moment(created_at).format("MM/DD/YY h:mm")}
             </cite>
-            {mine ? <Dropdown options={[
-                { label : "Edit Post", onClick : () => alert("Edit!") },
+            {user_id === author ? <Dropdown options={[
+                { label : "Edit Post", onClick : () => router.push(`/review/${id}/edit`) },
                 { label : "Delete Post", onClick : deletePost }
             ]}/> : <></>}
         </article>

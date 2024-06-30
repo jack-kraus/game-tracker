@@ -9,6 +9,6 @@ export default function Post({searchParams} : any) {
 
     return <>
         <GameSearch val={[value, setValue]}/>
-        <PostSubmit game_id={value?.id ?? 0}/>
+        <PostSubmit game_id={value && value.id ? value.id : undefined}/>
     </>;
 }

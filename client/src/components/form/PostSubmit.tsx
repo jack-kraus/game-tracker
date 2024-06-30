@@ -6,30 +6,42 @@ import { FormProvider, useForm } from "react-hook-form";
 import { BsStarFill } from "react-icons/bs";
 import hook from "@/data/hook_options";
 import { useRouter } from 'next/navigation';
+import { useState } from "react";
+import { ThreeDots } from "react-loader-spinner";
 
-export default function PostSubmit({game_id} : {game_id : number}) {
-    const methods = useForm();
+interface PostSubmit {
+    content : string,
+    title : string,
+    rating : number
+}
+
+export default function PostSubmit({game_id, review_id, defaultValues} : {game_id? : number, review_id?: string, defaultValues? : any}) {
+    defaultValues = defaultValues ? defaultValues : {};
+    const [loading, setLoading] = useState(false);
+    const methods = useForm({ defaultValues });
     const { watch, setError, handleSubmit } = methods;
     const router = useRouter();
 
     async function postForm(form_data : any) {
+        setLoading(true);
         if (!game_id) { return setError("rating", { message: "Game must be supplied" }); }
         let response : any = {};
         try {
-            const url = `/api/game/${game_id}/reviews`;
+            const url = review_id ? `/api/review/${review_id}` : `/api/game/${game_id}/reviews`;
             console.log(url);
             const data = await fetch(url, {
-                method: "POST",
+                method: review_id ? "PATCH" : "POST",
                 body: JSON.stringify({...form_data, game: game_id}),
                 headers: {
                     'Content-Type': 'application/json'
                 }
             }).then((res) => res.json());
             response = data;
-        } catch (e) { return setError("rating", { message: `${e}` }); }
+        } catch (e) { setLoading(false); return setError("rating", { message: `${e}` }); }
 
         if (!response.success) {
             setError("content", { type:"server", message:`${response.error}`});
+            setLoading(false);
         }
         else {
             router.push("/profile");
@@ -70,7 +82,9 @@ export default function PostSubmit({game_id} : {game_id : number}) {
             />
             <PurpleGradient/>            
             <div className="flex flex-row p-0">{[...Array(5)].map((_, ind) => starClass(ind))}</div>
-            <button type="submit" className='primary-button'>Submit</button>
+            <div className="flex w-full items-center gap-3">
+                <button type="submit" className='primary-button grow' disabled={loading}>{review_id ? "Edit Review" : "Submit"}</button> {loading ? <ThreeDots color="white" width={20} height={20}/> : <></>}
+            </div>
         </form>
     </FormProvider>;
 }

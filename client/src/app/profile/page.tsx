@@ -26,7 +26,7 @@ export default function Profile() {
         <button onClick={() => {logout()}} className='primary-button'>Log-Out</button>
         <button onClick={() => {router.push("/profile/edit")}} className='primary-button'>Edit-Profile</button>
         <div className="flex flex-col gap-3">
-            {data?.posts ? data.posts.map((item : any, index:number) => <Post key={index} {...item}/>) : <p>No posts</p>}
+            {data?.posts ? data.posts.map((item : any, index:number) => <Post key={index} {...item} user_id={data.id}/>) : <p>No posts</p>}
         </div>
     </LoadingHandler>;
 }

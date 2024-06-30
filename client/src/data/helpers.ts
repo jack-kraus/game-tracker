@@ -64,5 +64,12 @@ const reviewSchema = yup.object({
     author: yup.string().trim().required(),
 });
 
+const reviewEditSchema = yup.object({
+    title: yup.string().trim().required(),
+    content: yup.string().trim().required(),
+    rating: yup.number().min(0).max(10).required()
+});
+
+
 export const validation = { checkIsProperString, checkIsProperEmail, checkIsProperPassword, checkIsFilledString };
-export const schema = { reviewSchema };
+export const schema = { reviewSchema, reviewEditSchema };

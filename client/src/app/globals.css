@@ -24,7 +24,7 @@ html {
   }
 
   .primary-button {
-    @apply bg-primary p-2.5 rounded-xl px-6 font-bold text-base text-white hover:text-scale-100 active:bg-scale-1000 active:text-primary
+    @apply bg-primary p-2.5 rounded-xl px-6 font-bold text-base text-white hover:text-scale-100 active:bg-scale-1000 active:text-primary disabled:bg-scale-500 disabled:text-scale-1000
   }
 
   .input-box {

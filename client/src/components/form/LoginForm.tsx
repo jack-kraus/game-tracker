@@ -5,16 +5,6 @@ import hook from "@/data/hook_options";
 import Input from "./Input";
 import { useState } from "react";
 
-function loadingWrapper(submitFunction) {
-    const [loading, setLoading] = useState(false);
-    const func = async (data : any) => {
-        setLoading(true);
-        await submitFunction(data);
-        setLoading(false);
-    }
-    return [loading, func];
-}
-
 export function LoginForm() {
     const methods = useForm();
     const { handleSubmit, setError } = methods;
@@ -31,25 +21,28 @@ export function LoginForm() {
         }
     }
 
-    return <FormProvider {...methods}>
-        <form className='flex flex-col gap-3 box-item' noValidate onSubmit={handleSubmit(onSubmit)}>
-            <Input
-                label="Email"
-                id="email"
-                type="email"
-                placeholder="name@url.com"
-                hookOptions={hook.email_validation("Email")}
-            />
-            <Input
-                label="Password"
-                id="password"
-                type="password"
-                placeholder="Password"
-                hookOptions={hook.required_validation("Password")}
-            />
-            <button type="submit" className='primary-button'>{`Login${loading ? "..." : ""}`}</button>
-        </form>
-    </FormProvider>
+    return <>
+        <FormProvider {...methods}>
+            <form className='flex flex-col gap-3 box-item' noValidate onSubmit={handleSubmit(onSubmit)}>
+                <Input
+                    label="Email"
+                    id="email"
+                    type="email"
+                    placeholder="name@url.com"
+                    hookOptions={hook.email_validation("Email")}
+                />
+                <Input
+                    label="Password"
+                    id="password"
+                    type="password"
+                    placeholder="Password"
+                    hookOptions={hook.required_validation("Password")}
+                />
+                <button type="submit" className='primary-button'>{`Login${loading ? "..." : ""}`}</button>
+            </form>
+        </FormProvider>
+        
+    </>
 }
 
 export function SignupForm() {

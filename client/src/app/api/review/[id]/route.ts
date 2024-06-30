@@ -90,3 +90,35 @@ export async function DELETE(_request : NextRequest, {params} : {params : {id: s
     // return success
     return Response.json({success:true});
 }
+
+export async function PATCH(request : NextRequest, {params} : {params : {id: string}}) {
+    // check param
+    let review_id = params.id;
+    try { review_id = checkIsProperString(review_id, 1, true, "query"); }
+    catch (error : any) { return Response.json({success: false, error:`${error}`}); }
+
+    // validate body
+    let body = await request.json();
+    try { body = await schema.reviewEditSchema.validate(body); }
+    catch (error : any) { return Response.json({success: false, error:`${error}`}); }
+
+    // get client
+    const supabase = createClient();
+
+    // update
+    try {
+        console.log(body);
+        const { data, error } = await supabase
+            .from('post')
+            .update(body)
+            .eq('id', review_id)
+            .select();
+        if (error) throw error;
+        else if (!data || !data[0]) throw "Update unsuccessful";
+    }
+    catch(error : any) { return Response.json({success: false, error:`${error}`}); }
+
+    // if didn't get data return error
+    console.log("updated");
+    return Response.json({success:true});
+}
