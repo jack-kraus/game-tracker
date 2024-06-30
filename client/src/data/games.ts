@@ -22,19 +22,16 @@ async function searchGames(query : string, limit : number) {
 }
 
 async function searchGameById(id : string) {
-    let response;
-    response = await fetch(
+    let response = await axios.post(
         "https://api.igdb.com/v4/games/",
-        {
-            method: "POST",
-            body: `fields id, name, summary, cover.image_id, first_release_date, genres.name, platforms.name; where id = ${id}; limit 1;`,
-            headers: header_func()
-        }
-    ).then((res) => res.json());
+        `fields id, name, summary, cover.image_id, first_release_date, genres.name, platforms.name; where id = ${id}; limit 1;`,
+        {headers:headers}
+    );
+    let data = response.data as any[];
 
-    if (response.length === 0) throw "No Results found";
+    if (data.length === 0) throw "No Results found";
     
-    const result = response[0];
+    const result = data[0];
     if (result.cover) result.cover = `https://images.igdb.com/igdb/image/upload/t_cover_big/${result.cover.image_id}.jpg`;
     if (result.genres) result.genres = result.genres.map((item : {id: number, name: string}) => item.name).filter((item : string | undefined) => item);
     if (result.platforms) result.platforms = result.platforms.map((item : {id: number, name: string}) => item.name).filter((item : string | undefined) => item);

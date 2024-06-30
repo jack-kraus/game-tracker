@@ -1,4 +1,4 @@
-'use server'
+'use server';
 
 import { revalidatePath } from 'next/cache';
 import { redirect } from 'next/navigation';
@@ -44,22 +44,20 @@ export async function signup(formData: RegisterData) {
   // type-casting here for convenience
   // in practice, you should validate your inputs
   const { email, password, username } = formData;
-  const data = {
+  const insert = {
     email: email,
-    password: password,
-    options: {
-      data: {
-        username: username
-      }
-    }
+    password: password
   }
 
-  const { error } = await supabase.auth.signUp(data)
+  // insert new user
+  const { data, error } = await supabase.auth.signUp(insert);
+  if (error || !data) { throw error; }
 
-  if (error) {
-    throw error;
-  }
+  // insert into profile
+  const {error:error2} = await supabase.from("profile").insert({username:username});
+  if (error2) { throw error2; }
 
+  // return
   revalidatePath('/', 'layout')
   redirect('/profile')
 }

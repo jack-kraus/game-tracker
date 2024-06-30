@@ -13,8 +13,10 @@ export default function Posts() {
     });
     let { data } = query;
 
-    return  <LoadingHandler {...query}>
-        <h1 className="text-scale-0 underline">Feed</h1>
+    return  <>
+      <h1 className="text-scale-0 underline">Feed</h1>
+      <LoadingHandler {...query}>
         {data ? data.data.map((item : any, index:number) => <Post key={index} {...item}/>) : <></>}
-    </LoadingHandler>;
+      </LoadingHandler>
+    </>;
 }

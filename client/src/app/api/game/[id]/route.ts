@@ -14,5 +14,5 @@ export async function GET(_request : NextRequest , {params} : {params : {id: str
   try { results = await searchGameById(id); }
   catch (error : any) { return Response.json({success: false, error:`${error}`}); }
   
-  return Response.json({success:true, results});
+  return Response.json({success:true, results: results});
 }

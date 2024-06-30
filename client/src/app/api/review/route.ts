@@ -2,9 +2,12 @@ import { NextRequest } from "next/server";
 import { checkIsProperString, schema } from "@/data/helpers";
 import { createClient } from "@/utils/supabase/server";
 import moment from 'moment';
-import { NextApiRequest } from "next";
+import Yup from 'yup';
 
-export async function GET(_request : NextApiRequest) {
+export async function GET(request : NextRequest) {
+    // get search params
+    let filter = request.nextUrl.searchParams.get("filter");
+    
     // get client
     const supabase = createClient();
 
@@ -12,8 +15,9 @@ export async function GET(_request : NextApiRequest) {
     let reviews;
     try{
         const { data, error } = await supabase
-            .from('post_user_like')
-            .select('*');
+            .from("post_user_like")
+            .select('*')
+            .range(0,10);
         if (!data || error ) return Response.json({success: false, error:`Server Error`, object:error});
         reviews = data;
     } catch (error : any) { return Response.json({success: false, error:`1: ${error}`}); }
