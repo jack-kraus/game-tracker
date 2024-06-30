@@ -2,6 +2,8 @@
 import Post from '@/components/items/Post';
 import LoadingHandler from '@/components/ui/LoadingHandler';
 import { useInfiniteQuery, useQuery } from '@tanstack/react-query';
+import { useEffect } from 'react';
+import {BottomScrollListener} from 'react-bottom-scroll-listener';
 
 export default function Posts() {
     const fetchReviews = async ({ pageParam }) => {
@@ -27,9 +29,9 @@ export default function Posts() {
 
     let posts = data && data.pages ? data.pages.map((item) => item.data).flat() : undefined;
 
-    return  <>
+    return  <LoadingHandler bypass={true} isPending={status==="pending"} error={error}>
       <h1 className="text-scale-0 underline">Feed</h1>
-      {posts ? posts.map((item : any, index:number) => <Post key={index} {...item}/>) : <></>}
+      {posts && posts.map((item : any, index:number) => <Post key={index} {...item}/>)}
       <button
           onClick={() => fetchNextPage()}
           disabled={!hasNextPage || isFetchingNextPage}
@@ -40,7 +42,8 @@ export default function Posts() {
               ? 'Load More'
               : 'Nothing more to load'}
         </button>
-    </>;
+        <BottomScrollListener onBottom={() => { if (hasNextPage) {fetchNextPage();} }} triggerOnNoScroll={true}/>
+    </LoadingHandler>;
 }
 
 /* */
