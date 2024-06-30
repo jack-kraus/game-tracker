@@ -29,21 +29,18 @@ export default function Posts() {
 
     let posts = data && data.pages ? data.pages.map((item) => item.data).flat() : undefined;
 
-    return  <LoadingHandler bypass={true} isPending={status==="pending"} error={error}>
+    return  <>
       <h1 className="text-scale-0 underline">Feed</h1>
-      {posts && posts.map((item : any, index:number) => <Post key={index} {...item}/>)}
-      <button
-          onClick={() => fetchNextPage()}
-          disabled={!hasNextPage || isFetchingNextPage}
-        >
+      <LoadingHandler bypass={true} isPending={status==="pending"} error={error}>
+        {posts && posts.map((item : any, index:number) => <Post key={index} {...item}/>)}
+        <p className='text-scale-0'>
           {isFetchingNextPage
             ? 'Loading more...'
             : hasNextPage
               ? 'Load More'
               : 'Nothing more to load'}
-        </button>
-        <BottomScrollListener onBottom={() => { if (hasNextPage) {fetchNextPage();} }} triggerOnNoScroll={true}/>
-    </LoadingHandler>;
+        </p>
+        <BottomScrollListener onBottom={() => { if (hasNextPage) { fetchNextPage() } }} triggerOnNoScroll={true}/>
+      </LoadingHandler>
+    </>;
 }
-
-/* */
