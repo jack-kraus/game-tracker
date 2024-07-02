@@ -11,4 +11,14 @@ async function validateReview(review : any) {
     return review;
 }
 
+interface Options {
+    game : string,
+    title : string,
+    author : string,
+    order : string
+}
+async function get_reviews(supabase: SupabaseClient, options : Options) {
+
+}
+
 export default { validateReview }

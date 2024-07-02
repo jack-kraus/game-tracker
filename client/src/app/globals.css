@@ -19,16 +19,20 @@ html {
     hover:text-gray-950 hover:bg-scale-0 hover:rounded-xl transition-all;
   }
 
+  .link-item {
+    @apply hover:text-primary active:text-white transition-colors hover:underline;
+  }
+
   .box-item {
     @apply w-full rounded-xl bg-scale-800 text-scale-0 p-3 m-0 flex flex-row drop-shadow-md
   }
 
   .primary-button {
-    @apply bg-primary p-2.5 rounded-xl px-6 font-bold text-base text-white hover:text-scale-100 active:bg-scale-1000 active:text-primary disabled:bg-scale-500 disabled:text-scale-1000
+    @apply bg-primary p-2.5 rounded-xl px-6 font-bold text-base text-white hover:bg-secondary hover:text-scale-100 active:bg-scale-1000 active:text-primary disabled:bg-scale-500 disabled:text-scale-1000 transition-colors
   }
 
   .input-box {
-    @apply grow p-2 rounded-lg text-scale-1000 text-base focus:border-black
+    @apply grow p-2 rounded-lg text-scale-1000 text-base focus:outline-none focus:border-primary focus:bg-scale-100 border-2
   }
 }
 

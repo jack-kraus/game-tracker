@@ -12,6 +12,20 @@ const email_validation = (label:string) => {
     }
 };
 
+const username_validation = (label:string) => {
+    return {
+        required: {
+            value: true,
+            message: `${label} is required`
+        },
+        validate: (val: string) => {
+            if (val.match(/[ ]/)) return `${label} can't contain any spaces`;
+            else if (!val.match(/[-'/`~!#*$@_%+=.,^&(){}[\]|;:”<>?\\]/)) return `${label} can't contain any special characters`;
+        },
+        setValueAs: (v:string) => v.trim()
+    }
+};
+
 const password_validation = (label:string) => {
     return {
         required: {
@@ -65,4 +79,4 @@ const range_validation = (label:string, min:number, max:number) => {
     }
 };
 
-export default {email_validation, password_validation, confirm_password_validation, required_validation, range_validation};
+export default {email_validation, password_validation, confirm_password_validation, required_validation, range_validation, username_validation};

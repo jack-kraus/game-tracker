@@ -61,7 +61,7 @@ const reviewSchema = yup.object({
     game: yup.string().trim().required(),
     game_cover: yup.string().trim().url().required(),
     game_title: yup.string().trim().required(),
-    author: yup.string().trim().required(),
+    author: yup.string().trim().uuid().required(),
 });
 
 const reviewEditSchema = yup.object({
@@ -70,6 +70,7 @@ const reviewEditSchema = yup.object({
     rating: yup.number().min(0).max(10).required()
 });
 
+const uuidSchema = yup.string().trim().required().uuid();
 
 export const validation = { checkIsProperString, checkIsProperEmail, checkIsProperPassword, checkIsFilledString };
-export const schema = { reviewSchema, reviewEditSchema };
+export const schema = { reviewSchema, reviewEditSchema, uuidSchema };

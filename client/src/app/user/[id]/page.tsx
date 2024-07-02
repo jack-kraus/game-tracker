@@ -1,33 +1,38 @@
-"use client";
-
-import Post from '@/components/items/Post';
-import { useQuery } from '@tanstack/react-query';
 import React from "react";
 import FollowButton from "@/components/ui/FollowButton";
-import LoadingHandler from "@/components/ui/LoadingHandler";
-import { useUser } from '@/context/AuthProvider';
+import InfiniteScroller from '@/components/ui/InfiniteScroller';
+import {getUserByIdServer} from "@/data/users";
+import { schema } from "@/data/helpers";
+import { TbUser } from "react-icons/tb";
 
-export default function Profile({params} : any) {
-    const {session} = useUser();
-
+export default async function Profile({params} : any) {
     let { id } = params;
-    if (!id) return <h1>Improper ID</h1>;
-    
-    const query = useQuery({
-        queryKey: ['userProfile'],
-        queryFn: () =>
-          fetch(`/api/user/${id}`).then((res) =>
-            res.json()
-          ),
-    });
-    let { data } = query;
-    if (data) data = data.data;
+    try { id = await schema.uuidSchema.validate(id); }
+    catch (error) { return <h1>Improper ID</h1>; }
+    const data = await getUserByIdServer(id);
 
-    return <LoadingHandler {...query}>
-        <h1 className="text-scale-0 underline">{data?.username}'s Page</h1>
-        {session?.user?.id && session?.user?.id !== id && <FollowButton id={id} following={data?.following}/>}
-        <div className="flex flex-col gap-3">
-            {data?.posts ? data.posts.map((item : any, index:number) => <Post key={index} {...item}/>) : <p>No posts</p>}
+    return <>
+        <div className="box-item flex-col w-1/3 gap-3 items-center">
+            <h1 className="text-scale-0 underline">{data?.username}'s Page</h1>
+            <TbUser className="border-opacity-25 transition-all bg-scale-500 p-2 rounded-full flex justify-center items-center" size={80} color="white"/>
+            <table className="table-fixed border-spacing-2 text-scale-0 w-3/4">
+                <thead>
+                    <tr>
+                        <th>Followers</th>
+                        <th>Following</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <th>{data?.followers}</th>
+                        <th>{data?.following}</th>
+                    </tr>
+                </tbody>
+            </table>
+            <FollowButton id={id} following={data?.is_following}/>
         </div>
-    </LoadingHandler>;
+        <InfiniteScroller title="Top Posts" type="post_user" options={{
+            author : id,
+        }}/>
+    </>;
 }

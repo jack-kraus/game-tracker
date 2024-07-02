@@ -5,10 +5,9 @@ import { checkIsProperString } from "./helpers";
 async function searchGames(query : string, limit : number) {
     query = checkIsProperString(query, 1, true, "query");
     
-    let response;
-    response = await axios.post(
+    let response = await axios.post(
         "https://api.igdb.com/v4/games/",
-        `search "${query}"; fields id, name, summary, cover.image_id, first_release_date; limit ${limit};`,
+        `search "${query}"; fields id, name, summary, cover.image_id, first_release_date; where version_parent = null & category = 0; limit ${limit};`,
         {headers:headers}
     );
     

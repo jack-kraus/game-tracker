@@ -1,17 +1,8 @@
 import { NextRequest } from "next/server";
 import { createClient } from "@/utils/supabase/server";
-import { createClient as cc2 } from '@supabase/supabase-js';
 
 export async function GET(_request : NextRequest) {
     // get admin andf regular client
-    const supabase = cc2(
-        process.env.NEXT_PUBLIC_SUPABASE_URL!,
-        process.env.NEXT_PUBLIC_SUPABASE_ADMIN_KEY!, {
-        auth: {
-          autoRefreshToken: false,
-          persistSession: false
-        }
-    });
     const supabase_ = createClient();
 
     // get current user
@@ -32,20 +23,10 @@ export async function GET(_request : NextRequest) {
 
     // get posts
     try {
-        const { data } = await supabase_.from("post").select("*").eq("author", user_id);
+        const { data } = await supabase_.from("post").select("*").eq("author", user_id).order('created_at', { ascending: false });
         info.posts = data;
     }
     catch (error : any) { return Response.json({success: false, error:`${error}`}); }
-
-    // get is following
-    try {  
-        const { count, error } = await supabase
-            .from('follower')
-            .select('*', { count: 'exact', head: true })
-            .eq('user_id', user_id);
-        if (error) throw error;
-        info.following = !!count;
-    } catch (error : any) { return Response.json({success: false, error:`${error}`}); }
     
     // return success
     return Response.json({success:true, data:info});

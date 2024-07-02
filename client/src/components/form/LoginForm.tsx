@@ -41,7 +41,6 @@ export function LoginForm() {
                 <button type="submit" className='primary-button'>{`Login${loading ? "..." : ""}`}</button>
             </form>
         </FormProvider>
-        
     </>
 }
 
@@ -61,7 +60,7 @@ export function SignupForm() {
                 id="username"
                 type="text"
                 placeholder="Username"
-                hookOptions={hook.required_validation("Username")}
+                hookOptions={hook.username_validation("Username")}
             />
             <Input
                 label="Email"

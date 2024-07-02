@@ -12,6 +12,7 @@ const config: Config = {
     extend: {
       colors: {
         primary: '#8960FF',
+        secondary: "#ca80ff",
         scale: {
           0: "#e8f5fa",
           100: "#d4dfe6",

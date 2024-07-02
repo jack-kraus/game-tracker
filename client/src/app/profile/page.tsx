@@ -1,32 +1,34 @@
-"use client";
+import InfiniteScroller from "@/components/ui/InfiniteScroller";
+import { getUserServer } from "@/data/users";
+import LogoutButton from "@/components/ui/LogoutButton";
+import { TbUser } from "react-icons/tb";
 
-import { logout } from "@/data/actions";
-import Post from '@/components/items/Post';
-import { useQuery } from "@tanstack/react-query";
-import LoadingHandler from "@/components/ui/LoadingHandler";
-import { useRouter } from 'next/navigation';
+export default async function Profile() {
+    const data = await getUserServer();
 
-export default function Profile() {
-    const query = useQuery({
-        queryKey: ['userProfile'],
-        queryFn: () =>
-          fetch(`/api/user/current`).then((res) =>
-            res.json()
-          ),
-    });
-    const router = useRouter();
-    let { data } = query;
-    if (data) {
-        if (data.error) { router.push("/login"); return <></>; }
-        else { data = data.data; }
-    }
-
-    return <LoadingHandler {...query}>
-        <h1 className="text-scale-0 underline">{data?.username}'s Page</h1>
-        <button onClick={() => {logout()}} className='primary-button'>Log-Out</button>
-        <button onClick={() => {router.push("/profile/edit")}} className='primary-button'>Edit-Profile</button>
-        <div className="flex flex-col gap-3">
-            {data?.posts ? data.posts.map((item : any, index:number) => <Post key={index} {...item} user_id={data.id}/>) : <p>No posts</p>}
+    return <>
+        <div className="box-item flex-col w-1/3 gap-3 items-center">
+            <h1 className="text-scale-0 underline">Hello, {data?.username}</h1>
+            <TbUser className="border-opacity-25 transition-all bg-scale-500 p-2 rounded-full flex justify-center items-center" size={80} color="white"/>
+            <table className="table-fixed border-spacing-2 text-scale-0 w-3/4">
+                <thead>
+                    <tr>
+                        <th>Followers</th>
+                        <th>Following</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <th>{data?.followers}</th>
+                        <th>{data?.following}</th>
+                    </tr>
+                </tbody>
+            </table>
+            <LogoutButton/>
         </div>
-    </LoadingHandler>;
+        <InfiniteScroller title="Top Posts"
+            options={{
+                author : data.id
+        }}/>
+    </>;
 }

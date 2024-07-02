@@ -18,7 +18,7 @@ export default function Input({ label, id, type, placeholder, hookOptions, ...pr
         type,
         placeholder,
         autoComplete:"off",
-        className: "input-box border-2 focus:outline-none " + (thisError ? "border-red-500 border-2 focus:border-red-700 focus:bg-red-100" : "focus:border-primary focus:bg-scale-100"),
+        className: "input-box border-2 focus:outline-none " + (thisError ? "border-red-500 border-2 focus:border-red-700 focus:bg-red-100" : ""),
         ...register(id, hookOptions),
         ...props
     }
@@ -29,3 +29,5 @@ export default function Input({ label, id, type, placeholder, hookOptions, ...pr
         {thisError ? <p className="text-red-500">{thisError as string}</p> : <></>}
     </>;
 }
+
+// 
