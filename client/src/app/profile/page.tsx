@@ -2,9 +2,13 @@ import InfiniteScroller from "@/components/ui/InfiniteScroller";
 import { getUserServer } from "@/data/users";
 import LogoutButton from "@/components/ui/LogoutButton";
 import { TbUser } from "react-icons/tb";
+import { redirect } from "next/navigation";
 
 export default async function Profile() {
     const data = await getUserServer();
+    if (!data) {
+        redirect("/login");
+    }
 
     return <>
         <div className="box-item flex-col w-1/3 gap-3 items-center">
@@ -26,9 +30,13 @@ export default async function Profile() {
             </table>
             <LogoutButton/>
         </div>
-        <InfiniteScroller title="Top Posts"
+        <InfiniteScroller title="Top Posts" type="post_user"
             options={{
                 author : data.id
-        }}/>
+            }}
+            optionSelectors={{
+                order: ["created_at", "likes"]
+            }}
+        />
     </>;
 }

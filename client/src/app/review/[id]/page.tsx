@@ -1,4 +1,4 @@
-"use client";
+"use server";
 import React, { FormEvent, useState } from "react";
 import { useQuery } from '@tanstack/react-query';
 import Stars from "@/components/ui/Stars";
@@ -6,36 +6,32 @@ import { createClient } from "@/utils/supabase/client";
 import Comment from "@/components/items/Comment";
 import LikeButton from "@/components/ui/LikeButton";
 import LoadingHandler from "@/components/ui/LoadingHandler";
+import { getReviewById } from "@/data/reviews";
+import InfiniteScroller from "@/components/ui/InfiniteScroller";
+import { number } from "yup";
 
-export default function ReviewPage({params} : any) {
-    const [updated, setUpdated] = useState(0);
-    const update = () => setUpdated(updated + 1);
+const gameId = number().required().min(0);
+export default async function Review({params} : {params : {id : string}}) {
+    // get starting data
+    let { id } : {id : string | number } = params;
+    try { id = await gameId.validate(id); }
+    catch (error) { return <h1 className="text-red-500">Improper ID</h1>; }
+    let data : any;
+    try { data = await getReviewById(id); }
+    catch (e) { return <h1 className="text-red-500">{e}</h1>; }
     
-    let { id } = params;
-    if (!id) return <h1>Improper ID</h1>;
-
-    const query = useQuery({
-        queryKey: ['repoData', updated],
-        queryFn: () =>
-          fetch(`/api/review/${id}`).then((res) =>
-            res.json()
-          ),
-    });
-    let { data } = query;
-
     const supabase = createClient();
     async function addReview(event : any) {
+        "use server";
         event.preventDefault();
         const content = event.target.content.value;
         const { error } = await supabase
             .from('comment')
-            .insert({ post:id, content:content });
+            .insert({ post: id, content:content });
         if (error) console.log(error);
-        else update();
     }
 
-    if (data) data = data.data;
-    return  <LoadingHandler {...query}>
+    return <>
         <div className="text-white box-item gap-3">
             <div>
                 <img className="w-48" src={data?.game_cover} alt={data?.game_title + " cover"}/>
@@ -54,6 +50,10 @@ export default function ReviewPage({params} : any) {
             <textarea name="content" className="w-full input-box rounded-r-none min-h-12" rows={3} required/>
             <button className="primary-button rounded-l-none">Submit</button>
         </form>
-        {data?.comments && data.comments.map((item : any) => <Comment {...item}/>)}
-    </LoadingHandler>;
+        <InfiniteScroller
+            title="Comments"
+            type="comment"
+            route={`/api/review/${id}/comments`}
+        />
+    </>;
 }

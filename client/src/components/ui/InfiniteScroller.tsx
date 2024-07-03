@@ -7,8 +7,9 @@ import {BottomScrollListener} from 'react-bottom-scroll-listener';
 import GameResult from '../items/GameResult';
 import UserCard from '../items/UserCard';
 import SelectionOptions from '../items/SelectionOptions';
+import Comment from '../items/Comment';
 
-type renderType = "game" | "user" | "post" | "post_game" | "post_user";
+type renderType = "game" | "user" | "post" | "post_game" | "post_user" | "comment";
 
 interface InfiniteScrollerParams {
   route? : string,
@@ -25,6 +26,7 @@ function render(type : renderType, item : any, index : number) {
     case "user": return <UserCard key={index} {...item}/>;
     case "post_game": return <Post key={index} {...item} type="game"/>;
     case "post_user": return <Post key={index} {...item} type="user"/>;
+    case "comment": return <Comment key={index} {...item}/>;
   }
 }
 
