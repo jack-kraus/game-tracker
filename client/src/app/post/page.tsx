@@ -1,14 +1,21 @@
-'use client';
-import GameSearch from "@/components/form/GameSearch";
-import { useState } from "react";
-import PostSubmit from "@/components/form/PostSubmit";
+'use server';
+import PostWrapper from "@/components/other/PostWrapper";
+import { number } from "yup";
+import { searchGameById } from "@/data/games";
+import { getUserServer } from "@/data/users";
+import { redirect } from "next/navigation";
 
-export default function Post({searchParams} : any) {
-    const { name, id } = searchParams;
-    const [value, setValue] = useState(name && id ? {name, id} : null);
-
-    return <>
-        <GameSearch val={[value, setValue]}/>
-        <PostSubmit game_id={value && value.id ? value.id : undefined}/>
-    </>;
+export default async function Post({searchParams} : any) {
+    // redirect if not logged on
+    let user = await getUserServer();
+    if (!user) redirect("/login");
+    
+    // validate id and return default if not
+    let { id } = searchParams;
+    try {
+        id = await number().required().positive().validate(id);
+        const value = await searchGameById(id);
+        return <PostWrapper defaultValue={value}/>;
+    }
+    catch (e) { return <PostWrapper/>; }
 }

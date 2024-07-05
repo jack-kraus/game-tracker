@@ -38,6 +38,7 @@ export default function InfiniteScroller({title, route, options, type, optionSel
   }}
   const [values, setValues] = useState(selectorInitial);
   
+  // set initial options
   options = options ? options : {};
   route = route ? route : '/api/review';
   type = type ? type : "post";
@@ -76,7 +77,7 @@ export default function InfiniteScroller({title, route, options, type, optionSel
             ? 'Load More'
             : 'Nothing more to load'}
       </p>
-      <BottomScrollListener onBottom={() => { if (hasNextPage) { fetchNextPage() } }} triggerOnNoScroll={true}/>
+      <BottomScrollListener onBottom={() => { if (!isFetchingNextPage && hasNextPage) { fetchNextPage() } }} triggerOnNoScroll={true}/>
     </LoadingHandler>
   </>;
 }

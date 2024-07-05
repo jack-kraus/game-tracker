@@ -17,7 +17,7 @@ export async function getUserByIdServer(user_id : string) {
     const supabase = createClient();
     
     // get user data
-    const { data, error } = await supabase.from("profile_follow").select("*").eq("id", user_id).limit(1);
+    const { data, error } = await supabase.from("profile_follow_status").select("*").eq("id", user_id).limit(1);
     if (error || !data || !data[0]) return undefined;
 
     // return data point

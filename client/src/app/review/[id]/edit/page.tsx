@@ -1,6 +1,5 @@
 import PostSubmit from "@/components/form/PostSubmit";
 import { createClient } from "@/utils/supabase/server";
-import { redirect } from "next/navigation";
 
 
 export default async function EditPost({params} : any) {

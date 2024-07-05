@@ -16,7 +16,7 @@ interface PostSubmit {
 }
 
 export default function PostSubmit({game_id, review_id, defaultValues} : {game_id? : number, review_id?: string, defaultValues? : any}) {
-    defaultValues = defaultValues ? defaultValues : {};
+    defaultValues = defaultValues ? { rating : 0, ...defaultValues } : { rating : 0 };
     const [loading, setLoading] = useState(false);
     const methods = useForm({ defaultValues });
     const { watch, setError, handleSubmit } = methods;
@@ -24,7 +24,11 @@ export default function PostSubmit({game_id, review_id, defaultValues} : {game_i
 
     async function postForm(form_data : any) {
         setLoading(true);
-        if (!game_id) { return setError("rating", { message: "Game must be supplied" }); }
+        if (!game_id) { 
+            setLoading(false);
+            setError("rating", { message: "Game must be supplied" });
+            return;
+        }
         let response : any = {};
         try {
             const url = review_id ? `/api/review/${review_id}` : `/api/game/${game_id}/reviews`;

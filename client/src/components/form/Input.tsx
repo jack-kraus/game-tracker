@@ -1,32 +1,34 @@
 import { useFormContext } from "react-hook-form";
 
 interface InputProps {
-    label : string,
+    label? : string,
     id : string,
     type : string,
-    placeholder : string,
+    placeholder? : string,
     hookOptions : {[prop:string] : any},
-    [other:string]: any;
+    inputClass? : string,
+    labelClass? : string,
+    [other:string]: any
 }
 
-export default function Input({ label, id, type, placeholder, hookOptions, ...props } : InputProps) {
+export default function Input({ label, id, type, placeholder, hookOptions, inputClass, labelClass, ...props } : InputProps) {
     const { register, formState: { errors } } = useFormContext();
     const thisError = errors[id] ? errors[id].message : "";
     
     const values = {
         id,
         type,
-        placeholder,
+        placeholder : placeholder ? placeholder : label,
         autoComplete:"off",
-        className: "input-box border-2 focus:outline-none " + (thisError ? "border-red-500 border-2 focus:border-red-700 focus:bg-red-100" : ""),
+        className: "input-box border-2 focus:outline-none " + (thisError ? "border-red-500 border-2 focus:border-red-700 focus:bg-red-100" : "") + (inputClass ? inputClass : ""),
         ...register(id, hookOptions),
         ...props
     }
 
     return <>
-        <label htmlFor={id}>{label}</label>
+        {label && <label htmlFor={id}>{label}</label>}
         {type === "textarea" ? <textarea {...values} /> : <input {...values} />}
-        {thisError ? <p className="text-red-500">{thisError as string}</p> : <></>}
+        {thisError ? <p className={"text-red-500 " + (labelClass ? labelClass : "")}>{thisError as string}</p> : <></>}
     </>;
 }
 

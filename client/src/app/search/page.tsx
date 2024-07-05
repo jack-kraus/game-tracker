@@ -1,6 +1,6 @@
 "use server";
 
-import InfiniteScroller from '@/components/ui/InfiniteScroller';
+import PageScroller from '@/components/ui/PageScroller';
 import { object, string } from 'yup';
 
 const searchSchema = object({
@@ -17,14 +17,14 @@ export default async function Search({searchParams} : any) {
     const { query, type } = searchParams;
 
     if (type==="game") {
-        return <InfiniteScroller
+        return <PageScroller
             title={`Search for "${query}"`}
             route="/api/game"
             type="game"
             options={{query:query}}
         />;
     } else if (type==="user") {
-        return <InfiniteScroller
+        return <PageScroller
             title={`Search for "${query}"`}
             route="/api/user"
             type="user"

@@ -4,6 +4,7 @@ import { useForm, FormProvider } from "react-hook-form";
 import hook from "@/data/hook_options";
 import Input from "./Input";
 import { useState } from "react";
+import { ThreeDots } from "react-loader-spinner";
 
 export function LoginForm() {
     const methods = useForm();
@@ -23,7 +24,7 @@ export function LoginForm() {
 
     return <>
         <FormProvider {...methods}>
-            <form className='flex flex-col gap-3 box-item' noValidate onSubmit={handleSubmit(onSubmit)}>
+            <form className='flex flex-col gap-3 box-item w-full' noValidate onSubmit={handleSubmit(onSubmit)}>
                 <Input
                     label="Email"
                     id="email"
@@ -38,7 +39,9 @@ export function LoginForm() {
                     placeholder="Password"
                     hookOptions={hook.required_validation("Password")}
                 />
-                <button type="submit" className='primary-button'>{`Login${loading ? "..." : ""}`}</button>
+                <div className="flex w-full items-center gap-3">
+                    <button type="submit" disabled={loading} className='primary-button grow'>{`Login${loading ? "..." : ""}`}</button> {loading ? <ThreeDots color="white" width={20} height={20}/> : <></>}
+                </div>
             </form>
         </FormProvider>
     </>
@@ -47,14 +50,19 @@ export function LoginForm() {
 export function SignupForm() {
     const methods = useForm();
     const { watch, setError, handleSubmit } = methods;
+    const [loading, setLoading] = useState(false);
 
     async function onSubmit(data : any) {
+        setLoading(true);
         try { await signup(data); }
-        catch(e) { setError("confirm_password", {type:"server", message: `${e.message ? e.message : e}`}); console.log(e); }
+        catch(e) {
+            setLoading(false);
+            setError("confirm_password", {type:"server", message: `${e.message ? e.message : e}`});
+        }
     }
 
     return <FormProvider {...methods}>
-        <form className='flex flex-col gap-3 box-item' noValidate onSubmit={handleSubmit(onSubmit)}>
+        <form className='flex flex-col gap-3 box-item w-full' noValidate onSubmit={handleSubmit(onSubmit)}>
             <Input
                 label="Username"
                 id="username"
@@ -83,7 +91,9 @@ export function SignupForm() {
                 placeholder="Password"
                 hookOptions={hook.confirm_password_validation("Confirm Password", watch, "password")}
             />
-            <button type="submit" className='primary-button'>Sign-Up</button>
+            <div className="flex w-full items-center gap-3">
+                <button type="submit" disabled={loading} className='primary-button grow'>Sign-Up</button> {loading ? <ThreeDots color="white" width={20} height={20}/> : <></>}
+            </div>
         </form>
     </FormProvider>
 }

@@ -11,7 +11,7 @@ export default async function Profile() {
     }
 
     return <>
-        <div className="box-item flex-col w-1/3 gap-3 items-center">
+        <div className="box-item flex-col gap-3 items-center max-w-xs">
             <h1 className="text-scale-0 underline">Hello, {data?.username}</h1>
             <TbUser className="border-opacity-25 transition-all bg-scale-500 p-2 rounded-full flex justify-center items-center" size={80} color="white"/>
             <table className="table-fixed border-spacing-2 text-scale-0 w-3/4">

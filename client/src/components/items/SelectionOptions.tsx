@@ -16,10 +16,10 @@ export default function SelectionOptions({ optionSelectors, selectionState } : S
 
     return <div className='box-item text-scale-0 w-auto flex flex-row gap-5'>
         {optionSelectors && Object.entries(optionSelectors).map( ([key, value], i : number) =>
-        <div className='flex flex-col'>
+        <div className='flex flex-col' key={i}>
         <p>{key}</p>
         <select onChange={(e) => changeValue(key, e.target.value)} className='input-box'>
-            {value && value.map((name : string, j: number) => <option key={`${i},${j}`}>{name}</option>)}
+            {value && value.map((name : string, j: number) => <option key={`${i}, ${j}`}>{name}</option>)}
         </select>
         </div>)}
     </div>;

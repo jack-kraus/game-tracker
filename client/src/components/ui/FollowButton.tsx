@@ -3,6 +3,7 @@
 import { useUser } from "@/context/AuthProvider";
 import { createClient } from "@/utils/supabase/client";
 import { useState } from "react";
+import { ThreeDots } from "react-loader-spinner";
 
 interface FollowParams {
     id: string,
@@ -19,55 +20,45 @@ export default function FollowButton({id, following} : FollowParams) {
 
     async function deleteFollowing() {
         const { data : { user }} = await supabase.auth.getUser();
-        if (!user || !user.id) return { error: "Not signed in" };
+        if (!user || !user.id) return "Not signed in";
         
-        try {
-            const {error} = await supabase
+        const {error} = await supabase
             .from('follower')
             .delete()
             .eq('user_id', user.id)
             .eq('following', id);
-            if (error) throw error;
-        } catch(error) {
-            return {error : error.message};
-        }
+        if (error) throw error;
     }
 
     async function addFollowing() {
         const { data : { user }} = await supabase.auth.getUser();
-        if (!user || !user.id) return { error: "Not signed in" };
+        if (!user || !user.id) return "Not signed in";
 
-        try {
-            const {error} = await supabase
-                .from('follower')
-                .insert({user_id: user.id, following : id});
-            if (error) throw error;
-        } catch(error) {
-            return {error : error.message};
-        }
+        const {error} = await supabase
+            .from('follower')
+            .insert({user_id: user.id, following : id});
+        if (error) throw error.message;
     }
 
     async function handleFollowing() {
         setLoading(true);
         setError("");
-        
-        let response : any;
-        if (isFollowing) response = await deleteFollowing();
-        else response = await addFollowing();
 
-        const { error } = response;
-        if (!error) setIsFollowing(!isFollowing);
-        else { setError(error); }
+        try {
+            if (isFollowing) { await deleteFollowing(); }
+            else { await addFollowing(); }
+            setIsFollowing(!isFollowing);
+        } catch (e) {
+            setError(e);
+        }
 
         setLoading(false);
     }
 
     if (!session || session?.user?.id === id) return <></>;
-    return <>
-        <button type="button" className="primary-button" onClick={handleFollowing}>
-            {loading ? "Loading... " : ""}
-            {isFollowing ? "Unfollow" : "Follow"}
-        </button>
+    return <div className="flex flex-row gap-2 items-center">
+        <button type="button" onClick={handleFollowing} disabled={loading} className='primary-button'>{isFollowing ? "Unfollow" : "Follow"}</button>
+        {loading && <ThreeDots color="white" width={20} height={20}/>}
         {error && <p className="text-red-500">{error}</p>}
-    </>;
+    </div>;
 }

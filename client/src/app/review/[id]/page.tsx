@@ -1,14 +1,13 @@
 "use server";
 import React, { FormEvent, useState } from "react";
-import { useQuery } from '@tanstack/react-query';
 import Stars from "@/components/ui/Stars";
 import { createClient } from "@/utils/supabase/client";
-import Comment from "@/components/items/Comment";
 import LikeButton from "@/components/ui/LikeButton";
-import LoadingHandler from "@/components/ui/LoadingHandler";
 import { getReviewById } from "@/data/reviews";
 import InfiniteScroller from "@/components/ui/InfiniteScroller";
 import { number } from "yup";
+import CommentForm from "@/components/form/CommentForm";
+import { getUserServer } from "@/data/users";
 
 const gameId = number().required().min(0);
 export default async function Review({params} : {params : {id : string}}) {
@@ -19,17 +18,9 @@ export default async function Review({params} : {params : {id : string}}) {
     let data : any;
     try { data = await getReviewById(id); }
     catch (e) { return <h1 className="text-red-500">{e}</h1>; }
-    
-    const supabase = createClient();
-    async function addReview(event : any) {
-        "use server";
-        event.preventDefault();
-        const content = event.target.content.value;
-        const { error } = await supabase
-            .from('comment')
-            .insert({ post: id, content:content });
-        if (error) console.log(error);
-    }
+
+    // get current user
+    const user = await getUserServer();
 
     return <>
         <div className="text-white box-item gap-3">
@@ -45,11 +36,7 @@ export default async function Review({params} : {params : {id : string}}) {
             </div>
             <LikeButton id={id} liked={data?.liked} likes={data?.likes}/>
         </div>
-        <h2 className="text-xl text-scale-100 font-bold">Comments</h2>
-        <form className="flex w-full" onSubmit={addReview}>
-            <textarea name="content" className="w-full input-box rounded-r-none min-h-12" rows={3} required/>
-            <button className="primary-button rounded-l-none">Submit</button>
-        </form>
+        {user && <CommentForm id={id}/>}
         <InfiniteScroller
             title="Comments"
             type="comment"

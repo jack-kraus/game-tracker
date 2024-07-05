@@ -5,7 +5,7 @@ interface GameDict {
     name : string,
     id : string,
     cover? : string,
-    first_release_date : string
+    first_release_date? : string
 }
 
 type Game = GameDict | null;
@@ -38,7 +38,6 @@ export default function GameSearch({ val } : {val : Val}) {
     if (value) return <h1 className="text-scale-0" onClick={() => setValue(null)}>Review for: {value.name}</h1>;
     else {
         return <div className="w-full">
-            <p className="text-white">Can Run: {canRun ? "true" : "false"}</p>
             <input
                 onFocus={()=>setFocused(true)}
                 onBlur={()=>setTimeout(() => setFocused(false), 150)}
@@ -59,7 +58,7 @@ export default function GameSearch({ val } : {val : Val}) {
                         className="bg-scale-0 w-1/2 hover:bg-scale-300 flex flex-row p-2 items-center gap-3"
                     >
                         <img src={item.cover} className="w-8"></img>
-                        <p className="truncate">{item.name} {"(" + item.first_release_date + ")"}</p>
+                        <p className="truncate">{item.name} {item.first_release_date ? "(" + item.first_release_date + ")" : ""}</p>
                     </button>
                 </li>)}
             </ul> : <></>}

@@ -1,9 +1,10 @@
 "use client";
 
+import { useUser } from "@/context/AuthProvider";
 import { createClient } from "@/utils/supabase/client";
 import { useState } from "react";
-import { BsHeartFill, BsStarFill } from "react-icons/bs";
-import { Grid, RotatingLines } from "react-loader-spinner";
+import { BsHeartFill } from "react-icons/bs";
+import { Grid } from "react-loader-spinner";
 
 interface LikeParams {
     id: number,
@@ -15,6 +16,7 @@ export default function LikeButton({id, liked, likes} : LikeParams) {
     const [isLiked, setIsLiked] = useState(liked);
     const [loading, setLoading] = useState(false);
 
+    const {session} = useUser();
     const supabase = createClient();
 
     async function deleteLiked() {
@@ -58,7 +60,7 @@ export default function LikeButton({id, liked, likes} : LikeParams) {
             color="white"
             visible={loading}
         />
-        <button type="button" className="h-4" onClick={handleLiked} hidden={loading}>
+        <button type="button" className="h-4" onClick={handleLiked} hidden={loading} disabled={loading || !session}>
             <BsHeartFill className={isLiked ? "text-primary" : "text-scale-1000"}/>
         </button>
         <p>{likes - (liked ? 1 : 0) + (isLiked ? 1 : 0)}</p>

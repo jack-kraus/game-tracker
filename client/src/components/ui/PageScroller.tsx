@@ -64,7 +64,7 @@ export default function PageScroller({title, route, options, type, optionSelecto
         <h1 className="text-scale-0 underline">{title}</h1>
         {optionSelectors && <SelectionOptions selectionState={[values, setValues]} optionSelectors={optionSelectors}/>}
         <LoadingHandler isPending={isPending} error={error} data={data}>
-            {items && items.length ? items.map((item : any, index:number) =>  render(type, item, index)) : <p className='text-scale-0'>No More Posts</p>}
+            {items && items.length ? items.map((item : any, index:number) =>  render(type, item, index)) : <p className='text-scale-0'>Nothing more to load</p>}
             <div className='box-item w-auto gap-3 items-center'>
                 <button
                     onClick={() => alterPage(-1, items.length)}

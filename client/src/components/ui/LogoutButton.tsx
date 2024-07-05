@@ -1,7 +1,11 @@
 "use client";
 
 import { logout } from "@/data/actions";
+import LoadingButton from "./LoadingButton";
 
 export default function LogoutButton() {
-    return <button onClick={() => {logout()}} className='primary-button'>Log-Out</button>;
+    return <LoadingButton
+        func={logout}
+        label="Logout"
+    />;
 }

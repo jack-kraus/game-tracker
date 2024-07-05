@@ -20,11 +20,14 @@ export default function RootLayout({
 
   return (
     <html lang="en">
+      <head>
+        <script src="https://kit.fontawesome.com/d7d5c075c0.js" crossOrigin="anonymous"></script>
+      </head>
       <body className={inter.className}>
         <Navbar/>
         <AuthProvider>
           <Provider>
-            <main className="flex flex-col w-1/2 items-center mt-4 gap-3 pt-24 pb-4 mx-auto">
+            <main className="flex flex-col max-w-3xl px-10 items-center mt-4 gap-3 pt-24 pb-4 mx-auto">
               {children}
             </main>
           </Provider>

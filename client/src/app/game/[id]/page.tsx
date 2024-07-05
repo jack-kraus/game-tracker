@@ -16,18 +16,26 @@ export default async function GamePage({params} : any) {
     catch (error) { return <h1 className="text-red-500">{error}</h1>; }
     
     return  <>
-        <article className="box-item gap-3">
+        <article className="box-item gap-5">
             <div className="flex items-center w-48 h-auto shrink-0">
                 <img className="object-contain w-full rounded-md" src={game?.cover}/>
             </div>
-            <div>
+            <div className="flex flex-col gap-3">
                 <h1>{game.name}</h1>
-                <h2 className="font-bold">Summary</h2>
-                <p>{game.summary}</p>
-                <h2 className="font-bold">Genres</h2>
-                {game.genres ? <ol className="list-disc list-inside">{game.genres.map((item : string, i:number) => <li key={i}>{item}</li>)}</ol> : <></>}
-                <h2 className="font-bold">Platforms</h2>
-                {game.platforms ? <ol className="list-disc list-inside">{game.platforms.map((item : string, i:number) => <li key={i}>{item}</li>)}</ol> : <></>}
+                <p>
+                    <h2 className="font-bold">Summary</h2>
+                    {game.summary}
+                </p>
+                <div className="grid grid-cols-2">
+                    <div>
+                        <h2 className="font-bold">Platforms</h2>
+                        {game.platforms ? <ol className="list-disc list-inside">{game.platforms.map((item : string, i:number) => <li key={i}>{item}</li>)}</ol> : <></>}
+                    </div>
+                    <div>
+                        <h2 className="font-bold">Genres</h2>
+                        {game.genres ? <ol className="list-disc list-inside">{game.genres.map((item : string, i:number) => <li key={i}>{item}</li>)}</ol> : <></>}
+                    </div>
+                </div>
             </div>
             <Link href={{
                     pathname: '/post',
