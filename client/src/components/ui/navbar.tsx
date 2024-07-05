@@ -1,11 +1,11 @@
 "use client";
 
-import { useUser } from "@/context/AuthProvider";
 import Session from "@/hooks/Session";
 import useWindowDimensions from "@/hooks/WindowDimensions";
 import { useSearchParams } from "next/navigation";
 import { FaPlus } from "react-icons/fa";
 import { TbSearch, TbUser } from "react-icons/tb";
+import { ThreeDots } from "react-loader-spinner";
 
 export default function Navbar() {
     const searchParams = useSearchParams();
@@ -13,11 +13,11 @@ export default function Navbar() {
     let type = searchParams.get("type");
     type = type && ["game", "user"].includes(type.trim()) ? type.trim() : undefined;
     let { width } = useWindowDimensions();
-    let { signedIn } = Session();
+    let { signedIn, loading } = Session();
 
     return <>
         <nav className="w-screen h-16 m-0 flex bg-scale-1000 text-scale-0 items-center py-12 px-10 justify-between gap-5 fixed top-0 z-10 drop-shadow-md">
-            <a href="/" className="shrink-0"><img className="purple" src={width > 650 ? "/images/logo.svg" : "/images/logo_small.svg"}/></a>
+            <a href="/" className="shrink-0 group"><img className="purple group-hover:drop-shadow-white-md group-active:drop-shadow-white-xl" src={width > 650 ? "/images/logo.svg" : "/images/logo_small.svg"}/></a>
             <form className="flex min-w-5 grow" action="/search">
                 <input id="query" name="query" type="text" className="input-box rounded-r-none min-w-0" required={true} defaultValue={query} placeholder={`${signedIn}`}/>
                 <select name="type" className="bg-scale-800 text-scale-0 px-5 min-w-0" defaultValue={type}>
@@ -28,9 +28,9 @@ export default function Navbar() {
             </form>
             <a className="sidebar-icon rounded-sm flex-shrink-0" href="/post"><FaPlus size={25}/></a>
             {
-                !signedIn
-                ? <a href="/login" className="primary-button">Login</a>
-                : <a href="/profile" className="flex-shrink-0 hover:border-white border-opacity-25 hover:border-4 transition-all w-10 h-10 bg-scale-500 hover:bg-scale-300 active:bg-white rounded-full flex justify-center items-center"><TbUser size={30} color="white"/></a> 
+                loading ? <ThreeDots color="#7a7a7a" height={30} width={30}/> :
+                (!signedIn ? <a href="/login" className="primary-button">Login</a>
+                : <a href="/profile" className="flex-shrink-0 hover:border-white border-opacity-25 hover:border-4 transition-all w-10 h-10 bg-scale-500 hover:bg-scale-300 active:bg-white rounded-full flex justify-center items-center"><TbUser size={30} color="white"/></a>)
             }
         </nav>
         <p></p>

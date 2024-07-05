@@ -1,6 +1,7 @@
 "use client";
 
 import { useUser } from "@/context/AuthProvider";
+import Session from "@/hooks/Session";
 import { createClient } from "@/utils/supabase/client";
 import { useState } from "react";
 import { BsHeartFill } from "react-icons/bs";
@@ -16,40 +17,44 @@ export default function LikeButton({id, liked, likes} : LikeParams) {
     const [isLiked, setIsLiked] = useState(liked);
     const [loading, setLoading] = useState(false);
 
-    const {session} = useUser();
+    let { signedIn, loading:sessionLoading } = Session();
     const supabase = createClient();
 
     async function deleteLiked() {
         const { data : { user }} = await supabase.auth.getUser();
-        if (!user || !user.id) return { error: "Not signed in" };
+        if (!user || !user.id) throw "Not signed in";
         
-        return await supabase
+        const {error} = await supabase
             .from('like')
             .delete()
             .eq('user_id', user.id)
             .eq('post_id', id);
+        if (error) throw error.message;
     }
 
     async function addLiked() {
         const { data : { user }} = await supabase.auth.getUser();
-        if (!user || !user.id) return { error: "Not signed in" };
+        if (!user || !user.id) throw "Not signed in";
 
-        return await supabase
+        const {error} =  await supabase
             .from('like')
             .insert({user_id: user.id, post_id : id});
+        if (error) throw error.message;
     }
 
     async function handleLiked() {
         setLoading(true);
         
-        let response;
-        if (isLiked) response = await deleteLiked();
-        else response = await addLiked();
+        try {
+            if (isLiked) await deleteLiked();
+            else await addLiked();
+        } catch (e) {
+            alert(e);
+            setLoading(false);
+            return;
+        }
 
-        const { error } = response;
-        if (!error) setIsLiked(!isLiked);
-        else { console.log(error); }
-
+        setIsLiked(!isLiked);
         setLoading(false);
     }
 
@@ -60,7 +65,7 @@ export default function LikeButton({id, liked, likes} : LikeParams) {
             color="white"
             visible={loading}
         />
-        <button type="button" className="h-4" onClick={handleLiked} hidden={loading} disabled={loading || !session}>
+        <button type="button" className="h-4" onClick={handleLiked} hidden={loading || !signedIn} disabled={loading || sessionLoading || !signedIn }>
             <BsHeartFill className={isLiked ? "text-primary" : "text-scale-1000"}/>
         </button>
         <p>{likes - (liked ? 1 : 0) + (isLiked ? 1 : 0)}</p>

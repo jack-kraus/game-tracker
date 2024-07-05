@@ -4,6 +4,7 @@ import { revalidatePath } from 'next/cache';
 import { redirect } from 'next/navigation';
 
 import { createClient } from '@/utils/supabase/server';
+import { createClient as createClientClient } from '@/utils/supabase/client';
 
 interface LoginData {
   email : string,
@@ -30,7 +31,6 @@ export async function login(formData: LoginData) {
     throw error;
   }
 
-  revalidatePath('/', 'layout');
   redirect("/");
 }
 
