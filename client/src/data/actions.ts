@@ -11,6 +11,8 @@ interface LoginData {
 }
 
 export async function login(formData: LoginData) {
+  'use server';
+
   const supabase = createClient()
 
   // type-casting here for convenience
@@ -28,8 +30,8 @@ export async function login(formData: LoginData) {
     throw error;
   }
 
-  revalidatePath('/', 'layout')
-  redirect('/profile')
+  revalidatePath('/', 'layout');
+  redirect("/");
 }
 
 interface RegisterData {
@@ -46,11 +48,14 @@ export async function signup(formData: RegisterData) {
   const { email, password, username } = formData;
   const insert = {
     email: email,
-    password: password
+    password: password,
+    data: {
+      username : username
+    }
   }
 
   // insert new user
-  const { data, error } = await supabase.auth.signUp(insert);
+  const { data, error } = await supabase.auth.signUp(insert,);
   if (error || !data) { throw error; }
 
   // insert into profile
@@ -71,6 +76,6 @@ export async function logout() {
     redirect("/error");
   }
 
-  revalidatePath('/', 'layout')
-  redirect('/')
+  revalidatePath('/', 'layout');
+  redirect("/");
 }

@@ -1,4 +1,5 @@
 import { createClient } from "@/utils/supabase/server";
+import { createClient as createClientClient } from "@/utils/supabase/client";
 
 export async function getUserServer() {
     // get client
@@ -22,4 +23,26 @@ export async function getUserByIdServer(user_id : string) {
 
     // return data point
     return data[0];
+}
+
+export async function isSignedInClient() {
+    // get client
+    const supabase = createClientClient();
+    
+    // get user data
+    const { data } = await supabase.auth.getSession();
+
+    // get is signed in
+    return !!data?.session?.user;
+}
+
+export async function isSignedInServer() {
+    // get client
+    const supabase = createClient();
+    
+    // get user data
+    const { data } = await supabase.auth.getSession();
+
+    // get is signed in
+    return !!data?.session?.user;
 }
