@@ -7,6 +7,7 @@ import React from "react";
 import moment from 'moment';
 import { FaUser } from "react-icons/fa";
 import { TbUser } from "react-icons/tb";
+import LikeButton from "../ui/LikeButton";
 
 interface postProps {
     title: string,
@@ -20,10 +21,12 @@ interface postProps {
     id : number,
     username : string,
     user_id : string,
-    type? : "game" | "user"
+    type? : "game" | "user",
+    is_liked : boolean,
+    likes : number
 }
 
-export default function Post({ id, title, game, game_title, game_cover, content, rating, created_at, username, author, user_id, type } : postProps) {
+export default function Post({ id, title, game, game_title, game_cover, content, rating, created_at, username, author, user_id, type, likes, is_liked } : postProps) {
     const router = useRouter();
 
     async function deletePost() {
@@ -45,7 +48,7 @@ export default function Post({ id, title, game, game_title, game_cover, content,
             </div>}
             <div className="h-full w-full">
                 <a href={`/review/${id}`} className="link-item"><h1>{title}</h1></a>
-                <p className="h-full">{content}</p>
+                <p className="h-full">{content ? content.substring(0,200) : ""}{content && content.length > 200 ? "..." : ""}</p>
                 <Stars rating={rating}/>
             </div>
             <cite className="flex flex-col justify-between items-end text-right">
@@ -53,7 +56,7 @@ export default function Post({ id, title, game, game_title, game_cover, content,
                     <TbUser className="border-opacity-25 bg-scale-500 p-2 rounded-full flex justify-center items-center" size={60} color="white"/>
                     <a className="link-item" href={`/user/${author}`}>{username}</a>
                 </>}
-                {moment(created_at).format("MM/DD/YY h:mm")}
+                {moment(created_at).format("MM/DD/YY h:mm")}<LikeButton id={id} liked={is_liked} likes={likes}/>
             </cite>
             {user_id === author ? <Dropdown options={[
                 { label : "Edit Post", onClick : () => router.push(`/review/${id}/edit`) },

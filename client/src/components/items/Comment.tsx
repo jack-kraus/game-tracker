@@ -2,6 +2,7 @@ import { useState } from "react";
 import Dropdown from "../ui/Dropdown";
 import { createClient } from "@/utils/supabase/client";
 import { useUser } from "@/context/AuthProvider";
+import { useQueryClient } from "@tanstack/react-query";
 
 interface CommentProps {
     author : string,
@@ -21,8 +22,10 @@ export default function Comment({author, content, id, username} : CommentProps) 
     const [text, setText] = useState<string>(content);
     const supabase = createClient();
     const {session} = useUser();
+    const queryClient = useQueryClient();
 
     async function submitDelete() {
+        if (!confirm("Are you sure you want to delete this comment?")) return;
         setState(CommentState.loading);
         const { error, data } = await supabase
             .from('comment')
@@ -32,7 +35,7 @@ export default function Comment({author, content, id, username} : CommentProps) 
         if (error || !data.length) {
             alert("Error Deleting");
         }
-        else alert("Success");
+        await queryClient.refetchQueries({ queryKey: ["comments"], type: 'active' });
     }
 
     async function submitEdit(e : any) {

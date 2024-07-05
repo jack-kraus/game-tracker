@@ -20,7 +20,7 @@ export default function Navbar() {
             <a href="/" className="shrink-0 group"><img className="purple group-hover:drop-shadow-white-md group-active:drop-shadow-white-xl" src={width > 650 ? "/images/logo.svg" : "/images/logo_small.svg"}/></a>
             <form className="flex min-w-5 grow" action="/search">
                 <input id="query" name="query" type="text" className="input-box rounded-r-none min-w-0" required={true} defaultValue={query} placeholder={`${signedIn}`}/>
-                <select name="type" className="bg-scale-800 text-scale-0 px-5 min-w-0" defaultValue={type}>
+                <select name="type" className="bg-scale-800 text-scale-0 px-5 min-w-0 shrink-0 w-5 md:w-0" defaultValue={type}>
                     <option value="game">Game</option>
                     <option value="user">User</option>
                 </select>

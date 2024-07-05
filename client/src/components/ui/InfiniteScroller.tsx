@@ -16,7 +16,8 @@ interface InfiniteScrollerParams {
   options? : {[opt:string] : string},
   title : string,
   type? : renderType,
-  optionSelectors? : { [key: string]: string[]; }
+  optionSelectors? : { [key: string]: string[]; },
+  keyStart? : string
 }
 
 function render(type : renderType, item : any, index : number) {
@@ -30,7 +31,7 @@ function render(type : renderType, item : any, index : number) {
   }
 }
 
-export default function InfiniteScroller({title, route, options, type, optionSelectors} : InfiniteScrollerParams) {
+export default function InfiniteScroller({title, route, options, type, optionSelectors, keyStart} : InfiniteScrollerParams) {
   const selectorInitial = {};
   if (optionSelectors) {
     for (const [key, value] of Object.entries(optionSelectors)) {
@@ -47,8 +48,9 @@ export default function InfiniteScroller({title, route, options, type, optionSel
     const res = await fetch(route + '?' + new URLSearchParams({...options, ...values, page : pageParam}).toString());
     return res.json();
   }
+  let queryKey = keyStart ? [keyStart, route, options, values] : [route, options, values];
   let query = useInfiniteQuery({
-    queryKey: [route, options, values],
+    queryKey: queryKey,
     queryFn: fetchReviews,
     initialPageParam: 0,
     getNextPageParam: (lastPage, _allPages, lastPageParam) => {

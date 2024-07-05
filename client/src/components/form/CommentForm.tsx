@@ -5,12 +5,14 @@ import { FormProvider, useForm } from "react-hook-form";
 import Input from "./Input";
 import hook from "@/data/hook_options";
 import { useState } from "react";
+import { useQueryClient } from "@tanstack/react-query";
 
 export default function CommentForm({ id }) {
     const [loading, setLoading] = useState(false);
 
     const methods = useForm();
-    const { setError, handleSubmit } = methods;
+    const { setError, handleSubmit, reset } = methods;
+    const queryClient = useQueryClient();
 
     const supabase = createClient();
     async function addReview(data : any) {
@@ -21,7 +23,9 @@ export default function CommentForm({ id }) {
                 .from('comment')
                 .insert({ post: id, content:content });
             if (error) throw error.message;
-        } catch(error) { setError("content", { type: 'server', message: error }); } 
+        } catch(error) { setError("content", { type: 'server', message: error }); return; } 
+        await queryClient.refetchQueries({ queryKey: ["comments"], type: 'active' });
+        reset();
         setLoading(false);
     }
     

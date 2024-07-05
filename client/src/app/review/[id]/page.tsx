@@ -34,13 +34,14 @@ export default async function Review({params} : {params : {id : string}}) {
                 <p>{data?.content}</p>
                 <Stars rating={data?.rating}/>
             </div>
-            <LikeButton id={id} liked={data?.liked} likes={data?.likes}/>
+            <LikeButton id={id} liked={data?.is_liked} likes={data?.likes}/>
         </div>
         {user && <CommentForm id={id}/>}
         <InfiniteScroller
             title="Comments"
             type="comment"
             route={`/api/review/${id}/comments`}
+            keyStart="comments"
         />
     </>;
 }

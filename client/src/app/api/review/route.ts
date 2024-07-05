@@ -24,7 +24,7 @@ export async function GET(request : NextRequest) {
 
     // construct query
     let { filter, page, perPage, order, author, game } = searchParams;
-    let query = supabase.from(filter === "following" ? "post_user_like_following" : "post_user_like").select('*').range(page*perPage,(page+1)*perPage-1);
+    let query = supabase.from(filter === "following" ? "post_user_like_following_status" : "post_user_like_status").select('*').range(page*perPage,(page+1)*perPage-1);
     if (author) query = query.eq("author", author);
     if (game) query = query.eq("game", game);
     if (order) query = query.order(order, { ascending: false });

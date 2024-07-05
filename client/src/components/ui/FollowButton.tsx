@@ -14,7 +14,7 @@ export default function FollowButton({id, following} : FollowParams) {
     const [isFollowing, setIsFollowing] = useState(following);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState("");
-    const {session} = useUser();
+    let {session, loading:sessionLoading} = useUser();
 
     const supabase = createClient();
 
@@ -57,8 +57,8 @@ export default function FollowButton({id, following} : FollowParams) {
 
     if (!session || session?.user?.id === id) return <></>;
     return <div className="flex flex-row gap-2 items-center">
-        <button type="button" onClick={handleFollowing} disabled={loading} className='primary-button'>{isFollowing ? "Unfollow" : "Follow"}</button>
-        {loading && <ThreeDots color="white" width={20} height={20}/>}
+        <button type="button" onClick={handleFollowing} disabled={loading || sessionLoading} hidden={loading || sessionLoading} className='primary-button'>{isFollowing ? "Unfollow" : "Follow"}</button>
+        {(loading || sessionLoading) && <ThreeDots color="white" width={20} height={20}/>}
         {error && <p className="text-red-500">{error}</p>}
     </div>;
 }
