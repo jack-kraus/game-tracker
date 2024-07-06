@@ -4,6 +4,7 @@ import Navbar from "@/components/ui/Navbar";
 import "./globals.css";
 import QueryProvider from "@/context/QueryProvider";
 import AuthProvider from "@/context/AuthProvider";
+import { Suspense } from "react";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -22,7 +23,9 @@ export default async function RootLayout({
     <html lang="en">
       <body className={inter.className}>
         <AuthProvider>
-          <Navbar/>
+          <Suspense>
+            <Navbar/>
+          </Suspense>
           <QueryProvider>
             <main className="flex flex-col max-w-3xl px-10 items-center mt-4 gap-3 pt-24 pb-4 mx-auto">
               {children}
