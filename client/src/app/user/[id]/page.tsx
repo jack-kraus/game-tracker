@@ -31,8 +31,13 @@ export default async function Profile({params} : any) {
             </table>
             <FollowButton id={id} following={data?.is_following}/>
         </div>
-        <InfiniteScroller title="Top Posts" type="post_user" options={{
-            author : id,
-        }}/>
+        <InfiniteScroller title="Top Posts" type="post_user"
+            options={{
+                author : id,
+            }}
+            optionSelectors={{
+                order: ["created_at", "likes"]
+            }}
+        />
     </>;
 }

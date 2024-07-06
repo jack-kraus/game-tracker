@@ -41,9 +41,10 @@ export default function PostSubmit({game_id, review_id, defaultValues} : {game_i
                 }
             }).then((res) => res.json());
             response = data;
-        } catch (e) { setLoading(false); return setError("rating", { message: `${e}` }); }
+        } catch (e) { console.log("HELLO"); setLoading(false); return setError("rating", { message: `${e}` }); }
 
         if (!response.success) {
+            console.log("HELLO"); 
             setError("content", { type:"server", message:`${response.error}`});
             setLoading(false);
         }
@@ -54,9 +55,9 @@ export default function PostSubmit({game_id, review_id, defaultValues} : {game_i
 
     function starClass(i : number) {
         const range = watch("rating");
-        if ((i+1)*2 <= range) return <BsStarFill className="text-primary"/>;
-        else if (range-1 === i*2) return <BsStarFill style={{ fill: "url(#blue-gradient)" }}/>;
-        else return <BsStarFill className="text-scale-100"/>;
+        if ((i+1)*2 <= range) return <BsStarFill key={i} className="text-primary"/>;
+        else if (range-1 === i*2) return <BsStarFill key={i} style={{ fill: "url(#blue-gradient)" }}/>;
+        else return <BsStarFill key={i} className="text-scale-100"/>;
     }
 
     return <FormProvider {...methods}>

@@ -14,13 +14,17 @@ const email_validation = (label:string) => {
 
 const username_validation = (label:string) => {
     return {
+        minLength: {
+            value: 3,
+            message: `${label} must contain at least 3 characters`
+        },
         required: {
             value: true,
             message: `${label} is required`
         },
         validate: (val: string) => {
             if (val.match(/[ ]/)) return `${label} can't contain any spaces`;
-            else if (!val.match(/[-'/`~!#*$@_%+=.,^&(){}[\]|;:”<>?\\]/)) return `${label} can't contain any special characters`;
+            else if (val.match(/[^a-zA-Z0-9_-]/)) return `${label} can't contain any special characters except [_/-]`;
         },
         setValueAs: (v:string) => v.trim()
     }

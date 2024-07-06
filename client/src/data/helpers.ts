@@ -74,4 +74,4 @@ const uuidSchema = yup.string().trim().required().uuid();
 const gameSchema = yup.number().required().positive();
 
 export const validation = { checkIsProperString, checkIsProperEmail, checkIsProperPassword, checkIsFilledString };
-export const schema = { reviewSchema, reviewEditSchema, uuidSchema };
+export const schema = { reviewSchema, reviewEditSchema, uuidSchema, gameSchema };

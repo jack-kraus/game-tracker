@@ -13,13 +13,12 @@ export function LoginForm() {
 
     async function onSubmit(data : any) {
         setLoading(true);
-        try {
-            await login(data);
+        const response = await login(data);
+        if (response) {
+            const { key, message } : any = response;
+            setError(key, {type:"server", message: message});
         }
-        catch(e) { 
-            setError("password", {type:"server", message: `${e}`});
-            setLoading(false);
-        }
+        setLoading(false);
     }
 
     return <>
@@ -54,11 +53,12 @@ export function SignupForm() {
 
     async function onSubmit(data : any) {
         setLoading(true);
-        try { await signup(data); }
-        catch(e) {
-            setLoading(false);
-            setError("confirm_password", {type:"server", message: `${e.message ? e.message : e}`});
+        const response = await signup(data);
+        if (response) {
+            const { key, message } : any = response;
+            setError(key, {type:"server", message: message});
         }
+        setLoading(false);
     }
 
     return <FormProvider {...methods}>

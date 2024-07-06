@@ -7,5 +7,6 @@ export default function Feed() {
       filter: ["none", "following"],
       order: ["created_at", "likes"]
     }}
+    keyStart='posts'
   />;
 }

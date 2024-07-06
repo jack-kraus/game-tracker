@@ -1,13 +1,13 @@
 "use server";
-import React, { FormEvent, useState } from "react";
+import React from "react";
 import Stars from "@/components/ui/Stars";
-import { createClient } from "@/utils/supabase/client";
 import LikeButton from "@/components/ui/LikeButton";
 import { getReviewById } from "@/data/reviews";
 import InfiniteScroller from "@/components/ui/InfiniteScroller";
 import { number } from "yup";
 import CommentForm from "@/components/form/CommentForm";
 import { getUserServer } from "@/data/users";
+import PostEditDropdown from "@/components/ui/PostEditDropdown";
 
 const gameId = number().required().min(0);
 export default async function Review({params} : {params : {id : string}}) {
@@ -25,16 +25,17 @@ export default async function Review({params} : {params : {id : string}}) {
     return <>
         <div className="text-white box-item gap-3">
             <div>
-                <img className="w-48" src={data?.game_cover} alt={data?.game_title + " cover"}/>
+                <img className="w-48 rounded-md hover:brightness-150" src={data?.game_cover} alt={data?.game_title + " cover"}/>
                 <cite>{data?.game_title}</cite>
             </div>
-            <div className="grow">
+            <div className="grow flex flex-col gap-1">
                 <h1>{data?.title}</h1>
                 <cite>by <a href={`/user/${data?.author}`}>{data?.username}</a> at {data?.created_at}</cite>
                 <p>{data?.content}</p>
                 <Stars rating={data?.rating}/>
             </div>
             <LikeButton id={id} liked={data?.is_liked} likes={data?.likes}/>
+            {user?.id && <PostEditDropdown id={id}/>}
         </div>
         {user && <CommentForm id={id}/>}
         <InfiniteScroller

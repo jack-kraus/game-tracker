@@ -2,7 +2,10 @@
 const nextConfig = {
   webpack: (config, _options) => {
     config.optimization.minimize = false;
-    return config
+    config.watchOptions = {
+      ignored: "/mnt/c/pagefile.sys",
+    }
+    return config;
   },
   async headers() {
     return [

@@ -1,11 +1,17 @@
 import { BsStarFill } from "react-icons/bs";
 import PurpleGradient from "@/components/other/PurpleGradient";
 
-export default function Stars({rating} : {rating:number}) {
+export default function Stars({rating, size} : {rating:number, size?:number}) {
+    size ??= 20;
+
+    function starClass(i : number) {
+        if ((i+1)*2 <= rating) return <BsStarFill key={i} size={size} className="text-primary"/>;
+        else if (rating-1 === i*2) return <BsStarFill key={i} size={size} style={{ fill: "url(#blue-gradient)" }}/>;
+        else return <BsStarFill key={i} size={size} className="text-scale-100"/>;
+    }
+    
     return <>
-        <PurpleGradient/>
-        <span className="inline-flex">
-            {[...Array(5)].map((_, ind) => ind < rating ? <BsStarFill key={ind} className="text-primary size-6"/> :  <BsStarFill key={ind} className="size-6"/>)}
-        </span>
+        <PurpleGradient/>            
+        <div className="flex flex-row p-0">{[...Array(5)].map((_, ind) => starClass(ind))}</div>
     </>
 }

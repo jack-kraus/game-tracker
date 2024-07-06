@@ -1,5 +1,6 @@
 import PostSubmit from "@/components/form/PostSubmit";
 import { createClient } from "@/utils/supabase/server";
+import { redirect } from "next/navigation";
 
 
 export default async function EditPost({params} : any) {
@@ -12,10 +13,9 @@ export default async function EditPost({params} : any) {
     const {data : {user}} = await supabase.auth.getUser();
 
     if (!user.id || !data || !data[0] ||user.id !== data[0].author || error) {
-        console.log(error);
-        // redirect("/error");
+        redirect("/error");
     }
-
+    
     const postData = data[0];
 
     return <>

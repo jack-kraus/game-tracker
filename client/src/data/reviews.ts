@@ -24,6 +24,7 @@ export async function getReviewById(id : string | number) {
         .eq('id', id)
         .limit(1);
     if (error) throw error.message;
+    else if (!data[0]) throw "No post found";
     let review = data[0];
     if (review.created_at) review.created_at = moment(review.created).format("MM/DD/YYYY hh:mm");
 

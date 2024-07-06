@@ -65,7 +65,7 @@ export default function LikeButton({id, liked, likes} : LikeParams) {
             color="white"
             visible={loading}
         />
-        <button type="button" className="h-4" onClick={handleLiked} hidden={loading || !signedIn} disabled={loading || sessionLoading || !signedIn}>
+        <button type="button" className="h-4" onClick={handleLiked} hidden={loading} disabled={loading || sessionLoading || !signedIn}>
             <BsHeartFill className={isLiked ? "text-primary" : "text-scale-1000"}/>
         </button>
         <p>{likes - (liked ? 1 : 0) + (isLiked ? 1 : 0)}</p>

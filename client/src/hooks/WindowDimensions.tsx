@@ -11,7 +11,7 @@ export default function useWindowDimensions() {
         const { innerWidth: width, innerHeight: height } = window;
         setWindowDimensions({width, height});
     }
-
+    handleResize();
     window.addEventListener('resize', handleResize);
     return () => window.removeEventListener('resize', handleResize);
   }, []);

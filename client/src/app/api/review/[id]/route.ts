@@ -3,6 +3,7 @@ import { NextRequest } from "next/server";
 import { checkIsProperString, schema } from "@/data/helpers";
 import { createClient } from "@/utils/supabase/server";
 import moment from 'moment';
+import { number } from "yup";
 
 export async function GET(_request : NextRequest, {params} : {params : {id: string}}) {
     // check param
@@ -93,13 +94,17 @@ export async function DELETE(_request : NextRequest, {params} : {params : {id: s
 
 export async function PATCH(request : NextRequest, {params} : {params : {id: string}}) {
     // check param
-    let review_id = params.id;
-    try { review_id = checkIsProperString(review_id, 1, true, "query"); }
+    let review_id : string | number = params.id;
+    try { review_id = await number().required().min(0).validate(review_id); }
     catch (error : any) { return Response.json({success: false, error:`${error}`}); }
 
     // validate body
     let body = await request.json();
-    try { body = await schema.reviewEditSchema.validate(body); }
+    try {
+        const {title, content, rating} = await schema.reviewEditSchema.validate(body);
+        body = {title, content, rating};
+        console.log(body);
+    }
     catch (error : any) { return Response.json({success: false, error:`${error}`}); }
 
     // get client

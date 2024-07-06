@@ -4,7 +4,6 @@ import { revalidatePath } from 'next/cache';
 import { redirect } from 'next/navigation';
 
 import { createClient } from '@/utils/supabase/server';
-import { createClient as createClientClient } from '@/utils/supabase/client';
 
 interface LoginData {
   email : string,
@@ -13,7 +12,7 @@ interface LoginData {
 
 export async function login(formData: LoginData) {
   'use server';
-
+  
   const supabase = createClient()
 
   // type-casting here for convenience
@@ -24,13 +23,15 @@ export async function login(formData: LoginData) {
     email: email,
     password: password,
   }
-
-  const { error } = await supabase.auth.signInWithPassword(data);
-
-  if (error) {
-    throw error;
+ 
+  try {
+    const { error } = await supabase.auth.signInWithPassword(data);
+    if (error) throw error.message;
+  } catch (e) {
+    return { success : false, key : "password", message : e }
   }
 
+  revalidatePath('/', 'layout');
   redirect("/");
 }
 
@@ -41,6 +42,8 @@ interface RegisterData {
 }
 
 export async function signup(formData: RegisterData) {
+  'use server';
+
   const supabase = createClient();
 
   // type-casting here for convenience
@@ -48,26 +51,42 @@ export async function signup(formData: RegisterData) {
   const { email, password, username } = formData;
   const insert = {
     email: email,
-    password: password,
-    data: {
-      username : username
-    }
+    password: password
   }
 
+  // check if username taken
+  try {
+    const { count } = await supabase
+      .from('profile')
+      .select('*', { count: 'exact', head: true })
+      .eq('username', username);
+    if (count >= 1) return { success : false, key : "username", message : "Username taken" }
+  } catch(e) {
+    return { success : false, key : "password", message : e.toString() }
+  }
+  
   // insert new user
-  const { data, error } = await supabase.auth.signUp(insert,);
-  if (error || !data) { throw error; }
-
-  // insert into profile
-  const {error:error2} = await supabase.from("profile").insert({username:username});
-  if (error2) { throw error2; }
+  try {
+    const { data, error } = await supabase.auth.signUp(insert);
+    if (error || !data) {
+      if (error.code === "user_already_exists") return { success : false, key : "email", message : error.message }
+    }
+  } catch(e) {
+    return { success : false, key : "password", message : e.toString() }
+  }
+  
+  // insert into profile (if error, bypass in remote case of race condition with user sign-up)
+  try { await supabase.from("profile").upsert({ username:username }, { onConflict: 'id' }); }
+  catch(e) { console.error(e); }
 
   // return
-  revalidatePath('/', 'layout')
-  redirect('/profile')
+  revalidatePath('/', 'layout');
+  redirect('/profile');
 }
 
 export async function logout() {
+  'use server';
+
   const supabase = createClient();
 
   const { error } = await supabase.auth.signOut();
