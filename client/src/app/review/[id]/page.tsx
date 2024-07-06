@@ -24,8 +24,8 @@ export default async function Review({params} : {params : {id : string}}) {
 
     return <>
         <div className="text-white box-item gap-3">
-            <div>
-                <img className="w-48 rounded-md hover:brightness-150" src={data?.game_cover} alt={data?.game_title + " cover"}/>
+            <div className="w-48">
+                <img className="w-full rounded-md hover:brightness-150" src={data?.game_cover} alt={data?.game_title + " cover"}/>
                 <cite>{data?.game_title}</cite>
             </div>
             <div className="grow flex flex-col gap-1">
