@@ -20,7 +20,7 @@ async function searchGames(query : string, limit : number) {
     return response.data;
 }
 
-async function searchGameById(id : string) {
+async function searchGameById(id : string | number) {
     let response = await axios.post(
         "https://api.igdb.com/v4/games/",
         `fields id, name, summary, cover.image_id, first_release_date, genres.name, platforms.name; where id = ${id}; limit 1;`,

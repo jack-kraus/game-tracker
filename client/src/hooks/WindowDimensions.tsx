@@ -8,8 +8,8 @@ export default function useWindowDimensions() {
 
   useEffect(() => {
     function handleResize() {
-        const { innerWidth: width, innerHeight: height } = window;
-        setWindowDimensions({width, height});
+      const { innerWidth: width, innerHeight: height } = window;
+      setWindowDimensions({width, height});
     }
     handleResize();
     window.addEventListener('resize', handleResize);

@@ -72,11 +72,12 @@ export default function Comment({author, content, id, username} : CommentProps) 
         </form>;
     }
 
-    return <div className="w-full rounded-xl bg-scale-800 text-scale-0 p-3 flex flex-row gap-3 drop-shadow-md">
+    return <div className="w-full rounded-xl bg-scale-800 text-scale-0 p-3 flex flex-row gap-3 drop-shadow-md relative z-0">
         {section}
+        
         {session?.user?.id === author && (state === CommentState.normal ? <Dropdown options={[
             { label : "Edit Comment", onClick : () => setState(CommentState.editing) },
             { label : "Delete Comment", onClick : submitDelete }
-        ]}/> : <button className="h-full" onClick={() => setState(CommentState.normal)}><RxCross2 size={20}/></button>)}
+        ]}/> : <button className="h-full z-10 relative" onClick={() => setState(CommentState.normal)}><RxCross2 size={20}/></button>)}
     </div>;
 }

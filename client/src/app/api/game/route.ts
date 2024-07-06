@@ -6,13 +6,6 @@ import moment from "moment";
 import axios from "axios";
 
 const PER_PAGE = 10;
-/*const paramSchema = object({
-    filter : string().default("none").lowercase().trim().oneOf(["none", "following"]),
-    order : string().default("created_at").lowercase().trim().oneOf(["created_at", "likes"]),
-    author : string().trim().uuid(),
-    game : string().trim().uuid(),
-});*/
-
 const paramSchema = object({
   query : string().trim().transform((val) => val.replace("\"", "")).required(),
   page : number().default(0).integer().min(0),

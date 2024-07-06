@@ -17,7 +17,7 @@ export default async function Review({params} : {params : {id : string}}) {
     catch (error) { return <h1 className="text-red-500">Improper ID</h1>; }
     let data : any;
     try { data = await getReviewById(id); }
-    catch (e) { return <h1 className="text-red-500">{e}</h1>; }
+    catch (e) { return <h1 className="text-red-500">{`${e}`}</h1>; }
 
     // get current user
     const user = await getUserServer();
@@ -30,19 +30,21 @@ export default async function Review({params} : {params : {id : string}}) {
             </div>
             <div className="grow flex flex-col gap-1">
                 <h1>{data?.title}</h1>
-                <cite>by <a href={`/user/${data?.author}`}>{data?.username}</a> at {data?.created_at}</cite>
+                <cite>by <a className="link-item" href={`/user/${data?.author}`}>{data?.username}</a> at {data?.created_at}</cite>
                 <p>{data?.content}</p>
                 <Stars rating={data?.rating}/>
             </div>
             <LikeButton id={id} liked={data?.is_liked} likes={data?.likes}/>
-            {user?.id && <PostEditDropdown id={id}/>}
+            {user?.id && user.id === data?.author && <PostEditDropdown id={id}/>}
         </div>
         {user && <CommentForm id={id}/>}
-        <InfiniteScroller
-            title="Comments"
-            type="comment"
-            route={`/api/review/${id}/comments`}
-            keyStart="comments"
-        />
+        <div className="w-full flex flex-col gap-3 isolate items-center">
+            <InfiniteScroller
+                title="Comments"
+                type="comment"
+                route={`/api/review/${id}/comments`}
+                keyStart="comments"
+            />
+        </div>
     </>;
 }

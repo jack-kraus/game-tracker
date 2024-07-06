@@ -28,13 +28,6 @@ export async function GET(_request : NextRequest , {params} : {params : {id: str
         if (error || !data) return Response.json({success: false, error:`User not found: ${error}`});
         info = {...info, ...data[0]};
     } catch (error : any) { return Response.json({ success: false, error:`User not found: ${error}` }); }
-
-    // get posts
-    try {
-        const { data } = await supabase_.from("post").select("*").eq("author", id).order('created_at', { ascending: true });
-        info.posts = data;
-    }
-    catch (error : any) { return Response.json({success: false, error:error}); }
     
     // return success
     return Response.json({success:true, data:info});
