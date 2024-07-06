@@ -27,7 +27,7 @@ export default async function RootLayout({
             <Navbar/>
           </Suspense>
           <QueryProvider>
-            <main className="flex flex-col max-w-3xl px-10 items-center mt-4 gap-3 pt-24 pb-4 mx-auto">
+            <main className="flex flex-col max-w-3xl px-5 sm:px-10 items-center mt-4 gap-3 sm:pt-24 pt-20 pb-4 mx-auto">
               {children}
             </main>
           </QueryProvider>

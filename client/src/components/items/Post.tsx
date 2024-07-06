@@ -31,14 +31,14 @@ export default function Post({ id, title, game, game_title, game_cover, content,
     const { session } = useUser();
 
     return (
-        <article className="w-full rounded-xl bg-scale-800 text-scale-0 p-3 flex flex-row gap-3 drop-shadow-md">
+        <article className="box-item gap-3">
             {type !== "game" && <div className="w-48">
                 <img className="object-contain w-full rounded-md hover:brightness-150" src={game_cover}/>
                 <a href={`/game/${game}`}><i className="text-center text-xs link-item">{game_title}</i></a>
             </div>}
             <div className="h-full w-full flex flex-col gap-1">
                 <a href={`/review/${id}`} className="link-item"><h1>{title}</h1></a>
-                <p className="h-full">{content ? content.substring(0,200) : ""}{content && content.length > 200 ? "..." : ""}</p>
+                <p className="h-full text-ellipsis max-h-48 overflow-hidden">{content ? content.substring(0,200) : ""}{content && content.length > 200 ? "..." : ""}</p>
                 <Stars rating={rating}/>
             </div>
             <cite className="flex flex-col justify-between items-end text-right">
