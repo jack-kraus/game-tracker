@@ -3,7 +3,7 @@ import { NextRequest } from "next/server";
 import { schema } from "@/data/helpers";
 import { searchGameById } from "@/data/games";
 import { createClient } from "@/utils/supabase/server";
-
+export const dynamic = 'force-dynamic';
 export async function POST(request : NextRequest, {params} : {params : {id: string}}) {
     // check param
     let game_id:  string | number = params.id;

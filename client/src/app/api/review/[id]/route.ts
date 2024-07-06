@@ -5,6 +5,8 @@ import { createClient } from "@/utils/supabase/server";
 import moment from 'moment';
 import { number } from "yup";
 
+export const dynamic = 'force-dynamic';
+
 export async function GET(_request : NextRequest, {params} : {params : {id: string}}) {
     // check param
     let review_id : string | number = params.id;

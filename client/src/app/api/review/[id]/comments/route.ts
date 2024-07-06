@@ -8,6 +8,7 @@ const paramSchema = object({
     page : number().default(0).integer().min(0),
     perPage : number().default(PER_PAGE).integer().min(0),
 });
+export const dynamic = 'force-dynamic';
 
 export async function GET(request : NextRequest, {params} : {params : {id: string}}) {
     // check id param

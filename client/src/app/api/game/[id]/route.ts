@@ -2,7 +2,7 @@
 import { NextRequest } from "next/server";
 import { schema } from "@/data/helpers";
 import { searchGameById } from "@/data/games";
-
+export const dynamic = 'force-dynamic';
 export async function GET(_request : NextRequest , {params} : {params : {id: string}}) {
   // get game by id
   let id : string | number = params.id;

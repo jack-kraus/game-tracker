@@ -4,7 +4,7 @@ import { createClient } from "@/utils/supabase/server";
 import {string} from "yup";
 
 const uidSchema = string().required().uuid();
-
+export const dynamic = 'force-dynamic';
 export async function GET(_request : NextRequest , {params} : {params : {id: string}}) {
     // validate user id
     let id = params.id;

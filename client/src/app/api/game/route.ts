@@ -5,6 +5,8 @@ import { object, string, number } from 'yup';
 import moment from "moment";
 import axios from "axios";
 
+export const dynamic = 'force-dynamic';
+
 const PER_PAGE = 10;
 const paramSchema = object({
   query : string().trim().transform((val) => val.replace("\"", "")).required(),

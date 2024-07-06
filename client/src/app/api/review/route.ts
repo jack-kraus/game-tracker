@@ -2,7 +2,7 @@ import { NextRequest } from "next/server";
 import { createClient } from "@/utils/supabase/server";
 import moment from 'moment';
 import { object, string, number } from 'yup';
-
+export const dynamic = 'force-dynamic';
 const PER_PAGE = 10;
 const paramSchema = object({
     filter : string().default("none").lowercase().trim().oneOf(["none", "following"]),
