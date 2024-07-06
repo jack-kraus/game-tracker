@@ -67,14 +67,14 @@ export default function PostSubmit({game_id, review_id, defaultValues} : {game_i
                 label="Title"
                 placeholder="Post Title"
                 type="text"
-                hookOptions={hook.required_validation("Title")}
+                hookOptions={hook.string_range_validation("Title", 100)}
             />
             <Input
                 id="content"
                 label="Content"
                 placeholder="Share your thoughts..."
                 type="textarea"
-                hookOptions={hook.required_validation("Content")}
+                hookOptions={hook.string_range_validation("Content", 10000)}
             />
             <Input
                 id="rating"

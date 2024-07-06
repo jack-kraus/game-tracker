@@ -55,8 +55,8 @@ const checkIsFilledString = function(val : any, variableName : string) {
 }
 
 const reviewSchema = yup.object({
-    title: yup.string().trim().required(),
-    content: yup.string().trim().required(),
+    title: yup.string().trim().required().max(100),
+    content: yup.string().trim().required().max(10000),
     rating: yup.number().min(0).max(10).required(),
     game: yup.string().trim().required(),
     game_cover: yup.string().trim().url().required(),
@@ -65,8 +65,8 @@ const reviewSchema = yup.object({
 });
 
 const reviewEditSchema = yup.object({
-    title: yup.string().trim().required(),
-    content: yup.string().trim().required(),
+    title: yup.string().trim().required().max(100),
+    content: yup.string().trim().required().max(10000),
     rating: yup.number().min(0).max(10).required()
 });
 

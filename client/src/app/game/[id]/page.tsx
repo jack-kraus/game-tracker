@@ -22,10 +22,10 @@ export default async function GamePage({params} : any) {
             </div>
             <div className="flex flex-col gap-3">
                 <h1>{game.name}</h1>
-                <p>
+                <div>
                     <h2 className="font-bold">Summary</h2>
                     {game.summary}
-                </p>
+                </div>
                 <div className="grid grid-cols-2">
                     <div>
                         <h2 className="font-bold">Platforms</h2>

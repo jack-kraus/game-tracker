@@ -83,4 +83,18 @@ const range_validation = (label:string, min:number, max:number) => {
     }
 };
 
-export default {email_validation, password_validation, confirm_password_validation, required_validation, range_validation, username_validation};
+const string_range_validation = (label:string, max:number) => {
+    return {
+        maxLength: {
+            value: max,
+            message: `${label} must contain no more than ${max} characters`
+        },
+        required: {
+            value: true,
+            message: `${label} is required`
+        },
+        setValueAs: (v:string) => v.trim()
+    }
+};
+
+export default {email_validation, password_validation, confirm_password_validation, required_validation, range_validation, username_validation, string_range_validation};
