@@ -5,6 +5,7 @@
 html {
   box-sizing: border-box;
   @apply bg-scale-900;
+  font-weight: normal;
 }
 
 @layer utilities {
@@ -44,3 +45,4 @@ h1 {
   font-size: larger;
   font-weight: bold;
 }
+

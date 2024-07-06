@@ -3,6 +3,7 @@ import Dropdown from "../ui/Dropdown";
 import { createClient } from "@/utils/supabase/client";
 import { useUser } from "@/context/AuthProvider";
 import { useQueryClient } from "@tanstack/react-query";
+import { RxCross2 } from "react-icons/rx";
 
 interface CommentProps {
     author : string,
@@ -31,11 +32,12 @@ export default function Comment({author, content, id, username} : CommentProps) 
             .from('comment')
             .delete()
             .eq('id', id).select();
-        setState(CommentState.normal);
         if (error || !data.length) {
             alert("Error Deleting");
+        } else {
+            await queryClient.refetchQueries({ queryKey: ["comments"], type: 'active' });
         }
-        await queryClient.refetchQueries({ queryKey: ["comments"], type: 'active' });
+        setState(CommentState.normal);
     }
 
     async function submitEdit(e : any) {
@@ -72,9 +74,9 @@ export default function Comment({author, content, id, username} : CommentProps) 
 
     return <div className="w-full rounded-xl bg-scale-800 text-scale-0 p-3 flex flex-row gap-3 drop-shadow-md">
         {section}
-        {session?.user?.id === author && <Dropdown options={[
+        {session?.user?.id === author && (state === CommentState.normal ? <Dropdown options={[
             { label : "Edit Comment", onClick : () => setState(CommentState.editing) },
             { label : "Delete Comment", onClick : submitDelete }
-        ]}/>}
+        ]}/> : <button className="h-full" onClick={() => setState(CommentState.normal)}><RxCross2 size={20}/></button>)}
     </div>;
 }

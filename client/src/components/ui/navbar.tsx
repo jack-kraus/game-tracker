@@ -3,6 +3,7 @@
 import Session from "@/hooks/Session";
 import useWindowDimensions from "@/hooks/WindowDimensions";
 import { useSearchParams } from "next/navigation";
+import { useState } from "react";
 import { FaPlus } from "react-icons/fa";
 import { TbSearch, TbUser } from "react-icons/tb";
 import { ThreeDots } from "react-loader-spinner";
@@ -11,16 +12,19 @@ export default function Navbar() {
     const searchParams = useSearchParams();
     let query = searchParams.get("query") || "";
     let type = searchParams.get("type");
-    type = type && ["game", "user"].includes(type.trim()) ? type.trim() : undefined;
+    type = type && ["game", "user"].includes(type.trim()) ? type.trim() : "game";
     let { width } = useWindowDimensions();
     let { signedIn, loading } = Session();
+    const [selection, setSelection] = useState(type);
+
+    const cutoff = 640;
 
     return <>
-        <nav className="w-screen h-16 m-0 flex bg-scale-1000 text-scale-0 items-center py-12 px-10 justify-between gap-5 fixed top-0 z-10 drop-shadow-md">
-            <a href="/" className="shrink-0 group"><img className="purple group-hover:drop-shadow-white-md group-active:drop-shadow-white-xl" src={width > 650 ? "/images/logo.svg" : "/images/logo_small.svg"}/></a>
+        <nav className="w-screen h-16 m-0 flex bg-scale-1000 text-scale-0 items-center justify-between fixed top-0 z-10 drop-shadow-md sm:gap-5 gap-2 sm:py-12 sm:px-10 py-10 px-8">
+            <a href="/" className="shrink-0 group"><img className="purple group-hover:drop-shadow-white-md group-active:drop-shadow-white-xl group-active:invert group-active:hue-rotate-180" src={width > cutoff ? "/images/logo.svg" : "/images/logo_small.svg"}/></a>
             <form className="flex min-w-5 grow" action="/search">
-                <input id="query" name="query" type="text" className="input-box rounded-r-none min-w-0" required={true} defaultValue={query} placeholder={`${signedIn}`}/>
-                <select name="type" className="bg-scale-800 text-scale-0 px-5 min-w-0 shrink-0 w-5 md:w-0" defaultValue={type}>
+                <input id="query" name="query" type="text" className="input-box rounded-r-none min-w-0" required={true} defaultValue={query} placeholder={width > cutoff ? `Search for a ${selection}...` : "Search..."}/>
+                <select name="type" className="bg-scale-800 text-scale-0 px-5 min-w-0 w-24 sm:w-24 shrink-0" defaultValue={type} onChange={(e) => setSelection(e.target.value)}>
                     <option value="game">Game</option>
                     <option value="user">User</option>
                 </select>
