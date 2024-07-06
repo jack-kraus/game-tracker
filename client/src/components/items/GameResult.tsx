@@ -11,7 +11,7 @@ export default function GameResult({ name, summary, cover, id, first_release_dat
             <div className="w-1/4 max-w-48 shrink-0">
                 <img className="object-contain w-full rounded-md hover:brightness-150" src={cover ? cover : "https://static.vecteezy.com/system/resources/previews/005/337/799/non_2x/icon-image-not-found-free-vector.jpg"}/>
             </div>
-            <div>
+            <div className="flex flex-col gap-3">
                 <Link href={`/game/${id}`} className="link-item">
                     <h1>{name} <i className="italic">&#40;{first_release_date}&#41;</i></h1>
                 </Link>
