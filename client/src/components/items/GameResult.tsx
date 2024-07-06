@@ -6,18 +6,18 @@ interface gameProps {
 }
 
 export default function GameResult({ name, summary, cover, id, first_release_date, platforms } : gameProps) { 
-    return (
-        <article className="overflow-hidden w-full rounded-xl bg-scale-800 text-scale-0 p-3 flex flex-row gap-3 drop-shadow-md">
-            <img src={cover ? cover : "https://static.vecteezy.com/system/resources/previews/005/337/799/non_2x/icon-image-not-found-free-vector.jpg"}
-                alt="Cover" className="object-contain w-32 h-auto rounded-md hover:brightness-150"/>
-            <div className="grow">
+    return (//object-contain w-32 rounded-md hover:brightness-150
+        <article className="overflow-hidden box-item gap-3">
+            <div className="w-1/4 max-w-48 shrink-0">
+                <img className="object-contain w-full rounded-md hover:brightness-150" src={cover ? cover : "https://static.vecteezy.com/system/resources/previews/005/337/799/non_2x/icon-image-not-found-free-vector.jpg"}/>
+            </div>
+            <div>
                 <Link href={`/game/${id}`} className="link-item">
                     <h1>{name} <i className="italic">&#40;{first_release_date}&#41;</i></h1>
                 </Link>
-                <p className="text-ellipsis">{summary ? summary.substring(0,200) : ""}{summary && summary.length > 200 ? "..." : ""}</p>
+                <p className="text-ellipsis max-h-48 overflow-hidden">{summary}</p>
                 <p><b>Platforms:</b> {platforms.join(", ")}</p>
             </div>
-            <cite>{id}</cite>
             <Link href={{
                     pathname: '/post',
                     query: { id: id },
