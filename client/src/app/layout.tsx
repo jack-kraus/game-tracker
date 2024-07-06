@@ -1,17 +1,18 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
-import Navbar from "../components/navbar"
+import Navbar from "@/components/ui/Navbar";
 import "./globals.css";
-import Provider from "@/components/Provider";
+import QueryProvider from "@/context/QueryProvider";
+import AuthProvider from "@/context/AuthProvider";
 
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: "Leveler",
-  description: "A gaming social site",
+  description: "A gaming social site"
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
@@ -20,8 +21,14 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
-        <Navbar/>
-        <Provider>{children}</Provider>
+        <AuthProvider>
+          <Navbar/>
+          <QueryProvider>
+            <main className="flex flex-col max-w-3xl px-10 items-center mt-4 gap-3 pt-24 pb-4 mx-auto">
+              {children}
+            </main>
+          </QueryProvider>
+        </AuthProvider>
       </body>
     </html>
   );

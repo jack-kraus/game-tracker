@@ -10,8 +10,13 @@ const config: Config = {
   ],
   theme: {
     extend: {
+      dropShadow: {
+        "white-md" : ["0 10px 8px rgba(255, 255, 255, 0.08)", "0 4px 3px rgba(255, 255, 255, 0.2)"],
+        "white-xl" : ["0 20px 13px rgba(255, 255, 255, 0.06)", "0 8px 5px rgba(255, 255, 255, 0.16)"]
+      },
       colors: {
         primary: '#8960FF',
+        secondary: "#ca80ff",
         scale: {
           0: "#e8f5fa",
           100: "#d4dfe6",
