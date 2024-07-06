@@ -20,14 +20,15 @@ interface InfiniteScrollerParams {
   keyStart? : string
 }
 
-function render(type : renderType, item : any, index : number) {
+function render(type : renderType, item : any, index : number, length : number) {
+  const z_index = (length - index) * 10;
   switch (type) {
     case "post": return <Post key={index} {...item}/>;
     case "game": return <GameResult key={index} {...item}/>;
     case "user": return <UserCard key={index} {...item}/>;
     case "post_game": return <Post key={index} {...item} type="game"/>;
     case "post_user": return <Post key={index} {...item} type="user"/>;
-    case "comment": return <Comment key={index} {...item}/>;
+    case "comment": return <Comment z_index={z_index} key={index} {...item}/>;
   }
 }
 
@@ -71,7 +72,7 @@ export default function InfiniteScroller({title, route, options, type, optionSel
     <h1 className="text-scale-0 underline">{title}</h1>
     {optionSelectors && <SelectionOptions selectionState={[values, setValues]} optionSelectors={optionSelectors}/>}
     <LoadingHandler isPending={status==="pending"} error={error} data={data?.pages ? data.pages[0] : undefined}>
-      {items && items.length ? items.map((item : any, index:number) => render(type, item, index)) : <></>}
+      {items && items.length ? items.map((item : any, index:number) => render(type, item, index, items.length)) : <></>}
       <p className='text-scale-0'>
         {isFetchingNextPage
           ? 'Loading more...'

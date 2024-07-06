@@ -38,13 +38,11 @@ export default async function Review({params} : {params : {id : string}}) {
             {user?.id && user.id === data?.author && <PostEditDropdown id={id}/>}
         </div>
         {user && <CommentForm id={id}/>}
-        <div className="w-full flex flex-col gap-3 isolate items-center">
-            <InfiniteScroller
-                title="Comments"
-                type="comment"
-                route={`/api/review/${id}/comments`}
-                keyStart="comments"
-            />
-        </div>
+        <InfiniteScroller
+            title="Comments"
+            type="comment"
+            route={`/api/review/${id}/comments`}
+            keyStart="comments"
+        />
     </>;
 }

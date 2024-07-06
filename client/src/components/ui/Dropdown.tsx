@@ -28,7 +28,7 @@ export default function Dropdown({ options } : { options : DropdownOption[] }) {
 
     return <ClickAwayListener onClickAway={() => setOpen(false)}><div>
         <button type="button" onClick={() => setOpen(!open)}><TbDotsVertical/></button>
-        {open ? <ul className="flex flex-col absolute z-20">
+        {open && <ul className="flex flex-col absolute">
             {options.map((item : DropdownOption, ind : number) => <li key={ind}>
                 <button 
                     onClick={closeWrap(item.onClick)}
@@ -38,6 +38,6 @@ export default function Dropdown({ options } : { options : DropdownOption[] }) {
                     {item.label}
                 </button>
             </li>)}
-        </ul> : <></>}
+        </ul>}
     </div></ClickAwayListener>;
 }

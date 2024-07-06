@@ -9,7 +9,8 @@ interface CommentProps {
     author : string,
     content : string,
     id : string,
-    username : string
+    username : string,
+    z_index : number
 }
 
 enum CommentState {
@@ -18,7 +19,7 @@ enum CommentState {
     loading
 }
 
-export default function Comment({author, content, id, username} : CommentProps) {
+export default function Comment({author, content, id, username, z_index} : CommentProps) {
     const [state, setState] = useState(CommentState.normal);
     const [text, setText] = useState<string>(content);
     const supabase = createClient();
@@ -72,12 +73,11 @@ export default function Comment({author, content, id, username} : CommentProps) 
         </form>;
     }
 
-    return <div className="w-full rounded-xl bg-scale-800 text-scale-0 p-3 flex flex-row gap-3 drop-shadow-md relative z-0">
+    return <div className="w-full rounded-xl bg-scale-800 text-scale-0 p-3 flex flex-row gap-3 drop-shadow-md" style={{zIndex: z_index}}>
         {section}
-        
         {session?.user?.id === author && (state === CommentState.normal ? <Dropdown options={[
             { label : "Edit Comment", onClick : () => setState(CommentState.editing) },
             { label : "Delete Comment", onClick : submitDelete }
-        ]}/> : <button className="h-full z-10 relative" onClick={() => setState(CommentState.normal)}><RxCross2 size={20}/></button>)}
+        ]}/> : <button className="h-full" onClick={() => setState(CommentState.normal)}><RxCross2 size={20}/></button>)}
     </div>;
 }
