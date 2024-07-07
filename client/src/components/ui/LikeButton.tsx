@@ -1,7 +1,6 @@
 "use client";
 
 import { useUser } from "@/context/AuthProvider";
-import Session from "@/hooks/Session";
 import { createClient } from "@/utils/supabase/client";
 import { useState } from "react";
 import { BsHeartFill } from "react-icons/bs";
@@ -58,13 +57,13 @@ export default function LikeButton({id, liked, likes} : LikeParams) {
         setLoading(false);
     }
 
-    return <div className="flex flex-row grow-0 justify-around align-middle items-center w-10 h-8">
-        <Grid
+    return <div className="flex flex-row grow-0 justify-around align-middle gap-2 items-center w-10 h-8">
+        {loading && <Grid
             width="16"
             height="16"
             color="white"
             visible={loading}
-        />
+        />}
         <button type="button" className="h-4" onClick={handleLiked} hidden={loading} disabled={loading || sessionLoading || !signedIn}>
             <BsHeartFill className={isLiked ? "text-primary" : "text-scale-1000"}/>
         </button>

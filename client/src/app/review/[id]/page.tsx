@@ -24,11 +24,13 @@ export default async function Review({params} : {params : {id : string}}) {
     const user = await getUserServer();
 
     return <>
-        <div className="text-white box-item gap-3 flex-row">
+        <div className="text-white box-item gap-3 flex-row mb-3">
             <div className="flex sm:flex-row flex-row-reverse gap-3 w-full">
-                <div className="sm:w-48 w-24">
-                    <img className="w-full rounded-md hover:brightness-150" src={data?.game_cover} alt={data?.game_title + " cover"}/>
-                    <cite>{data?.game_title}</cite>
+                <div className="sm:w-96 w-24">
+                    <a className="link-item" href={`/game/${data?.game}`}>
+                        <img className="w-full rounded-md hover:brightness-150" src={data?.game_cover} alt={data?.game_title + " cover"}/>
+                    </a>
+                    <a className="link-item" href={`/game/${data?.game}`}><cite>{data?.game_title}</cite></a>
                 </div>
                 <div className="grow flex flex-col gap-1">
                     <h1>{data?.title}</h1>
