@@ -2,7 +2,6 @@
 
 import Session from "@/hooks/Session";
 import useWindowDimensions from "@/hooks/WindowDimensions";
-import { useSearchParams } from "next/navigation";
 import { FaPlus } from "react-icons/fa";
 import { TbUser } from "react-icons/tb";
 import { ThreeDots } from "react-loader-spinner";
@@ -11,10 +10,6 @@ import SearchBar from "@/components/ui/SearchBar";
 import { Suspense } from "react";
 
 export default function Navbar() {
-    const searchParams = useSearchParams();
-    let query = searchParams.get("query") || "";
-    let type = searchParams.get("type");
-    type = type && ["game", "user"].includes(type.trim()) ? type.trim() : "game";
     let { width } = useWindowDimensions();
     let { signedIn, loading } = Session();
 
@@ -28,7 +23,7 @@ export default function Navbar() {
                 </a>
             </div>
             <Suspense fallback={<div className="grow"></div>}>
-                <SearchBar type={type} query={query} width={width}/>
+                <SearchBar width={width}/>
             </Suspense>
             <a className="sidebar-icon rounded-sm flex-shrink-0" href="/post"><FaPlus size={25}/></a>
             {

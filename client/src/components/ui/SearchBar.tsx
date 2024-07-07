@@ -1,7 +1,13 @@
+import { useSearchParams } from "next/navigation";
 import React, { useState } from "react";
 import { TbSearch } from "react-icons/tb";
 
-export default function SearchBar({query, type, width}) {
+export default function SearchBar({ width }) {
+    const searchParams = useSearchParams();
+    let query = searchParams.get("query") || "";
+    let type = searchParams.get("type");
+    type = type && ["game", "user"].includes(type.trim()) ? type.trim() : "game";
+    
     const [active, setActive] = useState(false);
     const [selection, setSelection] = useState(type);
     const cutoff = 640;
