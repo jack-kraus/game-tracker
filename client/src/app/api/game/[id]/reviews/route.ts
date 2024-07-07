@@ -3,8 +3,10 @@ import { NextRequest } from "next/server";
 import { schema } from "@/data/helpers";
 import { searchGameById } from "@/data/games";
 import { createClient } from "@/utils/supabase/server";
+
 export const dynamic = 'force-dynamic';
-export async function POST(request : NextRequest, {params} : {params : {id: string}}) {
+
+export async function POST(request : NextRequest, {params}) {
     // check param
     let game_id:  string | number = params.id;
     try { game_id = await schema.numberIdSchema.validate(game_id) }
@@ -28,8 +30,13 @@ export async function POST(request : NextRequest, {params} : {params : {id: stri
     catch (error : any) { return Response.json({success: false, error:`${error}`}); }
 
     // insert item
-    const { error } = await supabase.from('post').insert(body);
-    if (error) return Response.json({success: false, error:`${error}`});
+    try {
+        const { error } = await supabase.from('post').insert(body);
+        if (error) throw error;
+    } catch(e) {
+        const message = e?.message ? (e.message.startsWith("duplicate key") ? "You can\'t review the same game twice!" : e.message) : "Server Error";
+        return Response.json({success: false, error: message});
+    }
 
     // return success
     return Response.json({success:true});

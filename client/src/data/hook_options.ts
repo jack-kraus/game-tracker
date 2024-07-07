@@ -37,7 +37,7 @@ const password_validation = (label:string) => {
             message: `${label} is required`
         },
         validate: (val: string) => {
-            if (!val.match(/[a-z]/)) return `${val.match(/[a-z]/)} must contain at least one lowercase letter`;
+            if (!val.match(/[a-z]/)) return `${label} must contain at least one lowercase letter`;
             else if (!val.match(/[A-Z]/)) return `${label} must contain at least one capital letter`;
             else if (!val.match(/\d/)) return `${label} must contain at least one number`;
             else if (!val.match(/[-'/`~!#*$@_%+=.,^&(){}[\]|;:”<>?\\]/)) return `${label} must contain at least one special character`;
