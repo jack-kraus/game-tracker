@@ -2,7 +2,7 @@
 
 import Session from "@/hooks/Session";
 import useWindowDimensions from "@/hooks/WindowDimensions";
-import { FaPlus } from "react-icons/fa";
+import { FaPlus, FaUser, FaUserPlus } from "react-icons/fa";
 import { TbUser } from "react-icons/tb";
 import { ThreeDots } from "react-loader-spinner";
 import { RiLoginCircleFill } from "react-icons/ri";
@@ -25,11 +25,11 @@ export default function Navbar() {
             <Suspense fallback={<div className="grow"></div>}>
                 <SearchBar width={width}/>
             </Suspense>
-            <a className="sidebar-icon rounded-sm flex-shrink-0" href="/post"><FaPlus size={25}/></a>
+            <a className="sidebar-icon flex-shrink-0" href="/post"><FaPlus size={25}/></a>
             {
                 loading ? <ThreeDots color="#7a7a7a" height={30} width={30}/> :
-                (!signedIn ? <a href="/login" className="primary-button sm:px-6 px-3">{width < cutoff ? <RiLoginCircleFill size={30}/> : "Login"}</a>
-                : <a href="/profile" className="flex-shrink-0 hover:border-white border-opacity-25 hover:border-4 hover:margin-4 transition-all w-10 h-10 bg-scale-500 hover:bg-scale-300 active:bg-white rounded-full flex justify-center items-center"><TbUser size={30} color="white"/></a>)
+                (!signedIn ? <a className="sidebar-icon flex-shrink-0" href="/post"><FaUserPlus size={25}/></a>
+                : <a href="/profile" className="sidebar-icon text-scale-0 flex-shrink-0 border-opacity-25 hover:border-4 hover:margin-4 bg-scale-500 active:text-white hover:text-scale-500"><FaUser size={25}/></a>)
             }
         </nav>
     </>;

@@ -24,18 +24,22 @@ export default async function Review({params} : {params : {id : string}}) {
     const user = await getUserServer();
 
     return <>
-        <div className="text-white box-item gap-3 sm:flex-row flex-row-reverse">
-            <div className="sm:w-48 w-24">
-                <img className="w-full rounded-md hover:brightness-150" src={data?.game_cover} alt={data?.game_title + " cover"}/>
-                <cite>{data?.game_title}</cite>
+        <div className="text-white box-item gap-3 flex-row mb-3">
+            <div className="flex sm:flex-row flex-row-reverse gap-3 w-full">
+                <div className="sm:w-96 w-24">
+                    <a className="link-item" href={`/game/${data?.game}`}>
+                        <img className="w-full rounded-md hover:brightness-150" src={data?.game_cover} alt={data?.game_title + " cover"}/>
+                    </a>
+                    <a className="link-item" href={`/game/${data?.game}`}><cite>{data?.game_title}</cite></a>
+                </div>
+                <div className="grow flex flex-col gap-1">
+                    <h1>{data?.title}</h1>
+                    <cite>by <a className="link-item" href={`/user/${data?.author}`}>{data?.username}</a> at {data?.created_at}</cite>
+                    <p>{data?.content}</p>
+                    <Stars rating={data?.rating}/>
+                </div>
+                <LikeButton id={id} liked={data?.is_liked} likes={data?.likes}/>
             </div>
-            <div className="grow flex flex-col gap-1">
-                <h1>{data?.title}</h1>
-                <cite>by <a className="link-item" href={`/user/${data?.author}`}>{data?.username}</a> at {data?.created_at}</cite>
-                <p>{data?.content}</p>
-                <Stars rating={data?.rating}/>
-            </div>
-            <LikeButton id={id} liked={data?.is_liked} likes={data?.likes}/>
             {user?.id && user.id === data?.author && <PostEditDropdown id={id}/>}
         </div>
         {user && <CommentForm id={id}/>}

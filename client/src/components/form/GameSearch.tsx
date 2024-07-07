@@ -44,6 +44,7 @@ export default function GameSearch({ val } : {val : Val}) {
                 value={field}
                 onChange={(e) => { setCanRun(false); setField(e.target.value); }}
                 className={"z-10 w-full input-box" + (loading ? " pl-9" : "")}
+                placeholder="Search for a game..."
                 style={{
                     backgroundImage: (loading ? `url("https://cdn.pixabay.com/animation/2023/08/11/21/18/21-18-05-265_512.gif")` : ""),
                     backgroundSize: "1.5rem",

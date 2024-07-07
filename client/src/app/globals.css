@@ -16,8 +16,7 @@ html {
 
 @layer components {
   .sidebar-icon {
-    @apply relative flex items-center rounded-lg justify-center h-12 w-12 mt-2 mb-2 my-auto bg-scale-800 text-primary font-extrabold
-    hover:text-gray-950 hover:bg-scale-0 hover:rounded-3xl transition-all;
+    @apply relative flex items-center rounded-2xl justify-center h-12 w-12 mt-2 mb-2 my-auto bg-scale-800 text-primary font-extrabold hover:text-secondary hover:bg-scale-0 hover:rounded-3xl active:text-scale-0 transition-all;
   }
 
   .link-item {

@@ -6,10 +6,10 @@ import ClickAwayListener from 'react-click-away-listener';
 
 interface DropdownOption {
     onClick : () => void,
-    label : string 
+    label : string
 }
 
-export default function Dropdown({ options } : { options : DropdownOption[] }) {
+export default function Dropdown({ options, right } : { options : DropdownOption[], right? : boolean }) {
     const [open, setOpen] = useState(false);
     
     // take in a function a return a function that calls it and closes the menu
@@ -26,9 +26,9 @@ export default function Dropdown({ options } : { options : DropdownOption[] }) {
         else if (ind === len - 1) return "rounded-b-lg"
     }
 
-    return <ClickAwayListener onClickAway={() => setOpen(false)}><div className="h-12">
+    return <ClickAwayListener onClickAway={() => setOpen(false)}><div className="h-12 relative">
         <button type="button" onClick={() => setOpen(!open)}><TbDotsVertical/></button>
-        {open && <ul className="flex flex-col absolute right-2">
+        {open && <ul className={"flex flex-col absolute" + (!right ? " -right-0.5" : "")}>
             {options.map((item : DropdownOption, ind : number) => <li key={ind}>
                 <button 
                     onClick={closeWrap(item.onClick)}
