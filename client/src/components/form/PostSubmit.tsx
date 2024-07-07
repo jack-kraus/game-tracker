@@ -44,7 +44,6 @@ export default function PostSubmit({game_id, review_id, defaultValues} : {game_i
         } catch (e) { console.log("HELLO"); setLoading(false); return setError("rating", { message: `${e}` }); }
 
         if (!response.success) {
-            console.log("HELLO"); 
             setError("content", { type:"server", message:`${response.error}`});
             setLoading(false);
         }

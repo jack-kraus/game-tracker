@@ -8,6 +8,7 @@ import { number } from "yup";
 import CommentForm from "@/components/form/CommentForm";
 import { getUserServer } from "@/data/users";
 import PostEditDropdown from "@/components/ui/PostEditDropdown";
+import Image from "next/image";
 
 const gameId = number().required().min(0);
 export default async function Review({params} : {params : {id : string}}) {
@@ -23,8 +24,8 @@ export default async function Review({params} : {params : {id : string}}) {
     const user = await getUserServer();
 
     return <>
-        <div className="text-white box-item gap-3">
-            <div className="w-48">
+        <div className="text-white box-item gap-3 sm:flex-row flex-row-reverse">
+            <div className="sm:w-48 w-24">
                 <img className="w-full rounded-md hover:brightness-150" src={data?.game_cover} alt={data?.game_title + " cover"}/>
                 <cite>{data?.game_title}</cite>
             </div>
