@@ -26,9 +26,9 @@ export default function Dropdown({ options } : { options : DropdownOption[] }) {
         else if (ind === len - 1) return "rounded-b-lg"
     }
 
-    return <ClickAwayListener onClickAway={() => setOpen(false)}><div>
+    return <ClickAwayListener onClickAway={() => setOpen(false)}><div className="h-12">
         <button type="button" onClick={() => setOpen(!open)}><TbDotsVertical/></button>
-        {open && <ul className="flex flex-col absolute">
+        {open && <ul className="flex flex-col absolute right-2">
             {options.map((item : DropdownOption, ind : number) => <li key={ind}>
                 <button 
                     onClick={closeWrap(item.onClick)}

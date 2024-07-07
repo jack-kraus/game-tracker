@@ -8,6 +8,7 @@ import { TbUser } from "react-icons/tb";
 import { ThreeDots } from "react-loader-spinner";
 import { RiLoginCircleFill } from "react-icons/ri";
 import SearchBar from "@/components/ui/SearchBar";
+import { Suspense } from "react";
 
 export default function Navbar() {
     const searchParams = useSearchParams();
@@ -26,7 +27,9 @@ export default function Navbar() {
                     <img className="object-cover purple group-hover:drop-shadow-white-md group-active:drop-shadow-white-xl group-active:invert group-active:hue-rotate-180" src={width >= cutoff ? "/images/logo.svg" : "/images/logo_small.svg"}/>
                 </a>
             </div>
-            <SearchBar type={type} query={query} width={width}/>
+            <Suspense fallback={<div className="grow"></div>}>
+                <SearchBar type={type} query={query} width={width}/>
+            </Suspense>
             <a className="sidebar-icon rounded-sm flex-shrink-0" href="/post"><FaPlus size={25}/></a>
             {
                 loading ? <ThreeDots color="#7a7a7a" height={30} width={30}/> :
