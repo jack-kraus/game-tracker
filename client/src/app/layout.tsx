@@ -23,9 +23,7 @@ export default async function RootLayout({
     <html lang="en">
       <body className={inter.className}>
         <AuthProvider>
-          <Suspense fallback={<div className="grow"></div>}>
-            <Navbar/>
-          </Suspense>
+          <Navbar/>
           <QueryProvider>
             <main className="flex flex-col max-w-3xl px-5 sm:px-10 items-center mt-4 gap-3 sm:pt-24 pt-20 pb-4 mx-auto">
               <Head>
