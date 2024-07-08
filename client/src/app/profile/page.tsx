@@ -35,7 +35,8 @@ export default async function Profile() {
                 author : data.id
             }}
             optionSelectors={{
-                order: ["created_at", "likes"]
+                order: ["created_at", "likes", "rating"],
+                last: ["all", "day", "week", "month"]
             }}
             reverseSelector={true}
             keyStart="posts"

@@ -6,7 +6,7 @@ export const dynamic = 'force-dynamic';
 const PER_PAGE = 10;
 const paramSchema = object({
     filter : string().default("none").lowercase().trim().oneOf(["none", "following"]),
-    order : string().default("created_at").lowercase().trim().oneOf(["created_at", "likes"]),
+    order : string().default("created_at").lowercase().trim().oneOf(["created_at", "likes", "rating"]),
     last : string().default("all").lowercase().trim().oneOf(["all", "day", "week", "month", "year"]),
     author : string().trim().uuid(),
     game : number().min(0),

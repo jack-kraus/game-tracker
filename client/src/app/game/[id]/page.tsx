@@ -49,6 +49,10 @@ export default async function GamePage({params} : any) {
             options={{
                 game: id
             }}
+            optionSelectors={{
+                order: ["created_at", "likes", "rating"],
+                last: ["all", "day", "week", "month"]
+            }}
         />
     </>;
 }

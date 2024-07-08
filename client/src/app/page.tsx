@@ -5,7 +5,7 @@ export default function Feed() {
     title="Feed"
     optionSelectors={{
       filter: ["none", "following"],
-      order: ["created_at", "likes"],
+      order: ["created_at", "likes", "rating"],
       last: ["all", "day", "week", "month"]
     }}
     keyStart='posts'
