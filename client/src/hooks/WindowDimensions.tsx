@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react';
 
 
 export default function useWindowDimensions() {
-  const [windowDimensions, setWindowDimensions] = useState({width : 600, height : 900, document : null});
+  const [windowDimensions, setWindowDimensions] = useState<{width:number, height:number, document: Document | null}>({width : 600, height : 900, document : null});
 
   useEffect(() => {
     function handleResize() {

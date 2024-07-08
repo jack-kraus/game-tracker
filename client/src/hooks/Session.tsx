@@ -3,7 +3,7 @@ import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 
 export default function Session() {
-    const [session, setSession] = useState(null);
+    const [session, setSession] = useState<any>(null);
     const [loading, setLoading] = useState(true);
     
     const supabase = createClient();
@@ -12,7 +12,7 @@ export default function Session() {
     useEffect(() => {
         setLoading(true);
         supabase.auth.getSession().then(({data}) => {
-            setSession(data?.session);
+            if (data?.session) { setSession(data.session); }
             setLoading(false);
         });
     }, [pathname]);

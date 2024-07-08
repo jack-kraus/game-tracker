@@ -8,7 +8,6 @@ import { number } from "yup";
 import CommentForm from "@/components/form/CommentForm";
 import { getUserServer } from "@/data/users";
 import PostEditDropdown from "@/components/ui/PostEditDropdown";
-import Image from "next/image";
 
 const gameId = number().required().min(0);
 export default async function Review({params} : {params : {id : string}}) {
@@ -26,13 +25,13 @@ export default async function Review({params} : {params : {id : string}}) {
     return <>
         <div className="text-white box-item gap-3 flex-row mb-3">
             <div className="flex sm:flex-row flex-row-reverse gap-3 w-full">
-                <div className="sm:w-96 w-24">
+                <div className="sm:w-32 w-16 shrink-0">
                     <a className="link-item" href={`/game/${data?.game}`}>
                         <img className="w-full rounded-md hover:brightness-150" src={data?.game_cover} alt={data?.game_title + " cover"}/>
                     </a>
                     <a className="link-item" href={`/game/${data?.game}`}><cite>{data?.game_title}</cite></a>
                 </div>
-                <div className="grow flex flex-col gap-1">
+                <div className="grow flex flex-col gap-2">
                     <h1>{data?.title}</h1>
                     <cite>by <a className="link-item" href={`/user/${data?.author}`}>{data?.username}</a> at {data?.created_at}</cite>
                     <p>{data?.content}</p>

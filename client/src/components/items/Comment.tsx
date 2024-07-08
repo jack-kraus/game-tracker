@@ -23,7 +23,7 @@ export default function Comment({author, content, id, username, z_index} : Comme
     const [state, setState] = useState(CommentState.normal);
     const [text, setText] = useState<string>(content);
     const supabase = createClient();
-    const {session} = useUser();
+    const { session } = useUser();
     const queryClient = useQueryClient();
 
     async function submitDelete() {
@@ -75,7 +75,7 @@ export default function Comment({author, content, id, username, z_index} : Comme
 
     return <div className="w-full rounded-xl bg-scale-800 text-scale-0 p-3 flex flex-row gap-3 drop-shadow-md" style={{zIndex: z_index}}>
         {section}
-        {session?.user?.id === author && (state === CommentState.normal ? <Dropdown options={[
+        {session && session?.user?.id === author && (state === CommentState.normal ? <Dropdown options={[
             { label : "Edit Comment", onClick : () => setState(CommentState.editing) },
             { label : "Delete Comment", onClick : submitDelete }
         ]}/> : <button className="h-full" onClick={() => setState(CommentState.normal)}><RxCross2 size={20}/></button>)}

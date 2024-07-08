@@ -19,7 +19,7 @@ export default async function GamePage({params} : any) {
         <article className="box-item gap-5 sm:flex-row flex-col items-center sm:items-start">
             <div className="flex items-center gap-3 flex-col w-48 h-auto shrink-0">
                 <h1>{game.name}</h1>
-                <img className="object-contain w-full rounded-md" src={game?.cover}/>
+                <img className="object-contain w-full rounded-md hover:brightness-150" src={game?.cover}/>
             </div>
             <div className="flex flex-col gap-3">
                 <div className="flex flex-col gap-3">
@@ -45,8 +45,13 @@ export default async function GamePage({params} : any) {
         <InfiniteScroller
             title="Reviews"
             type="post_game"
+            reverseSelector={true}
             options={{
                 game: id
+            }}
+            optionSelectors={{
+                order: ["created_at", "likes", "rating"],
+                last: ["all", "day", "week", "month"]
             }}
         />
     </>;

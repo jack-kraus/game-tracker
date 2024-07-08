@@ -1,33 +1,12 @@
 "use client";
-import Post from '@/components/items/Post';
 import LoadingHandler from '@/components/ui/LoadingHandler';
 import { useQuery } from '@tanstack/react-query';
-import { ReactNode, useState } from 'react';
-import GameResult from '../items/GameResult';
-import UserCard from '../items/UserCard';
+import { useState } from 'react';
 import SelectionOptions from '../items/SelectionOptions';
+import { ScrollerParams, render } from './ScrollerExports';
 
-type renderType = "game" | "user" | "post" | "post_game" | "post_user";
 
-interface InfiniteScrollerParams {
-  route? : string,
-  options? : {[opt:string] : string},
-  title : string,
-  renderItem? : (item:object, key:number) => ReactNode,
-  type? : renderType,
-  optionSelectors? : { [key: string]: string[]; }
-}
-
-function render(type : renderType, item : any, index : number) {
-  switch (type) {
-    case "post": return <Post key={index} {...item}/>;
-    case "game": return <GameResult key={index} {...item}/>;
-    case "user": return <UserCard key={index} {...item}/>;
-    case "post_game": return <Post key={index} {...item} type="game"/>;
-    case "post_user": return <Post key={index} {...item} type="user"/>;
-  }
-}
-export default function PageScroller({title, route, options, type, optionSelectors} : InfiniteScrollerParams) {
+export default function PageScroller({title, route, options, type, optionSelectors} : ScrollerParams) {
     options = options ? options : {};
     route = route ? route : '/api/review';
     type = type ? type : "post";
@@ -47,9 +26,8 @@ export default function PageScroller({title, route, options, type, optionSelecto
     }
 
     const alterPage = (offset : number, length : number) => {
-        const new_page = page + offset;
-        if (new_page < 0) {console.log(1); return;}
-        else if (!length && offset > 0) {console.log(2); return;}
+        const new_page = Math.max(0, page + offset);
+        if (!length && offset > 0) { return; }
         else { setPage(new_page); }
     }
 
@@ -64,7 +42,7 @@ export default function PageScroller({title, route, options, type, optionSelecto
         <h1 className="text-scale-0 underline">{title}</h1>
         {optionSelectors && <SelectionOptions selectionState={[values, setValues]} optionSelectors={optionSelectors}/>}
         <LoadingHandler isPending={isPending} error={error} data={data}>
-            {items && items.length ? items.map((item : any, index:number) =>  render(type, item, index)) : <p className='text-scale-0'>Nothing more to load</p>}
+            {items && items.length ? items.map((item : any, index:number) => render(type, item, index, items.length)) : <p className='text-scale-0'>Nothing more to load</p>}
             <div className='box-item w-auto gap-3 items-center'>
                 <button
                     onClick={() => alterPage(-1, items.length)}

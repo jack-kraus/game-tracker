@@ -1,5 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 import { useEffect, useState } from "react"
+import ClickAwayListener from "react-click-away-listener";
 
 interface GameDict {
     name : string,
@@ -35,7 +36,7 @@ export default function GameSearch({ val } : {val : Val}) {
 
     const loading = isPending && !!field && canRun;
 
-    if (value) return <h1 className="text-scale-0" onClick={() => setValue(null)}>Review for: {value.name}</h1>;
+    if (value) return <h1 className="text-scale-0" onClick={() => setValue(null)}>Review for: {value.name} <span className="text-base font-normal italic text-scale-200">&#x28;Click to edit&#x29;</span></h1>;
     else {
         return <div className="w-full">
             <input

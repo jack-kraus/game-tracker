@@ -12,6 +12,6 @@ export default function Stars({rating, size} : {rating:number, size?:number}) {
     
     return <>
         <PurpleGradient/>            
-        <div className="flex flex-row p-0">{[...Array(5)].map((_, ind) => starClass(ind))}</div>
+        <div className="flex flex-row p-0 m-0 gap-0.5">{[...Array(5)].map((_, ind) => starClass(ind))}</div>
     </>
 }

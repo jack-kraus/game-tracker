@@ -15,29 +15,17 @@ export default async function Profile({params} : any) {
         <div className="box-item flex-col max-w-xs gap-3 items-center">
             <h1 className="text-scale-0 underline">{data?.username}&apos;s Page</h1>
             <TbUser className="border-opacity-25 transition-all bg-scale-500 p-2 rounded-full flex justify-center items-center" size={80} color="white"/>
-            <table className="table-fixed border-spacing-2 text-scale-0 w-3/4">
-                <thead>
-                    <tr>
-                        <th>Followers</th>
-                        <th>Following</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <th>{data?.followers}</th>
-                        <th>{data?.following}</th>
-                    </tr>
-                </tbody>
-            </table>
-            <FollowButton id={id} following={data?.is_following}/>
+            <FollowButton id={id} followers={data?.followers} following={data?.following} is_following={data?.is_following}/>
         </div>
         <InfiniteScroller title="Top Posts" type="post_user"
             options={{
                 author : id,
             }}
             optionSelectors={{
-                order: ["created_at", "likes"]
+                order: ["created_at", "likes", "rating"],
+                last: ["all", "day", "week", "month"]
             }}
+            reverseSelector={true}
         />
     </>;
 }
