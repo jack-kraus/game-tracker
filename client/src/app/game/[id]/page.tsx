@@ -45,6 +45,7 @@ export default async function GamePage({params} : any) {
         <InfiniteScroller
             title="Reviews"
             type="post_game"
+            reverseSelector={true}
             options={{
                 game: id
             }}

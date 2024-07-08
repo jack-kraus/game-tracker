@@ -8,7 +8,6 @@ import { number } from "yup";
 import CommentForm from "@/components/form/CommentForm";
 import { getUserServer } from "@/data/users";
 import PostEditDropdown from "@/components/ui/PostEditDropdown";
-import Image from "next/image";
 
 const gameId = number().required().min(0);
 export default async function Review({params} : {params : {id : string}}) {

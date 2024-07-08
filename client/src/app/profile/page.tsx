@@ -37,6 +37,7 @@ export default async function Profile() {
             optionSelectors={{
                 order: ["created_at", "likes"]
             }}
+            reverseSelector={true}
             keyStart="posts"
         />
     </>;

@@ -1,7 +1,7 @@
 // export const dynamic = 'force-dynamic' // defaults to auto
 import { headers } from "@/data/api";
 import { NextRequest } from "next/server";
-import { object, string, number } from 'yup';
+import { object, string, number, boolean } from 'yup';
 import moment from "moment";
 import axios from "axios";
 
@@ -12,7 +12,7 @@ const paramSchema = object({
   query : string().trim().transform((val) => val.replace("\"", "")).required(),
   page : number().default(0).integer().min(0),
   perPage : number().default(PER_PAGE).integer().min(0),
-  order : string().lowercase().trim().oneOf(["created_at", "likes"]),
+  order : string().lowercase().trim().oneOf(["created_at", "likes"])
 });
 
 export async function GET(request : NextRequest) {

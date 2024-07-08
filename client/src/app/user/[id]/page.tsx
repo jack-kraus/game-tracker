@@ -38,6 +38,7 @@ export default async function Profile({params} : any) {
             optionSelectors={{
                 order: ["created_at", "likes"]
             }}
+            reverseSelector={true}
         />
     </>;
 }
