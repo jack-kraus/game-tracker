@@ -12,7 +12,7 @@ export default function Session() {
     useEffect(() => {
         setLoading(true);
         supabase.auth.getSession().then(({data}) => {
-            setSession(data.session);
+            setSession(data && data?.session ? data.session : null);
             setLoading(false);
         });
     }, [pathname]);
