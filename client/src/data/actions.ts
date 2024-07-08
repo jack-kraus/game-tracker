@@ -60,7 +60,7 @@ export async function signup(formData: RegisterData) {
       .from('profile')
       .select('*', { count: 'exact', head: true })
       .eq('username', username);
-    if (count >= 1) return { success : false, key : "username", message : "Username taken" }
+    if (!count || count >= 1) return { success : false, key : "username", message : "Username taken" }
   } catch(e) {
     return { success : false, key : "password", message : e.toString() }
   }
@@ -69,7 +69,7 @@ export async function signup(formData: RegisterData) {
   try {
     const { data, error } = await supabase.auth.signUp(insert);
     if (error || !data) {
-      if (error.code === "user_already_exists") return { success : false, key : "email", message : error.message }
+      if (error?.code === "user_already_exists") return { success : false, key : "email", message : error.message }
     }
   } catch(e) {
     return { success : false, key : "password", message : e.toString() }
