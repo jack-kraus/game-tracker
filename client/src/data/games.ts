@@ -21,11 +21,14 @@ async function searchGames(query : string, limit : number) {
 }
 
 async function searchGameById(id : string | number) {
+    let axios_error : string = "";
     let response = await axios.post(
         "https://api.igdb.com/v4/games/",
         `fields id, name, summary, cover.image_id, first_release_date, genres.name, platforms.name; where id = ${id}; limit 1;`,
         {headers:headers}
-    );
+    ).catch((error) => axios_error = error.message);
+    if (axios_error) throw axios_error;
+
     let data = response.data as any[];
 
     if (data.length === 0) throw "No Results found";

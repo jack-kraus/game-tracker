@@ -1,4 +1,9 @@
 import InfiniteScroller from '@/components/ui/InfiniteScroller';
+import { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  description: "Check out the newest reviews among your friends and in the community"
+};
 
 export default function Feed() {
   return <InfiniteScroller

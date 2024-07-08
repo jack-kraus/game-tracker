@@ -8,6 +8,12 @@ const searchSchema = object({
     type: string().trim().default("game").oneOf(["game", "user"])
 });
 
+export async function generateMetadata({ searchParams } : any) {
+    const { query } = searchParams;
+    if (!query) return { title: "Error | Leveler"};
+    return { title: `Search for "${query}" | Leveler`};
+}
+
 export default async function Search({searchParams} : any) {
     try {
         searchParams = await searchSchema.validate(searchParams);

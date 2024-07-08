@@ -1,4 +1,4 @@
-import React from "react";
+import React, { cache } from "react";
 import {number} from "yup";
 import { searchGameById } from "@/data/games";
 import InfiniteScroller from "@/components/ui/InfiniteScroller";
@@ -7,12 +7,26 @@ import Link from "next/link";
 
 const gameId = number().min(0).required();
 
+const gameById = cache(async (id : string | number) => {
+    try { id = await gameId.validate(id); }
+    catch(e) { throw "Improper Id"; }
+    const game = await searchGameById(id);
+    return { game, id }
+});
+
+export async function generateMetadata({ params } : any) {
+    let { id } = params;
+    let game : any;
+    try { ({game, id} = await gameById(id)); }
+    catch (e) { return { title : "Error | Leveler", description: e }; }
+
+    return { title: `${game.name} | Game | Leveler`, description: game.summary ?? "" }
+}
+
 export default async function GamePage({params} : any) {
     let { id } = params;
-    try { id = await gameId.validate(id); }
-    catch (error) { return <h1 className="text-red-500">Improper ID</h1>; }
-    let game;
-    try { game = await searchGameById(id); }
+    let game : any;
+    try { ({game, id} = await gameById(id)); }
     catch (error) { return <h1 className="text-red-500">{error}</h1>; }
     
     return  <>

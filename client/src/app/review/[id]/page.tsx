@@ -1,23 +1,42 @@
 "use server";
-import React from "react";
+import React, { cache } from "react";
 import Stars from "@/components/ui/Stars";
 import LikeButton from "@/components/ui/LikeButton";
 import { getReviewById } from "@/data/reviews";
 import InfiniteScroller from "@/components/ui/InfiniteScroller";
-import { number } from "yup";
 import CommentForm from "@/components/form/CommentForm";
 import { getUserServer } from "@/data/users";
 import PostEditDropdown from "@/components/ui/PostEditDropdown";
+import { schema } from "@/data/helpers";
 
-const gameId = number().required().min(0);
-export default async function Review({params} : {params : {id : string}}) {
+const reviewById = cache(async (id : string | number) => {
     // get starting data
-    let { id } : {id : string | number } = params;
-    try { id = await gameId.validate(id); }
-    catch (error) { return <h1 className="text-red-500">Improper ID</h1>; }
+    try { id = await schema.numberIdSchema.validate(id); }
+    catch (error) { throw "Improper ID"; }
     let data : any;
     try { data = await getReviewById(id); }
-    catch (e) { return <h1 className="text-red-500">{`${e}`}</h1>; }
+    catch (e) { throw "Issue finding Review"; }
+    
+    // return data
+    return { data, id };
+});
+
+export async function generateMetadata({ params } : any) {
+    let { id } = params;
+    let data;
+    try { ({ data, id } = await reviewById(id)); }
+    catch (error) { return { title: `Error | Leveler` } }
+
+    return { title: `${data?.title} | Review | Leveler` }
+}
+
+export default async function Review({params} : {params : {id : string | number}}) {
+    // get starting data
+    let { id } = params;
+    let data;
+    try { ({ data, id } = await reviewById(id)); }
+    catch (error) { return <h1 className="text-red-500">{error}</h1> }
+
 
     // get current user
     const user = await getUserServer();
