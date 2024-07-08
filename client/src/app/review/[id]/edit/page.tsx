@@ -12,7 +12,8 @@ export default async function EditPost({params} : any) {
         .eq('id', params.id);
     const {data : {user}} = await supabase.auth.getUser();
 
-    if (!user.id || !data || !data[0] ||user.id !== data[0].author || error) {
+
+    if (!user || !user.id || !data || !data[0] ||user.id !== data[0].author || error) {
         redirect("/error");
     }
     
