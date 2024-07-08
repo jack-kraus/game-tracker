@@ -1,16 +1,12 @@
 'use client';
+
 import { useState } from "react";
 import { LoginForm, SignupForm } from "@/components/form/LoginForm";
-import { Metadata } from "next";
 
 enum FormState {
     Login,
     SignUp
 }
-
-export const metadata: Metadata = {
-    title: "Login/Sign-Up | Leveler"
-};
 
 export default function Login() {
     const [state, setState] = useState(FormState.Login);
