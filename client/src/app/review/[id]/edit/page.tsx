@@ -1,7 +1,17 @@
+"use server";
 import PostSubmit from "@/components/form/PostSubmit";
 import { createClient } from "@/utils/supabase/server";
+import { Metadata } from "next";
 import { redirect } from "next/navigation";
+import React from "react";
+import { getReviewById } from "@/data/reviews";
+import { number } from "yup";
 
+const gameId = number().required().min(0);
+export const metadata: Metadata = {
+    title: "Edit Post | Leveler",
+    description: "Change up your review and save back to your profile"
+};
 
 export default async function EditPost({params} : any) {
     if (!params.id) { console.log(params); return<></>; }

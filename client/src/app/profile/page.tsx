@@ -3,6 +3,12 @@ import { getUserServer } from "@/data/users";
 import LogoutButton from "@/components/ui/LogoutButton";
 import { TbUser } from "react-icons/tb";
 import { redirect } from "next/navigation";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+    title: "Profile | Leveler",
+    description: "Your reviews and data"
+};
 
 export default async function Profile() {
     const data = await getUserServer();

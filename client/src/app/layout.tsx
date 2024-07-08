@@ -11,7 +11,7 @@ const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: "Leveler",
-  description: "A gaming social site"
+  description: "A gaming social site for sharing reviews"
 };
 
 export default async function RootLayout({
