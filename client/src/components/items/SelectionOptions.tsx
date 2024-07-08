@@ -27,7 +27,7 @@ export default function SelectionOptions({ optionSelectors, reverseSelector, sel
         <div className='flex flex-col' key={i}>
             <p>{capitalize(key)}</p>
             <select onChange={(e) => changeValue(key, e.target.value)} className='input-box'>
-                {value && value.map((name : string, j: number) => <option className="hover:bg-scale-700" key={`${i}, ${j}`} value={name}>{capitalize(name)}</option>)}
+                {value && value.map((name : string, j: number) => <option className="hover:bg-scale-700 font-sans" key={`${i}, ${j}`} value={name}>{capitalize(name)}</option>)}
             </select>
         </div>)}
         {reverseSelector && <div className='flex flex-col'>
