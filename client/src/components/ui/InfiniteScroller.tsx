@@ -80,7 +80,7 @@ export default function InfiniteScroller({title, route, options, type, optionSel
             ? 'Load More'
             : 'Nothing more to load'}
       </p>
-      <BottomScrollListener onBottom={() => { if (!isFetchingNextPage && hasNextPage) { fetchNextPage() } }} triggerOnNoScroll={true}/>
+      <BottomScrollListener offset={100} onBottom={() => { if (!isFetchingNextPage && hasNextPage) { fetchNextPage() } }} triggerOnNoScroll={true}/>
     </LoadingHandler>
   </>;
 }
