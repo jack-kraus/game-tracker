@@ -1,36 +1,39 @@
-"use server";
 import PostSubmit from "@/components/form/PostSubmit";
 import { createClient } from "@/utils/supabase/server";
 import { Metadata } from "next";
 import { redirect } from "next/navigation";
 import React from "react";
-import { getReviewById } from "@/data/reviews";
-import { number } from "yup";
+import { getJustReviewById } from "@/data/reviews";
+import { schema } from "@/data/helpers";
 
-const gameId = number().required().min(0);
 export const metadata: Metadata = {
     title: "Edit Post | Leveler",
     description: "Change up your review and save back to your profile"
 };
 
 export default async function EditPost({params} : any) {
-    if (!params.id) { console.log(params); return<></>; }
+    "use server";
+
+    // get starting data
+    let { id } = params;
+    try { id = await schema.numberIdSchema.validate(id); }
+    catch (error) { return <h1 className="text-red-500">Improper ID</h1>; }
+    let data : any;
+    try { data = await getJustReviewById(id); }
+    catch (e) { return <h1 className="text-red-500">Trouble finding post</h1>; }
+
+    // get user
     const supabase = createClient();
-    const { data, error } = await supabase
-        .from('post')
-        .select('*')
-        .eq('id', params.id);
-    const {data : {user}} = await supabase.auth.getUser();
+    const { data: { user } } = await supabase.auth.getUser();
 
-
-    if (!user || !user.id || !data || !data[0] ||user.id !== data[0].author || error) {
+    // check if can access data
+    if (!user || !user.id || !data || user.id !== data.author) {
         redirect("/error");
     }
-    
-    const postData = data[0];
 
+    // return form
     return <>
-        <h1 className="text-scale-0">Review for {postData.game_title}</h1>
-        <PostSubmit game_id={postData.game} defaultValues={postData} review_id={postData.id}/>
+        <h1 className="text-scale-0">Review for {data.game_title}</h1>
+        <PostSubmit game_id={data.game} defaultValues={data} review_id={data.id}/>
     </>;
 }

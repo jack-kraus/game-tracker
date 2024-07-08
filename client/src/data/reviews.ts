@@ -13,6 +13,24 @@ async function validateReview(review : any) {
     return review;
 }
 
+export async function getJustReviewById(id : string | number) {
+    const idSchema = number().required().min(0);
+    id = await idSchema.validate(id);
+
+    const supabase = createClient();
+    const { data, error } = await supabase
+        .from('post')
+        .select('*')
+        .eq('id', id)
+        .limit(1);
+    if (error) throw error.message;
+    else if (!data[0]) throw "No post found";
+    let review = data[0];
+    if (review.created_at) review.created_at = moment(review.created).format("MM/DD/YYYY hh:mm");
+
+    return data[0];
+}
+
 export async function getReviewById(id : string | number) {
     const idSchema = number().required().min(0);
     id = await idSchema.validate(id);
