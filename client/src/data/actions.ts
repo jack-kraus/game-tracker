@@ -60,7 +60,9 @@ export async function signup(formData: RegisterData) {
       .from('profile')
       .select('*', { count: 'exact', head: true })
       .eq('username', username);
-    if (!count || count >= 1) return { success : false, key : "username", message : "Username taken" }
+    console.log(count);
+    console.log(typeof count);
+    if ((typeof count !== "number") || count >= 1) return { success : false, key : "username", message : "Username taken" }
   } catch(e) {
     return { success : false, key : "password", message : e.toString() }
   }
