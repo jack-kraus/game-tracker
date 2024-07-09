@@ -44,12 +44,10 @@ export default async function Review({params} : {params : {id : string | number}
     return <>
         <div className="text-white box-item gap-3 flex-row mb-3">
             <div className="flex sm:flex-row flex-row-reverse gap-3 w-full">
-                <div className="sm:w-32 w-16 shrink-0">
-                    <a className="link-item" href={`/game/${data?.game}`}>
-                        <img className="w-full rounded-md hover:brightness-150" src={data?.game_cover} alt={data?.game_title + " cover"}/>
-                    </a>
-                    <a className="link-item" href={`/game/${data?.game}`}><cite>{data?.game_title}</cite></a>
-                </div>
+                <a className="sm:w-32 w-16 shrink-0 group text-center" href={`/game/${data?.game}`}>
+                    <img className="w-full rounded-md group-hover:brightness-150" src={data?.game_cover} alt={data?.game_title + " cover"}/>
+                    <cite className="group-link-item text-sm text-end">{data?.game_title}</cite>
+                </a>
                 <div className="grow flex flex-col gap-2">
                     <h1>{data?.title}</h1>
                     <cite>by <a className="link-item" href={`/user/${data?.author}`}>{data?.username}</a> at {data?.created_at}</cite>

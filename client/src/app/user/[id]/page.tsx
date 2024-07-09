@@ -3,7 +3,7 @@ import FollowButton from "@/components/ui/FollowButton";
 import InfiniteScroller from '@/components/ui/InfiniteScroller';
 import { getUserByIdServer } from "@/data/users";
 import { schema } from "@/data/helpers";
-import { TbUser } from "react-icons/tb";
+import { FaUser } from "react-icons/fa";
 
 const userById = cache(async (id : string | number) => {
     try { id = await schema.uuidSchema.validate(id); }
@@ -31,7 +31,7 @@ export default async function Profile({params} : any) {
     return <>
         <div className="box-item flex-col max-w-xs gap-3 items-center">
             <h1 className="text-scale-0 underline">{user?.username}&apos;s Page</h1>
-            <TbUser className="border-opacity-25 transition-all bg-scale-500 p-2 rounded-full flex justify-center items-center" size={80} color="white"/>
+            <FaUser className="border-opacity-25 transition-all bg-scale-500 p-3 rounded-full flex justify-center items-center" size={80} color="white"/>
             <FollowButton id={id} followers={user?.followers} following={user?.following} is_following={user?.is_following}/>
         </div>
         <InfiniteScroller title="Top Posts" type="post_user"
