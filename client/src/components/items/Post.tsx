@@ -40,7 +40,7 @@ export default function Post({ id, title, game, game_title, game_cover, content,
             </a>}
             <div className="h-full w-full flex flex-col gap-1">
                 <a href={`/review/${id}`} className="link-item"><h1>{title}</h1></a>
-                <SeeMore lines={5}>{content}</SeeMore>
+                <SeeMore>{content}</SeeMore>
                 <Stars rating={rating}/>
             </div>
             <cite className="flex flex-col justify-start items-end text-right gap-3">

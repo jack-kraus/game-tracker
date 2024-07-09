@@ -3,7 +3,7 @@
 import { useLayoutEffect, useRef, useState } from "react";
 import ClickAwayListener from "react-click-away-listener";
 
-export default function SeeMore({children, lines}) {
+export default function SeeMore({children}) {
     const ref = useRef<null | HTMLParagraphElement>(null);
     const [showMore, setShowMore] = useState(false);
     const [showLink, setShowLink] = useState(false);
@@ -11,7 +11,7 @@ export default function SeeMore({children, lines}) {
     useLayoutEffect(() => {
         function updateSize() {
             if (!ref.current) return;
-            if (ref.current.scrollHeight / 24 > lines) { setShowLink(true); }
+            if (ref.current.scrollHeight / 24 > 5) { setShowLink(true); }
             else { setShowLink(false); }
         }
         updateSize();
@@ -21,11 +21,11 @@ export default function SeeMore({children, lines}) {
     const onClickMore = () => {
         setShowMore(!showMore);
     };
-
+    
     return <>
         <ClickAwayListener onClickAway={()=>setShowMore(false)}>
         <div className="flex flex-col gap-1">
-            <p ref={ref} className={"h-full text-ellipsis overflow-hidden " + (showMore ? "line-clamp-none" : `line-clamp-${lines > 6 ? `[${lines}]` : lines}`)}>
+            <p ref={ref} className={"h-full text-ellipsis overflow-hidden " + (showMore ? "line-clamp-none" : "line-clamp-5")}>
                 {children}
             </p>
             {showLink && <button className="text-scale-200 hover:text-scale-0" onClick={onClickMore}>&#x28;See {showMore ? "Less" : "More"}&#x29;</button>}
