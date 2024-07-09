@@ -11,7 +11,7 @@ export default function SeeMore({children, lines}) {
     useLayoutEffect(() => {
         function updateSize() {
             if (!ref.current) return;
-            if (ref.current.clientHeight < ref.current.scrollHeight) { setShowLink(true); }
+            if (ref.current.scrollHeight / 24 > lines) { setShowLink(true); }
             else { setShowLink(false); }
         }
         updateSize();
@@ -25,7 +25,7 @@ export default function SeeMore({children, lines}) {
     return <>
         <ClickAwayListener onClickAway={()=>setShowMore(false)}>
         <div className="flex flex-col gap-1">
-            <p ref={ref} className={"h-full text-ellipsis overflow-hidden " + (showMore ? "line-clamp-none" : "line-clamp-5")}>
+            <p ref={ref} className={"h-full text-ellipsis overflow-hidden " + (showMore ? "line-clamp-none" : `line-clamp-${lines > 6 ? `[${lines}]` : lines}`)}>
                 {children}
             </p>
             {showLink && <button className="text-scale-200 hover:text-scale-0" onClick={onClickMore}>&#x28;See {showMore ? "Less" : "More"}&#x29;</button>}
