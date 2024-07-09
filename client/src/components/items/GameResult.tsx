@@ -16,10 +16,10 @@ export default function GameResult({ name, summary, cover, id, first_release_dat
             </div>
             <div className="flex flex-col gap-3">
                 <Link href={`/game/${id}`} className="link-item">
-                    <h1>{name} <i className="italic">&#40;{first_release_date}&#41;</i></h1>
+                    <h1>{name} {first_release_date && <i className="italic">&#40;{first_release_date}&#41;</i>}</h1>
                 </Link>
                 <SeeMore>{summary}</SeeMore>
-                <p><b>Platforms:</b> {platforms.join(", ")}</p>
+                <p><b>Platforms:</b> {platforms ? platforms.join(", ") : "N/A"}</p>
             </div>
             <Link href={{
                     pathname: '/post',
