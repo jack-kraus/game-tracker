@@ -1,9 +1,12 @@
-import React, { cache } from "react";
+import React, { cache, ReactNode } from "react";
 import {number} from "yup";
 import { searchGameById } from "@/data/games";
 import InfiniteScroller from "@/components/ui/InfiniteScroller";
-import { BsPlusCircleFill } from "react-icons/bs";
+import { BsNintendoSwitch, BsJoystick, BsPlusCircleFill } from "react-icons/bs";
 import Link from "next/link";
+import { SiAtari, SiCommodore, SiNintendo, SiNintendogamecube, SiWii, SiWiiu } from "react-icons/si";
+import { FaApple, FaGamepad, FaPlaystation, FaWindows, FaXbox } from "react-icons/fa";
+import { SiNintendo3Ds } from "react-icons/si";
 
 const gameId = number().min(0).required();
 
@@ -43,7 +46,7 @@ export default async function GamePage({params} : any) {
                 <div className="grid grid-cols-2 gap-2">
                     <h2 className="font-bold">Platforms</h2>
                     <h2 className="font-bold">Genres</h2>
-                    {game.platforms ? <ol className="list-disc list-inside">{game.platforms.map((item : string, i:number) => <li key={i}>{item}</li>)}</ol> : <></>}
+                    {game.platforms ? <ol className="list-disc list-inside">{game.platforms.map((item : string, i:number) => PlatformItem(item, i))}</ol> : <></>}
                     {game.genres ? <ol className="list-disc list-inside">{game.genres.map((item : string, i:number) => <li key={i}>{item}</li>)}</ol> : <></>}
                 </div>
             </div>
@@ -69,4 +72,22 @@ export default async function GamePage({params} : any) {
             }}
         />
     </>;
+}
+
+function PlatformItem(name : string, i : number) {
+    let icon : null | ReactNode = <></>;
+    const lower = name.toLowerCase();
+    if (lower.startsWith("xbox"))                               { icon = <FaXbox color="white" className="p-0 m-0 inline"/>; }
+    else if (lower.startsWith("playstation"))                   { icon = <FaPlaystation color="white" className="p-0 m-0 inline"/>; }
+    else if (lower.startsWith("pc"))                            { icon = <FaWindows color="white" className="p-0 m-0 inline"/>; }
+    else if (lower.startsWith("mac"))                           { icon = <FaApple color="white" className="p-0 m-0 inline"/>; }
+    else if (lower.startsWith("nintendo switch"))               { icon = <BsNintendoSwitch color="white" className="p-0 m-0 inline"/>; }
+    else if (lower.startsWith("nintendo gamecube"))             { icon = <SiNintendogamecube color="white" className="p-0 m-0 inline"/>; }
+    else if (lower.startsWith("atari"))                         { icon = <SiAtari color="white" className="p-0 m-0 inline"/>; }
+    else if (lower.startsWith("commodore"))                     { icon = <SiCommodore color="white" className="p-0 m-0 inline"/>; }
+    else if (lower.startsWith("arcade"))                        { icon = <BsJoystick color="white" className="p-0 m-0 inline"/>; }
+    else if (["nintendo 3ds", "nintendo ds"].includes(lower))   { icon = <SiNintendo3Ds color="white" className="p-0 m-0 inline"/>; }
+    else if (lower === "wii u")                                 { icon = <SiWiiu color="white" className="p-0 m-0 inline"/>; }
+    else if (lower === "wii")                                   { icon = <SiWii color="white" className="p-0 m-0 inline"/>; }
+    return <li key={`platform:${i}`}>{icon}{icon ? " " : ""}{name}</li>
 }

@@ -19,8 +19,16 @@ html {
     @apply relative flex items-center rounded-2xl justify-center h-12 w-12 mt-2 mb-2 my-auto bg-scale-800 text-primary font-extrabold hover:text-secondary hover:bg-scale-0 hover:rounded-3xl active:text-scale-0 transition-all;
   }
 
+  .group-sidebar-icon {
+    @apply relative flex items-center rounded-2xl justify-center h-12 w-12 mt-2 mb-2 my-auto bg-scale-800 text-primary font-extrabold group-hover:text-secondary group-hover:bg-scale-0 group-hover:rounded-3xl active:text-scale-0 transition-all;
+  }
+
   .link-item {
-    @apply hover:text-primary active:text-white transition-colors hover:underline;
+    @apply hover:text-secondary active:text-primary underline text-scale-0 text-scale-100;
+  }
+
+  .group-link-item {
+    @apply group-hover:text-secondary group-active:text-primary underline text-scale-100;
   }
 
   .box-item {

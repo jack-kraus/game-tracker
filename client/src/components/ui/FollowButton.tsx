@@ -57,7 +57,6 @@ export default function FollowButton({id, followers, following, is_following} : 
         setLoading(false);
     }
 
-    if (!session || session?.user?.id === id) return <></>;
     return <>
         <table className="table-fixed border-spacing-2 text-scale-0 w-3/4">
             <thead>
@@ -73,10 +72,10 @@ export default function FollowButton({id, followers, following, is_following} : 
                 </tr>
             </tbody>
         </table>
-        <div className="flex flex-row gap-2 items-center">
+        {session && session?.user?.id === id && <div className="flex flex-row gap-2 items-center">
             <button type="button" onClick={handleFollowing} disabled={loading || sessionLoading} hidden={sessionLoading} className='primary-button'>{isFollowing ? "Unfollow" : "Follow"}</button>
             {(loading || sessionLoading) && <ThreeDots color="white" width={20} height={20}/>}
             {error && <p className="text-red-500">{error}</p>}
-        </div>
+        </div>}
     </>;
 }

@@ -7,7 +7,7 @@ import AuthProvider from "@/context/AuthProvider";
 import Head from "@/components/other/Head";
 import Footer from "@/components/ui/Footer";
 
-const inter = Inter({ subsets: ["latin"] });
+const inter = Inter({ subsets: ["latin"], fallback: ["ui-sans-serif", "system-ui", "sans-serif"] });
 
 export const metadata: Metadata = {
   title: "Leveler",
