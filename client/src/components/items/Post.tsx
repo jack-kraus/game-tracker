@@ -45,7 +45,7 @@ export default function Post({ id, title, game, game_title, game_cover, content,
             </div>
             <cite className="flex flex-col justify-start items-end text-right gap-3">
                 {type !== "user" && <a className="flex flex-col items-end gap-1 group" href={`/user/${author}`}>
-                    <FaUser size={60} className="p-2 bg-scale-500 text-scale-0 rounded-full group-hover:rounded-3xl object-contain transition-colors group-hover:bg-scale-0 group-hover:text-scale-500"/>
+                    <FaUser size={60} className="p-2 bg-scale-500 text-scale-0 rounded-full group-hover:rounded-3xl object-contain group-hover:bg-scale-0 group-hover:text-scale-500"/>
                     <p className="group-link-item">{username}</p>
                 </a>}
                 {moment(created_at).format("MM/DD/YY h:mm")}<LikeButton id={id} liked={is_liked} likes={likes}/>
