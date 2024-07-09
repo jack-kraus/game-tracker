@@ -18,7 +18,7 @@ export default function GameResult({ name, summary, cover, id, first_release_dat
                 <Link href={`/game/${id}`} className="link-item">
                     <h1>{name} <i className="italic">&#40;{first_release_date}&#41;</i></h1>
                 </Link>
-                <SeeMore lines={5}>{summary}</SeeMore>
+                <SeeMore>{summary}</SeeMore>
                 <p><b>Platforms:</b> {platforms.join(", ")}</p>
             </div>
             <Link href={{
