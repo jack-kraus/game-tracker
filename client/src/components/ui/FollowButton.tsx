@@ -72,7 +72,7 @@ export default function FollowButton({id, followers, following, is_following} : 
                 </tr>
             </tbody>
         </table>
-        {session && session?.user?.id === id && <div className="flex flex-row gap-2 items-center">
+        {session && session?.user?.id !== id && <div className="flex flex-row gap-2 items-center">
             <button type="button" onClick={handleFollowing} disabled={loading || sessionLoading} hidden={sessionLoading} className='primary-button'>{isFollowing ? "Unfollow" : "Follow"}</button>
             {(loading || sessionLoading) && <ThreeDots color="white" width={20} height={20}/>}
             {error && <p className="text-red-500">{error}</p>}
