@@ -54,7 +54,7 @@ const confirm_password_validation = (label:string, watch:(a:string)=>string, pas
         },
         validate: (val: string) => {
             if (watch(password_id) != val) {
-              return "Your passwords do no match";
+              return "Your passwords do not match";
             }
         },
         setValueAs: (v:string) => v.trim()
