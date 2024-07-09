@@ -9,6 +9,7 @@ import { TbUser } from "react-icons/tb";
 import LikeButton from "../ui/LikeButton";
 import { useUser } from "@/context/AuthProvider";
 import PostEditDropdown from "../ui/PostEditDropdown";
+import SeeMore from "../ui/SeeMore";
 
 interface postProps {
     title: string,
@@ -38,10 +39,10 @@ export default function Post({ id, title, game, game_title, game_cover, content,
             </div>}
             <div className="h-full w-full flex flex-col gap-1">
                 <a href={`/review/${id}`} className="link-item"><h1>{title}</h1></a>
-                <p className="h-full text-ellipsis max-h-48 overflow-hidden">{content ? content.substring(0,200) : ""}{content && content.length > 200 ? "..." : ""}</p>
+                <SeeMore lines={5}>{content}</SeeMore>
                 <Stars rating={rating}/>
             </div>
-            <cite className="flex flex-col justify-between items-end text-right">
+            <cite className="flex flex-col justify-start items-end text-right gap-3">
                 {type !== "user" && <>
                     <TbUser className="border-opacity-25 bg-scale-500 p-2 rounded-full flex justify-center items-center" size={60} color="white"/>
                     <a className="link-item" href={`/user/${author}`}>{username}</a>

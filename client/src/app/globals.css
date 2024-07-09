@@ -20,7 +20,7 @@ html {
   }
 
   .link-item {
-    @apply hover:text-primary active:text-white transition-colors hover:underline;
+    @apply hover:text-secondary active:text-primary underline text-scale-0;
   }
 
   .box-item {
