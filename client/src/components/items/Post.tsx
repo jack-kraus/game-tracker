@@ -34,7 +34,7 @@ export default function Post({ id, title, game, game_title, game_cover, content,
 
     return (
         <article className="box-item gap-3">
-            {type !== "game" && <a className="w-48 sm:w-32 w-16 shrink-0 group text-center" href={`/game/${game}`}>
+            {type !== "game" && <a className="sm:w-32 w-16 shrink-0 group text-center" href={`/game/${game}`}>
                 <img className="object-contain w-full rounded-md group-hover:brightness-150" src={game_cover} alt={game_title + " cover"}/>
                 <cite className="group-link-item text-sm text-end">{game_title}</cite>
             </a>}
