@@ -7,7 +7,7 @@ export type renderType = "game" | "user" | "post" | "post_game" | "post_user" | 
 
 export interface ScrollerParams {
   route? : string,
-  options? : {[opt:string] : string},
+  options? : {[opt:string] : string | boolean},
   title : string,
   type? : renderType,
   optionSelectors? : { [key: string]: string[]; },

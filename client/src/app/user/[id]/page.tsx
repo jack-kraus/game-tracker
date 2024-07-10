@@ -37,6 +37,7 @@ export default async function Profile({params} : any) {
         <InfiniteScroller title="Top Posts" type="post_user"
             options={{
                 author : id,
+                unlisted : true
             }}
             optionSelectors={{
                 order: ["created_at", "likes", "rating"],
