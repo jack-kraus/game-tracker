@@ -13,6 +13,7 @@ const paramSchema = object({
     reverse : boolean().default(false),
     page : number().default(0).integer().min(0),
     perPage : number().default(PER_PAGE).integer().min(0),
+    unlisted : boolean().default(false)
 });
 
 export async function GET(request : NextRequest) {
@@ -25,7 +26,7 @@ export async function GET(request : NextRequest) {
     const supabase = createClient();
 
     // construct query
-    let { filter, page, perPage, order, author, game, reverse, last } = searchParams;
+    let { filter, page, perPage, order, author, game, reverse, last, unlisted } = searchParams;
     let query = supabase.from(filter === "following" ? "post_user_like_following_status" : "post_user_like_status").select('*').range(page*perPage,(page+1)*perPage-1);
     if (author) query = query.eq("author", author);
     if (game) query = query.eq("game", game);
@@ -38,6 +39,7 @@ export async function GET(request : NextRequest) {
         const cutoff = new Date(today.getTime() - (24*60*60*1000*days));
         query = query.gte("created_at", cutoff.toISOString());
     }
+    if (!unlisted && filter !== "following") query = query.eq("unlisted", false);
     if (order) query = query.order(order, { ascending: reverse });
 
     // get reviews table
