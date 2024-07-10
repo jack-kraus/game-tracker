@@ -40,7 +40,8 @@ export default async function Profile() {
         </div>
         <InfiniteScroller title="Top Posts" type="post_user"
             options={{
-                author : data.id
+                author : data.id,
+                unlisted : true
             }}
             optionSelectors={{
                 order: ["created_at", "likes", "rating"],
