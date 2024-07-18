@@ -52,9 +52,9 @@ export default async function Review({params} : {params : {id : string | number}
                 </a>
                 <div className="grow flex flex-col gap-2">
                     <h1>{data?.title}</h1>
-                    <div className="flex gap-1">
+                    <div className="flex gap-1 flex-wrap">
                         <p className="text-scale-300">by</p>
-                        <a href={`/user/${data?.author}`} className="group w-auto inline-flex gap-1 items-center self-start">
+                        <a href={`/user/${data?.author}`} className="group w-auto inline-flex flex-wrap gap-1 items-center self-start">
                             <FaUser size={20} className="p-1  bg-scale-500 text-scale-0 rounded-full group-hover:rounded-3xl object-contain group-hover:bg-scale-0 group-hover:text-scale-500"/>
                             <p className="group-link-item break-words">{data?.username}</p>
                         </a>
