@@ -8,6 +8,8 @@ import CommentForm from "@/components/form/CommentForm";
 import { getUserServer } from "@/data/users";
 import PostEditDropdown from "@/components/ui/PostEditDropdown";
 import { schema } from "@/data/helpers";
+import { FaUser } from "react-icons/fa";
+import moment from "moment";
 
 const reviewById = cache(async (id : string | number) => {
     // get starting data
@@ -50,8 +52,15 @@ export default async function Review({params} : {params : {id : string | number}
                 </a>
                 <div className="grow flex flex-col gap-2">
                     <h1>{data?.title}</h1>
-                    <cite>by <a className="link-item" href={`/user/${data?.author}`}>{data?.username}</a> at {data?.created_at}</cite>
-                    <p>{data?.content}</p>
+                    <div className="flex gap-1">
+                        <p className="text-scale-300">by</p>
+                        <a href={`/user/${data?.author}`} className="group w-auto inline-flex gap-1 items-center self-start">
+                            <FaUser size={20} className="p-1  bg-scale-500 text-scale-0 rounded-full group-hover:rounded-3xl object-contain group-hover:bg-scale-0 group-hover:text-scale-500"/>
+                            <p className="group-link-item break-words">{data?.username}</p>
+                        </a>
+                        <p className="text-scale-300">on {moment(data?.created_at).format("MM/DD/YY")}</p>
+                    </div>
+                    <p className="whitespace-pre-line">{data?.content}</p>
                     <Stars rating={data?.rating}/>
                 </div>
                 <LikeButton id={id} liked={data?.is_liked} likes={data?.likes}/>

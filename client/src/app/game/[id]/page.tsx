@@ -5,7 +5,7 @@ import InfiniteScroller from "@/components/ui/InfiniteScroller";
 import { BsNintendoSwitch, BsJoystick, BsPlusCircleFill } from "react-icons/bs";
 import Link from "next/link";
 import { SiAtari, SiCommodore, SiNintendo, SiNintendogamecube, SiWii, SiWiiu } from "react-icons/si";
-import { FaApple, FaGamepad, FaPlaystation, FaWindows, FaXbox } from "react-icons/fa";
+import { FaApple, FaPlaystation, FaWindows, FaXbox } from "react-icons/fa";
 import { SiNintendo3Ds } from "react-icons/si";
 
 const gameId = number().min(0).required();
@@ -39,7 +39,7 @@ export default async function GamePage({params} : any) {
                 <img className="object-contain w-full rounded-md hover:brightness-150" src={game?.cover}/>
             </div>
             <div className="flex flex-col gap-3">
-                <div className="flex flex-col gap-3">
+                <div className="flex flex-col gap-3 whitespace-pre-line">
                     <h2 className="font-bold">Summary</h2>
                     {game.summary}
                 </div>

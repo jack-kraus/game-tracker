@@ -8,6 +8,7 @@ import hook from "@/data/hook_options";
 import { useRouter } from 'next/navigation';
 import { useState } from "react";
 import { ThreeDots } from "react-loader-spinner";
+import Stars from "../ui/Stars";
 
 interface PostSubmit {
     content : string,
@@ -52,15 +53,8 @@ export default function PostSubmit({game_id, review_id, defaultValues} : {game_i
         }
     }
 
-    function starClass(i : number) {
-        const range = watch("rating");
-        if ((i+1)*2 <= range) return <BsStarFill key={i} className="text-primary"/>;
-        else if (range-1 === i*2) return <BsStarFill key={i} style={{ fill: "url(#blue-gradient)" }}/>;
-        else return <BsStarFill key={i} className="text-scale-100"/>;
-    }
-
     return <FormProvider {...methods}>
-        <form className='flex flex-col gap-3 box-item' onSubmit={handleSubmit(postForm)}>
+        <form className='flex flex-col gap-4 box-item' onSubmit={handleSubmit(postForm)}>
             <Input
                 id="title"
                 label="Title"
@@ -84,8 +78,7 @@ export default function PostSubmit({game_id, review_id, defaultValues} : {game_i
                 min="0"
                 max="10"
             />
-            <PurpleGradient/>            
-            <div className="flex flex-row p-0">{[...Array(5)].map((_, ind) => starClass(ind))}</div>
+            <div className="flex justify-center"><Stars size={30} rating={watch("rating")}/></div>
             <div className="flex w-full items-center gap-3">
                 <button type="submit" className='primary-button grow' disabled={loading}>{review_id ? "Edit Review" : "Submit"}</button> {loading ? <ThreeDots color="white" width={20} height={20}/> : <></>}
             </div>

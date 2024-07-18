@@ -48,7 +48,7 @@ export default function InfiniteScroller({title, route, options, type, optionSel
     {optionSelectors && <SelectionOptions selectionState={[values, setValues]} optionSelectors={optionSelectors} reverseSelector={reverseSelector}/>}
     <LoadingHandler isPending={status==="pending"} error={error} data={data?.pages ? data.pages[0] : undefined}>
       {items && items.length ? items.map((item : any, index:number) => render(type, item, index, items.length)) : <></>}
-      <p className='text-scale-0'>
+      <p className='text-scale-100'>
         {isFetchingNextPage
           ? 'Loading more...'
           : hasNextPage

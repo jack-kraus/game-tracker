@@ -20,7 +20,7 @@ export default function Input({ label, id, type, placeholder, hookOptions, input
         type,
         placeholder : placeholder ? placeholder : label,
         autoComplete:"off",
-        className: "input-box border-2 focus:outline-none " + (thisError ? "border-red-500 border-2 focus:border-red-700 focus:bg-red-100" : "") + (inputClass ? inputClass : ""),
+        className: "input-box border-2 focus:outline-none " + (thisError ? "border-red-500 border-2 focus:border-red-700 focus:bg-red-100" : "") + (inputClass ? inputClass : "") + (type === "range" ? "p-0" : ""),
         ...register(id, hookOptions),
         ...props
     }

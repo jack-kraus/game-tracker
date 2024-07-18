@@ -25,7 +25,7 @@ export default function SeeMore({children}) {
     return <>
         <ClickAwayListener onClickAway={()=>setShowMore(false)}>
         <div className="flex flex-col gap-1">
-            <p ref={ref} className={"h-full text-ellipsis overflow-hidden " + (showMore ? "line-clamp-none" : "line-clamp-5")}>
+            <p ref={ref} className={"h-full text-ellipsis overflow-hidden whitespace-pre-line " + (showMore ? "line-clamp-none" : "line-clamp-5")}>
                 {children}
             </p>
             {showLink && <button className="text-scale-200 hover:text-scale-0" onClick={onClickMore}>&#x28;See {showMore ? "Less" : "More"}&#x29;</button>}

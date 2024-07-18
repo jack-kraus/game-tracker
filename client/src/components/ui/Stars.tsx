@@ -10,8 +10,8 @@ export default function Stars({rating, size} : {rating:number, size?:number}) {
         else return <BsStarFill key={i} size={size} className="text-scale-100"/>;
     }
     
-    return <>
-        <PurpleGradient/>            
-        <div className="flex flex-row p-0 m-0 gap-0.5">{[...Array(5)].map((_, ind) => starClass(ind))}</div>
-    </>
+    return <div className="flex flex-row p-0 m-0 gap-0.5 self-start">
+        {[...Array(5)].map((_, ind) => starClass(ind))}
+        <PurpleGradient/>
+    </div>
 }
