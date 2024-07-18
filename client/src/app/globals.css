@@ -32,7 +32,7 @@ html {
   }
 
   .box-item {
-    @apply w-full rounded-xl bg-scale-800 text-scale-0 p-3 m-0 flex flex-row drop-shadow-md
+    @apply w-full rounded-xl bg-scale-800 text-scale-0 p-4 m-0 flex flex-row drop-shadow-md
   }
 
   .primary-button {

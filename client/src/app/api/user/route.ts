@@ -21,7 +21,7 @@ export async function GET(request : NextRequest) {
 
     // construct query
     let { query, page, perPage } = searchParams;
-    let supabase_query = supabase.from('profile_follow_status').select('*').ilike('username', `%${query}%`).range(page*perPage,(page+1)*perPage-1);
+    let supabase_query = supabase.from('profile_follow_status').select('id, username').ilike('username', `%${query}%`).range(page*perPage,(page+1)*perPage-1);
 
     // get from server
     let result : any;

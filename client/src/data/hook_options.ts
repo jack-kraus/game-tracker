@@ -18,6 +18,10 @@ const username_validation = (label:string) => {
             value: 3,
             message: `${label} must contain at least 3 characters`
         },
+        maxLength: {
+            value: 20,
+            message: `${label} must contain no more than 20 characters`
+        },
         required: {
             value: true,
             message: `${label} is required`
