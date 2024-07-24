@@ -68,9 +68,11 @@ export async function signup(formData: RegisterData) {
   // insert new user
   try {
     const { data, error } = await supabase.auth.signUp(insert);
-    if (error || !data) {
+    if (error || !data?.user) {
       if (error?.code === "user_already_exists") return { success : false, key : "email", message : error.message }
+      else return { success : false, key : "confirm_password", message : error?.message || "Server error" }
     }
+    console.log(error);
   } catch(e) {
     return { success : false, key : "password", message : e.toString() }
   }

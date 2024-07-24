@@ -4,12 +4,12 @@ import { useState, useEffect } from 'react';
 
 
 export default function useWindowDimensions() {
-  const [windowDimensions, setWindowDimensions] = useState<{width:number, height:number, document: Document | null}>({width : 600, height : 900, document : null});
+  const [windowDimensions, setWindowDimensions] = useState<{width:number, height:number, small : boolean, document: Document | null}>({width : 600, height : 900, small : true, document : null});
 
   useEffect(() => {
     function handleResize() {
       const { innerWidth: width, innerHeight: height } = window;
-      setWindowDimensions({width, height, document : document});
+      setWindowDimensions({width, height, small : width < 640, document : document});
     }
     handleResize();
     window.addEventListener('resize', handleResize);
