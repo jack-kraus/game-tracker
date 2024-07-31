@@ -4,6 +4,7 @@ import { createClient } from "@/utils/supabase/client";
 import { useUser } from "@/context/AuthProvider";
 import { useQueryClient } from "@tanstack/react-query";
 import { RxCross2 } from "react-icons/rx";
+import { FaUser } from "react-icons/fa";
 
 interface CommentProps {
     author : string,
@@ -63,7 +64,10 @@ export default function Comment({author, content, id, username, z_index} : Comme
     }
 
     let section = <div className="w-full">
-        <a href={`/user/${author}`}>{username}</a>
+        <a href={`/user/${author}`} className="group w-auto inline-flex gap-1 items-center self-start flex-wrap">
+            <FaUser size={20} className="p-1  bg-scale-500 text-scale-0 rounded-full group-hover:rounded-3xl object-contain group-hover:bg-scale-0 group-hover:text-scale-500"/>
+            <p className="group-link-item break-words">{username}</p>
+        </a>
         <p>{text}</p>
     </div>;
     if (state === CommentState.editing || state === CommentState.loading) {
