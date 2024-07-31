@@ -5,6 +5,9 @@ import { createClient } from "@/utils/supabase/client";
 import { useState } from "react";
 import { BsHeartFill } from "react-icons/bs";
 import { Grid } from "react-loader-spinner";
+import Modal from "./Modal";
+import PageScroller from "./PageScroller";
+import { abbreviateNumber } from "js-abbreviation-number";
 
 interface LikeParams {
     id: number,
@@ -57,7 +60,7 @@ export default function LikeButton({id, liked, likes} : LikeParams) {
         setLoading(false);
     }
 
-    return <div className="flex flex-row grow-0 justify-around align-middle gap-2 items-center w-10 h-8">
+    return <div className="flex flex-row grow-0 justify-around align-middle gap-1 items-center w-10 h-8">
         {loading && <Grid
             width="16"
             height="16"
@@ -67,6 +70,14 @@ export default function LikeButton({id, liked, likes} : LikeParams) {
         <button type="button" className="h-4" onClick={handleLiked} hidden={loading} disabled={loading || sessionLoading || !signedIn}>
             <BsHeartFill className={isLiked ? "text-primary" : "text-scale-1000"}/>
         </button>
-        <p>{likes - (liked ? 1 : 0) + (isLiked ? 1 : 0)}</p>
+        <Modal open_element={abbreviateNumber(likes - (liked ? 1 : 0) + (isLiked ? 1 : 0), 1)} button_styling="hover:bg-scale-500 active:bg-scale-100 rounded-full px-2 py-1">
+            <PageScroller title={`Users that have liked this post`} type="user"
+                route="/api/user"
+                options={{
+                    liked: `${id}`
+                }}
+                keyStart={`users_liked_post:${id}`}
+            />
+        </Modal>
     </div>;
 }

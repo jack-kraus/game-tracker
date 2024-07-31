@@ -1,11 +1,8 @@
 'use client';
 
-import { useRouter } from "next/navigation";
-import Dropdown from "@/components/ui/Dropdown";
 import Stars from "@/components/ui/Stars";
 import React from "react";
 import moment from 'moment';
-import { TbUser } from "react-icons/tb";
 import LikeButton from "../ui/LikeButton";
 import { useUser } from "@/context/AuthProvider";
 import PostEditDropdown from "../ui/PostEditDropdown";
@@ -31,6 +28,7 @@ interface postProps {
 
 export default function Post({ id, title, game, game_title, game_cover, content, rating, created_at, username, author, type, likes, is_liked } : postProps) {
     const { session } = useUser();
+    
 
     return (
         <article className="box-item gap-2 sm:gap-3">
@@ -51,20 +49,10 @@ export default function Post({ id, title, game, game_title, game_cover, content,
                 <SeeMore>{content}</SeeMore>
                 <Stars rating={rating}/>
             </div>
-            <LikeButton id={id} liked={is_liked} likes={likes}/>
-            {session?.user?.id === author && <PostEditDropdown id={id}/>}
+            <div className="flex flex-col justify-center gap-1 items-end self-start">
+                {session?.user?.id === author && <PostEditDropdown id={id}/>}
+                <LikeButton id={id} liked={is_liked} likes={likes}/>
+            </div>
         </article>
     );
 }
-
-/*
- <cite className="flex flex-col items-end text-right gap-2 text-sm sm:text-base hyphens-manual">
-                {type !== "user" && <a className="text-wrap flex flex-col items-end gap-1 group" href={`/user/${author}`}>
-                    <FaUser size={40} className="p-1 bg-scale-500 text-scale-0 rounded-full group-hover:rounded-3xl object-contain group-hover:bg-scale-0 group-hover:text-scale-500"/>
-                    <p className="group-link-item break-words sm:max-w-full max-w-24">{username}</p>
-                </a>}
-                {moment(created_at).format("MM/DD/YY h:mm")}<LikeButton id={id} liked={is_liked} likes={likes}/>
-            </cite>
-
-
-*/

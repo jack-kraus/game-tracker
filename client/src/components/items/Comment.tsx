@@ -4,13 +4,16 @@ import { createClient } from "@/utils/supabase/client";
 import { useUser } from "@/context/AuthProvider";
 import { useQueryClient } from "@tanstack/react-query";
 import { RxCross2 } from "react-icons/rx";
+import { FaUser } from "react-icons/fa";
+import moment from "moment";
 
 interface CommentProps {
     author : string,
     content : string,
     id : string,
     username : string,
-    z_index : number
+    z_index : number,
+    created_at : string
 }
 
 enum CommentState {
@@ -19,7 +22,7 @@ enum CommentState {
     loading
 }
 
-export default function Comment({author, content, id, username, z_index} : CommentProps) {
+export default function Comment({author, content, id, username, created_at, z_index} : CommentProps) {
     const [state, setState] = useState(CommentState.normal);
     const [text, setText] = useState<string>(content);
     const supabase = createClient();
@@ -62,8 +65,14 @@ export default function Comment({author, content, id, username, z_index} : Comme
         }
     }
 
-    let section = <div className="w-full">
-        <a href={`/user/${author}`}>{username}</a>
+    let section = <div className="w-full flex flex-col gap-1">
+        <div className="flex gap-2 flex-wrap">
+            <a href={`/user/${author}`} className="group w-auto inline-flex gap-1 items-center self-start flex-wrap">
+                <FaUser size={20} className="p-1  bg-scale-500 text-scale-0 rounded-full group-hover:rounded-3xl object-contain group-hover:bg-scale-0 group-hover:text-scale-500"/>
+                <p className="group-link-item break-words">{username}</p>
+            </a>
+            <p className="text-scale-300">{moment(created_at).format("MM/DD/YY")}</p>
+        </div>
         <p>{text}</p>
     </div>;
     if (state === CommentState.editing || state === CommentState.loading) {

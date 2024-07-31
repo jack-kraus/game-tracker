@@ -43,6 +43,10 @@ export default function InfiniteScroller({title, route, options, type, optionSel
 
   let items = data && data.pages ? data.pages.map((item) => item.data).filter((item) => item).flat() : undefined;
 
+  const nextPage = () => {
+    if (!isFetchingNextPage && hasNextPage) { fetchNextPage() }
+  }
+
   return  <>
     <h1 className="text-scale-0 underline">{title}</h1>
     {optionSelectors && <SelectionOptions selectionState={[values, setValues]} optionSelectors={optionSelectors} reverseSelector={reverseSelector}/>}
@@ -52,10 +56,10 @@ export default function InfiniteScroller({title, route, options, type, optionSel
         {isFetchingNextPage
           ? 'Loading more...'
           : hasNextPage
-            ? 'Load More'
+            ? <button onClick={nextPage}>Load More</button>
             : 'Nothing more to load'}
       </p>
-      <BottomScrollListener offset={100} onBottom={() => { if (!isFetchingNextPage && hasNextPage) { fetchNextPage() } }} triggerOnNoScroll={true}/>
+      <BottomScrollListener offset={100} onBottom={nextPage} triggerOnNoScroll={true}/>
     </LoadingHandler>
   </>;
 }

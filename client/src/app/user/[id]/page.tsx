@@ -32,7 +32,7 @@ export default async function Profile({params} : any) {
         <div className="box-item flex-col max-w-xs gap-3 items-center">
             <h1 className="text-scale-0 underline">{user?.username}&apos;s Page</h1>
             <FaUser className="border-opacity-25 transition-all bg-scale-500 p-3 rounded-full flex justify-center items-center" size={80} color="white"/>
-            <FollowButton id={id} followers={user?.followers} following={user?.following} is_following={user?.is_following}/>
+            <FollowButton id={id} followers={user?.followers} following={user?.following} is_following={user?.is_following} username={user?.username}/>
         </div>
         <InfiniteScroller title="Top Posts" type="post_user"
             options={{
