@@ -12,10 +12,11 @@ interface FollowParams {
     followers? : number,
     following? : number,
     is_following: boolean
+    followState: [boolean, (_:boolean) => void]
 }
 
-export default function FollowButton({id, username, followers, following, is_following} : FollowParams) {
-    const [isFollowing, setIsFollowing] = useState(is_following);
+export default function FollowButton({id, followState} : FollowParams) {
+    const [isFollowing, setIsFollowing] = followState;
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState("");
     let {session, loading:sessionLoading} = useUser();
@@ -60,7 +61,6 @@ export default function FollowButton({id, username, followers, following, is_fol
     }
 
     return <>
-        <FollowerTable {...{id, username, is_following, following}} followers={(followers ?? 0) + (isFollowing ? 1 : 0) - (is_following ? 1 : 0)}/>
         {session && session?.user?.id !== id && <div className="flex flex-row gap-2 items-center">
             <button type="button" onClick={handleFollowing} disabled={loading || sessionLoading} hidden={sessionLoading} className='primary-button'>{isFollowing ? "Unfollow" : "Follow"}</button>
             {(loading || sessionLoading) && <ThreeDots color="white" width={20} height={20}/>}
