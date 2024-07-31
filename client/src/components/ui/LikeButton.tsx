@@ -76,7 +76,7 @@ export default function LikeButton({id, liked, likes} : LikeParams) {
                 options={{
                     liked: `${id}`
                 }}
-                keyStart="users"
+                keyStart={`users_liked_post:${id}`}
             />
         </Modal>
     </div>;

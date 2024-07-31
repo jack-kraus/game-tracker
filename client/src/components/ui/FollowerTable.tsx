@@ -19,7 +19,7 @@ export default function FollowerTable({id, username, followers, following}) {
                             options={{
                                 followers: id
                             }}
-                            keyStart="users"
+                            keyStart={`followers_${id}`}
                         />
                     </Modal>
                 </th>
@@ -30,7 +30,7 @@ export default function FollowerTable({id, username, followers, following}) {
                             options={{
                                 following: id
                             }}
-                            keyStart="users"
+                            keyStart={`following_${id}`}
                         />
                     </Modal>
                 </th>
