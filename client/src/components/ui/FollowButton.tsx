@@ -4,15 +4,17 @@ import { useUser } from "@/context/AuthProvider";
 import { createClient } from "@/utils/supabase/client";
 import { useState } from "react";
 import { ThreeDots } from "react-loader-spinner";
+import FollowerTable from "./FollowerTable";
 
 interface FollowParams {
     id: string,
+    username: string,
     followers? : number,
     following? : number,
     is_following: boolean
 }
 
-export default function FollowButton({id, followers, following, is_following} : FollowParams) {
+export default function FollowButton({id, username, followers, following, is_following} : FollowParams) {
     const [isFollowing, setIsFollowing] = useState(is_following);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState("");
@@ -58,20 +60,7 @@ export default function FollowButton({id, followers, following, is_following} : 
     }
 
     return <>
-        <table className="table-fixed border-spacing-2 text-scale-0 w-3/4">
-            <thead>
-                <tr>
-                    <th>Followers</th>
-                    <th>Following</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <th>{(followers ?? 0) + (isFollowing ? 1 : 0) - (is_following ? 1 : 0)}</th>
-                    <th>{following}</th>
-                </tr>
-            </tbody>
-        </table>
+        <FollowerTable {...{id, username, is_following, following}} followers={(followers ?? 0) + (isFollowing ? 1 : 0) - (is_following ? 1 : 0)}/>
         {session && session?.user?.id !== id && <div className="flex flex-row gap-2 items-center">
             <button type="button" onClick={handleFollowing} disabled={loading || sessionLoading} hidden={sessionLoading} className='primary-button'>{isFollowing ? "Unfollow" : "Follow"}</button>
             {(loading || sessionLoading) && <ThreeDots color="white" width={20} height={20}/>}

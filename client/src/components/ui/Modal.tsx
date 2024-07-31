@@ -1,25 +1,33 @@
 'use client';
 
 import useWindowDimensions from "@/hooks/WindowDimensions";
-import { useState } from "react";
+import { ReactNode, useState } from "react";
 import { createPortal } from "react-dom";
 import { RiCloseFill } from "react-icons/ri";
 
-export default function Modal({open_element, children}) {
+interface ModalStyle {
+    open_element :  ReactNode[] | ReactNode,
+    button_styling? : string,
+    children : ReactNode[] | ReactNode
+}
+
+export default function Modal({open_element, button_styling, children} : ModalStyle) {
     const { document } = useWindowDimensions();
     const [open, setOpen] = useState(false);
     
     const element = <div className="w-screen h-screen fixed top-0 left-0 bg-opacity-50 bg-black z-10">
-        <div className="w-full h-full flex">
-            <div className="box-item m-10 sm:m-24 overflow-y-scroll flex-col">
+        <div className="w-full h-full flex justify-center">
+            <div className="box-item flex-col m-10 sm:m-24 bg-scale-900 items-center max-w-4xl">
                 <button className="self-end text-scale-300 hover:text-scale-0" onClick={()=>setOpen(false)}><RiCloseFill size={25}/></button>
-                {children}
+                <div className="flex flex-col w-full h-full overflow-y-scroll items-center gap-3">
+                    {children}
+                </div>
             </div>
         </div>
     </div>
 
     return <>
-        <button onClick={()=>setOpen(true)}>{open_element}</button>
+        <button className={button_styling ?? ""} onClick={()=>setOpen(true)}>{open_element}</button>
         {document && open && createPortal(element, document.body)}
     </>;
 }

@@ -4,6 +4,9 @@ import LogoutButton from "@/components/ui/LogoutButton";
 import { redirect } from "next/navigation";
 import { Metadata } from "next";
 import { FaUser } from "react-icons/fa";
+import Modal from "@/components/ui/Modal";
+import PageScroller from "@/components/ui/PageScroller";
+import FollowerTable from "@/components/ui/FollowerTable";
 
 export const metadata: Metadata = {
     title: "Profile | Leveler",
@@ -22,20 +25,7 @@ export default async function Profile() {
         <div className="box-item flex-col gap-3 items-center max-w-xs">
             <h1 className="text-scale-0 underline">Hello, {data?.username}</h1>
             <FaUser className="border-opacity-25 transition-all bg-scale-500 p-3 rounded-full flex justify-center items-center" size={80} color="white"/>
-            <table className="table-fixed border-spacing-2 text-scale-0 w-3/4">
-                <thead>
-                    <tr>
-                        <th>Followers</th>
-                        <th>Following</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <th>{data?.followers}</th>
-                        <th>{data?.following}</th>
-                    </tr>
-                </tbody>
-            </table>
+            <FollowerTable {...data}/>
             <LogoutButton/>
         </div>
         <InfiniteScroller title="Top Posts" type="post_user"
