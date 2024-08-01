@@ -39,6 +39,10 @@ html {
     @apply bg-primary p-2.5 rounded-xl px-6 font-bold text-base text-white hover:bg-secondary hover:text-scale-100 active:bg-scale-1000 active:text-primary disabled:bg-scale-500 disabled:text-scale-1000 transition-colors
   }
 
+  .secondary-button {
+    @apply bg-transparent p-2.5 rounded-xl px-6 font-bold text-base text-primary hover:bg-scale-700 hover:text-scale-100 active:bg-scale-1000 active:text-primary disabled:text-scale-1000 transition-colors border-2 border-primary
+  }
+
   .input-box {
     @apply grow p-2 rounded-lg text-scale-1000 text-base focus:outline-none focus:border-primary focus:bg-scale-100 border-2
   }

@@ -8,6 +8,7 @@ import { Grid } from "react-loader-spinner";
 import Modal from "./Modal";
 import PageScroller from "./PageScroller";
 import { abbreviateNumber } from "js-abbreviation-number";
+import { cn } from "@/data/utils";
 
 interface LikeParams {
     id: number,
@@ -68,7 +69,7 @@ export default function LikeButton({id, liked, likes} : LikeParams) {
             visible={loading}
         />}
         <button type="button" className="h-4" onClick={handleLiked} hidden={loading} disabled={loading || sessionLoading || !signedIn}>
-            <BsHeartFill className={isLiked ? "text-primary" : "text-scale-1000"}/>
+            <BsHeartFill className={cn({  "text-primary" : isLiked,  "text-scale-1000" : !isLiked })}/>
         </button>
         <Modal open_element={abbreviateNumber(likes - (liked ? 1 : 0) + (isLiked ? 1 : 0), 1)} button_styling="hover:bg-scale-500 active:bg-scale-100 rounded-full px-2 py-1">
             <PageScroller title={`Users that have liked this post`} type="user"

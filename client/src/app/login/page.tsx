@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { LoginForm, SignupForm } from "@/components/form/LoginForm";
+import { cn } from "@/data/utils";
 
 enum FormState {
     Login,
@@ -15,8 +16,8 @@ export default function Login() {
     return <>
         <div className="w-full max-w-md">
             <div className="pl-3">
-                <button className={`primary-button rounded-b-none ${state !== FormState.Login ? "bg-scale-1000 text-primary" : ""}`} onClick={() => setState(FormState.Login)}>Login</button>
-                <button className={`primary-button rounded-b-none ${state !== FormState.SignUp ? "bg-scale-1000 text-primary" : ""}`} onClick={() => setState(FormState.SignUp)}>Sign-Up</button>
+                <button className={cn(`primary-button rounded-b-none`, { "bg-scale-1000 text-primary": state !== FormState.Login })} onClick={() => setState(FormState.Login)}>Login</button>
+                <button className={cn(`primary-button rounded-b-none`, { "bg-scale-1000 text-primary": state !== FormState.SignUp })} onClick={() => setState(FormState.SignUp)}>Sign-Up</button>
             </div>
             {form_content}
         </div>

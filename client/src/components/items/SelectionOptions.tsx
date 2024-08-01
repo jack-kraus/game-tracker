@@ -1,3 +1,4 @@
+import { cn } from "@/data/utils";
 import { FaCheck } from "react-icons/fa";
 
 interface SelectionOptionsParams {
@@ -32,7 +33,7 @@ export default function SelectionOptions({ optionSelectors, reverseSelector, sel
         </div>)}
         {reverseSelector && <div className='flex flex-col'>
             <p>Reverse</p>
-            <button className={"text-scale-1000 flex justify-center items-center rounded-lg w-10 h-10 bg-white border-primary " + (!values.reverse ? "" : "border-2 bg-scale-100")} onClick={() => changeValue("reverse", !values.reverse)}>
+            <button className={cn("text-scale-1000 flex justify-center items-center rounded-lg w-10 h-10 bg-white border-primary", { "border-2 bg-scale-100" : values?.reverse })} onClick={() => changeValue("reverse", !values.reverse)}>
                 {values.reverse && <FaCheck size={20}/>}
             </button>
         </div>}

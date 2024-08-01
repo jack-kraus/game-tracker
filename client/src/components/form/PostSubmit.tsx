@@ -42,7 +42,7 @@ export default function PostSubmit({game_id, review_id, defaultValues} : {game_i
                 }
             }).then((res) => res.json());
             response = data;
-        } catch (e) { console.log("HELLO"); setLoading(false); return setError("rating", { message: `${e}` }); }
+        } catch (e) { setLoading(false); return setError("rating", { message: `${e}` }); }
 
         if (!response.success) {
             setError("content", { type:"server", message:`${response.error}`});

@@ -72,7 +72,6 @@ export async function signup(formData: RegisterData) {
       if (error?.code === "user_already_exists") return { success : false, key : "email", message : error.message }
       else return { success : false, key : "confirm_password", message : error?.message || "Server error" }
     }
-    console.log(error);
   } catch(e) {
     return { success : false, key : "password", message : e.toString() }
   }
@@ -99,4 +98,52 @@ export async function logout() {
 
   revalidatePath('/', 'layout');
   redirect("/");
+}
+
+export async function change_password(formData: RegisterData) {
+  'use server';
+
+  const supabase = createClient();
+
+  // type-casting here for convenience
+  // in practice, you should validate your inputs
+  const { password } = formData;
+
+  // update user user
+  try {
+    const { data, error } = await supabase.auth.updateUser({ password: password });
+    if (error || !data?.user) {
+      if (error?.code === "user_already_exists") return { success : false, key : "email", message : error.message }
+      else return { success : false, key : "confirm_password", message : error?.message || "Server error" }
+    }
+  } catch(e) {
+    return { success : false, key : "password", message : e.toString() }
+  }
+
+  // return
+  revalidatePath('/', 'layout');
+  redirect('/profile');
+}
+
+
+export async function change_username(formData: RegisterData) {
+  'use server';
+
+  const supabase = createClient();
+
+  // type-casting here for convenience
+  // in practice, you should validate your inputs
+  const { username } = formData;
+
+  // add username
+  try {
+    const { error } = await supabase.from("profile").upsert({ username:username }, { onConflict: 'id' });
+    if (error) throw error.message.startsWith("duplicate key value") ? "Username taken" : error.message;
+  } catch(e) {
+    return { success : false, key : "username", message : e.toString() }
+  }
+
+  // return
+  revalidatePath('/', 'layout');
+  redirect('/profile');
 }
