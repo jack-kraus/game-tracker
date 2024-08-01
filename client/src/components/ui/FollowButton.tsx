@@ -67,7 +67,7 @@ export default function FollowButton({id, followState} : FollowParams) {
     return <>
         {session && session?.user?.id !== id && <div className="flex flex-row gap-2 items-center">
             <button type="button" onClick={handleFollowing} disabled={loading || sessionLoading} hidden={sessionLoading} className={cn('primary-button', { "secondary-button" : isFollowing })}>
-                {!small ? (isFollowing ? "Unfollow" : "Follow") : (isFollowing ? <RiUserUnfollowFill/> : <RiUserFollowFill/>)}
+                {!small ? (isFollowing ? "Unfollow" : "Follow") : (isFollowing ? <RiUserUnfollowFill size={25}/> : <RiUserFollowFill size={25}/>)}
             </button>
             {(loading || sessionLoading) && <ThreeDots color="white" width={20} height={20}/>}
             {error && <p className="text-red-500">{error}</p>}
