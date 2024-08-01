@@ -3,6 +3,7 @@
 import { useState } from "react"
 import { TbDotsVertical } from "react-icons/tb";
 import ClickAwayListener from 'react-click-away-listener';
+import { cn } from "@/data/utils";
 
 interface DropdownOption {
     onClick : () => void,
@@ -21,9 +22,11 @@ export default function Dropdown({ options, right } : { options : DropdownOption
     }
 
     function roundClass(ind : number, len : number) {
-        if (ind === 0 && ind === len - 1) return "rounded-lg";
-        else if (ind === 0) return "rounded-t-lg";
-        else if (ind === len - 1) return "rounded-b-lg"
+        return cn("whitespace-nowrap w-full bg-scale-0 relative hover:bg-scale-300 flex flex-row text-scale-1000 p-2 items-center",
+        {
+            "rounded-t-lg": ind === 0,
+            "rounded-b-lg": ind === len - 1
+        });
     }
 
     return <ClickAwayListener onClickAway={() => setOpen(false)}><div className="relative">
@@ -33,7 +36,7 @@ export default function Dropdown({ options, right } : { options : DropdownOption
                 <button 
                     onClick={closeWrap(item.onClick)}
                     type="button"
-                    className={"whitespace-nowrap w-full bg-scale-0 relative hover:bg-scale-300 flex flex-row text-scale-1000 p-2 items-center " + roundClass(ind, options.length)}
+                    className={roundClass(ind, options.length)}
                 >
                     {item.label}
                 </button>

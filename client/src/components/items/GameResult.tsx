@@ -7,7 +7,7 @@ interface gameProps {
 }
 
 export default function GameResult({ name, summary, cover, id, first_release_date, platforms } : gameProps) { 
-    return (//object-contain w-32 rounded-md hover:brightness-150
+    return (
         <article className="overflow-hidden box-item gap-3">
             <div className="w-1/4 max-w-48 shrink-0">
                 <Link href={`/game/${id}`}>

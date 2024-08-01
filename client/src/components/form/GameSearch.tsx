@@ -1,3 +1,4 @@
+import { cn } from "@/data/utils";
 import { useQuery } from "@tanstack/react-query";
 import { useEffect, useState } from "react"
 import ClickAwayListener from "react-click-away-listener";
@@ -44,7 +45,7 @@ export default function GameSearch({ val } : {val : Val}) {
                 onBlur={()=>setTimeout(() => setFocused(false), 150)}
                 value={field}
                 onChange={(e) => { setCanRun(false); setField(e.target.value); }}
-                className={"z-10 w-full input-box" + (loading ? " pl-9" : "")}
+                className={cn("z-10 w-full input-box", { "pl-9": loading })}
                 placeholder="Search for a game..."
                 style={{
                     backgroundImage: (loading ? `url("https://cdn.pixabay.com/animation/2023/08/11/21/18/21-18-05-265_512.gif")` : ""),

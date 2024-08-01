@@ -1,3 +1,4 @@
+import { cn } from "@/data/utils";
 import { useFormContext } from "react-hook-form";
 
 interface InputProps {
@@ -20,7 +21,11 @@ export default function Input({ label, id, type, placeholder, hookOptions, input
         type,
         placeholder : placeholder ? placeholder : label,
         autoComplete:"off",
-        className: "input-box border-2 focus:outline-none " + (thisError ? "border-red-500 border-2 focus:border-red-700 focus:bg-red-100" : "") + (inputClass ? inputClass : "") + (type === "range" ? "p-0" : ""),
+        className: cn("input-box border-2 focus:outline-none", {
+            "border-red-500 border-2 focus:border-red-700 focus:bg-red-100": thisError,
+            inputClass: inputClass,
+            "p-0": type === "range"
+        }),
         ...register(id, hookOptions),
         ...props
     }
@@ -28,7 +33,7 @@ export default function Input({ label, id, type, placeholder, hookOptions, input
     return <>
         {label && <label htmlFor={id}>{label}</label>}
         {type === "textarea" ? <textarea {...values} /> : <input {...values} />}
-        {thisError ? <p className={"text-red-500 " + (labelClass ? labelClass : "")}>{thisError as string}</p> : <></>}
+        {thisError ? <p className={cn("text-red-500", { labelClass : labelClass })}>{thisError as string}</p> : <></>}
     </>;
 }
 
