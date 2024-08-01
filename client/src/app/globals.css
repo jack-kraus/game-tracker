@@ -42,6 +42,10 @@ html {
   .input-box {
     @apply grow p-2 rounded-lg text-scale-1000 text-base focus:outline-none focus:border-primary focus:bg-scale-100 border-2
   }
+
+  .hover-button {
+    @apply hover:bg-scale-500 active:bg-scale-100 rounded-full px-3 py-1.5
+  }
 }
 
 .purple {

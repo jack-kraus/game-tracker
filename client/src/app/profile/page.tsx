@@ -4,8 +4,6 @@ import LogoutButton from "@/components/ui/LogoutButton";
 import { redirect } from "next/navigation";
 import { Metadata } from "next";
 import { FaUser } from "react-icons/fa";
-import Modal from "@/components/ui/Modal";
-import PageScroller from "@/components/ui/PageScroller";
 import FollowerTable from "@/components/ui/FollowerTable";
 
 export const metadata: Metadata = {
