@@ -6,6 +6,7 @@ import Input from "./Input";
 import hook from "@/data/hook_options";
 import { useState } from "react";
 import { useQueryClient } from "@tanstack/react-query";
+import { cn } from "@/data/utils";
 
 export default function CommentForm({ id }) {
     const [loading, setLoading] = useState(false);
@@ -36,7 +37,7 @@ export default function CommentForm({ id }) {
                 placeholder="Share your thoughts on this review..."
                 type="textarea"
                 hookOptions={hook.required_validation("Content")}
-                inputClass="w-full input-box rounded-r-none min-h-12 grow"
+                inputClass={cn("w-full input-box rounded-r-none min-h-12 grow")}
                 rows={3}
                 labelClass="flex w-24 justify-center items-center text-center px-5 bg-scale-800"
             />

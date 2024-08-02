@@ -23,9 +23,8 @@ export default function Input({ label, id, type, placeholder, hookOptions, input
         autoComplete:"off",
         className: cn("input-box border-2 focus:outline-none", {
             "border-red-500 border-2 focus:border-red-700 focus:bg-red-100": thisError,
-            inputClass: inputClass,
-            "p-0": type === "range"
-        }),
+            "p-0": type === "range",
+        }, inputClass),
         ...register(id, hookOptions),
         ...props
     }
