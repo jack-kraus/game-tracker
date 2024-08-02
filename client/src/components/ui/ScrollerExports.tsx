@@ -3,8 +3,9 @@ import Comment from "../items/Comment";
 import GameResult from "../items/GameResult";
 import Post from "../items/Post";
 import UserCard from "../items/UserCard";
+import Notification from "../items/Notification";
 
-export type renderType = "game" | "user" | "post" | "post_game" | "post_user" | "comment";
+export type renderType = "game" | "user" | "post" | "post_game" | "post_user" | "comment" | "notification";
 
 export interface ScrollerParams {
   route? : string,
@@ -34,6 +35,9 @@ export function render(type : renderType, item : any, index : number, length : n
       break;
     case "post_user":
       element = <Post key={index} {...item} type="user"/>;
+      break;
+    case "notification":
+      element = <Notification {...item}/>;
       break;
     case "comment":
       element = <Comment z_index={z_index} key={index} {...item}/>;

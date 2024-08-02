@@ -32,8 +32,6 @@ export default function Input({ label, id, type, placeholder, hookOptions, input
     return <>
         {label && <label htmlFor={id}>{label}</label>}
         {type === "textarea" ? <textarea {...values} /> : <input {...values} />}
-        {thisError ? <p className={cn("text-red-500", { labelClass : labelClass })}>{thisError as string}</p> : <></>}
+        {thisError ? <p className={cn("text-red-500", labelClass)}>{thisError as string}</p> : <></>}
     </>;
 }
-
-// 
