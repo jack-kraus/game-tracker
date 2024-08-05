@@ -38,7 +38,7 @@ export default function Navbar({ user_id, notification_count }) {
 
     const bell = <div className="relative"><BsBellFill size={25}/>
         {!!notifyCount && <p className="absolute bottom-3 text-xs right-3 text-white font-bold z-10 bg-red-500 px-1 rounded-full">
-            {abbreviateNumber(notifyCount * 100)}
+            {abbreviateNumber(notifyCount)}
         </p>}
     </div>;
 
