@@ -45,7 +45,7 @@ export default function PageScroller({title, route, options, type, optionSelecto
         {optionSelectors && <SelectionOptions selectionState={[values, setValues]} optionSelectors={optionSelectors}/>}
         <LoadingHandler isPending={isFetching} error={error} data={data}>
             {items && items.length ? items.map((item : any, index:number) => render(type, item, index, items.length)) : <p className='text-scale-0'>Nothing more to load</p>}
-            {lastPage !== 0 && <div className='flex w-auto gap-3 items-center text-white'>
+            {lastPage !== 0 && <div className='flex p-3 w-auto gap-3 items-center text-white'>
                 {page > 1 && <button
                     onClick={() => setPage(0)}
                     className='bg-scale-800 rounded-full px-2 py-1 hover:bg-scale-200'
