@@ -18,7 +18,6 @@ export default function Navbar({ user_id, notification_count }) {
     let { width, small } = useWindowDimensions();
     const [ searchOpen, setSearchOpen ] = useState(false);
     const [ notifyCount, setNotifyCount ] = useState(notification_count);
-    const [ stale, setStale ] = useState(false);
     const queryClient = useQueryClient();
     const supabase = createClient();
 
@@ -33,15 +32,6 @@ export default function Navbar({ user_id, notification_count }) {
                 filter: `user_id=eq.${user_id}`
             },
             (payload) => { console.log(payload); setNotifyCount((current) => current + 1) }
-        ).on(
-            'postgres_changes',
-            {
-                event: '*',
-                schema: 'public',
-                table: 'notification',
-                filter: `user_id=eq.${user_id}`
-            },
-            () => { setStale(true); }
         )
         .subscribe();
 
@@ -61,7 +51,7 @@ export default function Navbar({ user_id, notification_count }) {
             <Suspense fallback={<div className="grow"></div>}>
                 {(!small || searchOpen) ? <SearchBar width={width}/> : <><div className="grow"/><button onClick={()=>setSearchOpen(true)} className="hover:bg-scale-400 active:bg-scale-100 p-2 rounded-full flex justify-end"><RiSearchFill size={25}/></button></>}
             </Suspense>
-            {(!small || !searchOpen) && <Modal onOnClick={() => queryClient.refetchQueries({ queryKey: ["notification"] })} offOnClick={() => { if (stale) { notificationCount().then((result) => setNotifyCount(result)) } }} button_styling="hover:bg-scale-400 active:bg-scale-100 p-2 rounded-full static" open_element={bell}>
+            {(!small || !searchOpen) && <Modal onOnClick={() => queryClient.refetchQueries({ queryKey: ["notification"] })} offOnClick={() => notificationCount().then((result) => setNotifyCount(result)) } button_styling="hover:bg-scale-400 active:bg-scale-100 p-2 rounded-full static" open_element={bell}>
                 <PageScroller
                     route="/api/notification"
                     title="Notifications"
