@@ -27,9 +27,6 @@ export async function GET(_request : NextRequest, {params} : {params : {id: stri
         review = data[0];
     } catch (error : any) { return Response.json({success: false, error:`1: ${error}`}); }
 
-    // edit date info
-    review.created_at = moment(review.created_at).format('MM/DD/YYYY h:mm a');
-
     return Response.json({success:true, data:review});
 }
 

@@ -32,7 +32,7 @@ export default function PageScroller({title, route, options, type, optionSelecto
         else { setPage(new_page); }
     }
 
-    let { isPending, error, data } = useQuery({
+    let { isFetching, error, data } = useQuery({
         queryKey: [keyStart, page, values],
         queryFn: () => fetchReviews({pageParam:page})
     });
@@ -41,35 +41,35 @@ export default function PageScroller({title, route, options, type, optionSelecto
     let lastPage = data && data.lastPage !== undefined ? data.lastPage : undefined;
 
     return  <>
-        <h1 className="text-scale-0 underline">{title}</h1>
+        <h1 className="text-scale-0 underline p-1">{title}</h1>
         {optionSelectors && <SelectionOptions selectionState={[values, setValues]} optionSelectors={optionSelectors}/>}
-        <LoadingHandler isPending={isPending} error={error} data={data}>
+        <LoadingHandler isPending={isFetching} error={error} data={data}>
             {items && items.length ? items.map((item : any, index:number) => render(type, item, index, items.length)) : <p className='text-scale-0'>Nothing more to load</p>}
-            {lastPage !== 0 && <div className='box-item w-auto gap-3 items-center'>
-                <button
+            {lastPage !== 0 && <div className='flex p-3 w-auto gap-3 items-center text-white'>
+                {page > 1 && <button
                     onClick={() => setPage(0)}
-                    className='bg-scale-900 rounded-full px-2 py-1 hover:bg-scale-200'
+                    className='bg-scale-800 rounded-full px-2 py-1 hover:bg-scale-200'
                 >
                     &lt;&lt;
-                </button>
+                </button>}
                 <button
                     onClick={() => alterPage(-1, items.length, lastPage)}
                     disabled={page===0}
-                    className='bg-scale-900 rounded-full px-2 py-1 hover:bg-scale-200'
+                    className='bg-scale-800 rounded-full px-2 py-1 hover:bg-scale-200'
                 >
                     &lt;
                 </button>
                 <p>{page}</p>
                 <button
                     onClick={() => alterPage(1, items.length, lastPage)}
-                    disabled={!items?.length || (lastPage !== undefined && page == lastPage)}
-                    className='bg-scale-900 rounded-full px-2 py-1 hover:bg-scale-200'
+                    disabled={!items?.length || items.length < 10 || (lastPage !== undefined && page == lastPage)}
+                    className='bg-scale-800 rounded-full px-2 py-1 hover:bg-scale-200'
                 >
                     &gt;
                 </button>
                 {lastPage !== undefined && <button
                     onClick={() => setPage(lastPage)}
-                    className='bg-scale-900 rounded-full px-2 py-1 hover:bg-scale-200'
+                    className='bg-scale-800 rounded-full px-2 py-1 hover:bg-scale-200'
                 >
                     &gt;&gt;
                 </button>}

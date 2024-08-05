@@ -1,9 +1,11 @@
+import { ReactNode } from "react";
 import Comment from "../items/Comment";
 import GameResult from "../items/GameResult";
 import Post from "../items/Post";
 import UserCard from "../items/UserCard";
+import Notification from "../items/Notification";
 
-export type renderType = "game" | "user" | "post" | "post_game" | "post_user" | "comment";
+export type renderType = "game" | "user" | "post" | "post_game" | "post_user" | "comment" | "notification";
 
 export interface ScrollerParams {
   route? : string,
@@ -17,12 +19,29 @@ export interface ScrollerParams {
 
 export function render(type : renderType, item : any, index : number, length : number) {
   const z_index = (length - index) * 10;
+  let element : ReactNode;
   switch (type) {
-    case "post": return <Post key={index} {...item}/>;
-    case "game": return <GameResult key={index} {...item}/>;
-    case "user": return <UserCard key={index} {...item}/>;
-    case "post_game": return <Post key={index} {...item} type="game"/>;
-    case "post_user": return <Post key={index} {...item} type="user"/>;
-    case "comment": return <Comment z_index={z_index} key={index} {...item}/>;
+    case "post":
+      element = <Post key={index} {...item}/>;
+      break;
+    case "game":
+      element = <GameResult key={index} {...item}/>;
+      break;
+    case "user":
+      element = <UserCard key={index} {...item}/>;
+      break;
+    case "post_game":
+      element = <Post key={index} {...item} type="game"/>;
+      break;
+    case "post_user":
+      element = <Post key={index} {...item} type="user"/>;
+      break;
+    case "notification":
+      element = <Notification {...item}/>;
+      break;
+    case "comment":
+      element = <Comment z_index={z_index} key={index} {...item}/>;
+      return <div className="w-full" style={{ zIndex: z_index }} key={`item_${type}_${item.id ?? index}`}>{element}</div>;
   }
+  return <div className="w-full" key={`item_${type}_${item.id ?? index}`}>{element}</div>;
 }

@@ -1,14 +1,13 @@
 'use client';
 
 import Input from "@/components/form/Input";
-import PurpleGradient from "@/components/other/PurpleGradient";
 import { FormProvider, useForm } from "react-hook-form";
-import { BsStarFill } from "react-icons/bs";
 import hook from "@/data/hook_options";
 import { useRouter } from 'next/navigation';
 import { useState } from "react";
 import { ThreeDots } from "react-loader-spinner";
 import Stars from "../ui/Stars";
+import UnloadHook from "@/hooks/UnloadHook";
 
 interface PostSubmit {
     content : string,
@@ -22,6 +21,7 @@ export default function PostSubmit({game_id, review_id, defaultValues} : {game_i
     const methods = useForm({ defaultValues });
     const { watch, setError, handleSubmit } = methods;
     const router = useRouter();
+    UnloadHook();
 
     async function postForm(form_data : any) {
         setLoading(true);
