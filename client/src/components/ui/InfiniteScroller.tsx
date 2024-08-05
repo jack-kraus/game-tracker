@@ -48,7 +48,7 @@ export default function InfiniteScroller({title, route, options, type, optionSel
   }
 
   return  <>
-    <h1 className="text-scale-0 underline p-3">{title}</h1>
+    <h1 className="text-scale-0 underline p-1">{title}</h1>
     {optionSelectors && <SelectionOptions selectionState={[values, setValues]} optionSelectors={optionSelectors} reverseSelector={reverseSelector}/>}
     <LoadingHandler isPending={status==="pending"} error={error} data={data?.pages ? data.pages[0] : undefined}>
       {items && items.length ? items.map((item : any, index:number) => render(type, item, index, items.length)) : <></>}

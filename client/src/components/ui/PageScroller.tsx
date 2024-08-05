@@ -41,7 +41,7 @@ export default function PageScroller({title, route, options, type, optionSelecto
     let lastPage = data && data.lastPage !== undefined ? data.lastPage : undefined;
 
     return  <>
-        <h1 className="text-scale-0 underline">{title}</h1>
+        <h1 className="text-scale-0 underline p-1">{title}</h1>
         {optionSelectors && <SelectionOptions selectionState={[values, setValues]} optionSelectors={optionSelectors}/>}
         <LoadingHandler isPending={isFetching} error={error} data={data}>
             {items && items.length ? items.map((item : any, index:number) => render(type, item, index, items.length)) : <p className='text-scale-0'>Nothing more to load</p>}
