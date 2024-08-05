@@ -51,7 +51,7 @@ export default function Navbar({ user_id, notification_count }) {
             <Suspense fallback={<div className="grow"></div>}>
                 {(!small || searchOpen) ? <SearchBar width={width}/> : <><div className="grow"/><button onClick={()=>setSearchOpen(true)} className="hover:bg-scale-400 active:bg-scale-100 p-2 rounded-full flex justify-end"><RiSearchFill size={25}/></button></>}
             </Suspense>
-            {(!small || !searchOpen) && <Modal onOnClick={() => queryClient.refetchQueries({ queryKey: ["notification"] })} offOnClick={() => notificationCount().then((result) => setNotifyCount(result)) } button_styling="hover:bg-scale-400 active:bg-scale-100 p-2 rounded-full static" open_element={bell}>
+            {(!small || !searchOpen) && user_id && <Modal onOnClick={() => queryClient.refetchQueries({ queryKey: ["notification"] })} offOnClick={() => notificationCount().then((result) => setNotifyCount(result)) } button_styling="hover:bg-scale-400 active:bg-scale-100 p-2 rounded-full static" open_element={bell}>
                 <PageScroller
                     route="/api/notification"
                     title="Notifications"
