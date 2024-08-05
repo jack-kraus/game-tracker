@@ -13,6 +13,7 @@ import ClickAwayListener from "react-click-away-listener";
 import { createClient } from "@/utils/supabase/client";
 import { useQueryClient } from "@tanstack/react-query";
 import { notificationCount } from "../other/NavbarWrapper";
+import { abbreviateNumber } from "js-abbreviation-number";
 
 export default function Navbar({ user_id, notification_count }) {
     let { width, small } = useWindowDimensions();
@@ -37,7 +38,7 @@ export default function Navbar({ user_id, notification_count }) {
 
     const bell = <div className="relative"><BsBellFill size={25}/>
         {!!notifyCount && <p className="absolute bottom-3 text-xs right-3 text-white font-bold z-10 bg-red-500 px-1 rounded-full">
-            {notifyCount}
+            {abbreviateNumber(notifyCount * 100)}
         </p>}
     </div>;
 

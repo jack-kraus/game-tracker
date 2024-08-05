@@ -26,9 +26,9 @@ export default function SelectionOptions({ optionSelectors, reverseSelector, sel
     }
 
     if (!open) return <button className={cn("hover-button bg-scale-800 text-white py-2 px-4")} onClick={() => setOpen(true)}>Filter...</button>
-    return <div className={cn('box-item p-3 text-scale-0 w-auto flex-col')}>
-        <button onClick={()=>setOpen(false)} className={cn("self-end text-2xl text-scale-200 hover:text-scale-0")}>&times;</button>
-        <div className="flex flex-row flex-wrap gap-5 items-center justify-center">
+    return <div className={cn('p-3 flex text-scale-0 w-auto flex-col')}>
+        <button onClick={()=>setOpen(false)} className={cn("self-end text-2xl hover-button px-2 py-0.5 my-2")}>&times;</button>
+        <div className="box-item flex-wrap gap-5 items-center justify-center">
             {optionSelectors && Object.entries(optionSelectors).map( ([key, value], i : number) =>
             <div className='flex flex-col' key={i}>
                 <p>{capitalize(key)}</p>
@@ -45,6 +45,3 @@ export default function SelectionOptions({ optionSelectors, reverseSelector, sel
         </div>
     </div>;
 }
-
-
-// grow p-2 rounded-lg text-scale-1000 text-base focus:outline-none focus:border-primary focus:bg-scale-100 border-2
