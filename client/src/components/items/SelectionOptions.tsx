@@ -23,7 +23,7 @@ export default function SelectionOptions({ optionSelectors, reverseSelector, sel
         setValues(newValues);
     }
 
-    return <div className='box-item text-scale-0 w-auto flex flex-row flex-wrap gap-5 items-center justify-center top-0'>
+    return <div className='p-3 text-scale-0 w-auto flex flex-row flex-wrap gap-5 items-center justify-center top-0'>
         {optionSelectors && Object.entries(optionSelectors).map( ([key, value], i : number) =>
         <div className='flex flex-col' key={i}>
             <p>{capitalize(key)}</p>

@@ -1,6 +1,18 @@
 import { createClient } from "@/utils/supabase/server";
 import { createClient as createClientClient } from "@/utils/supabase/client";
 
+export async function getUserIdServer() {
+    // get client
+    const supabase = createClient();
+
+    // get current user
+    const { data: { user } } = await supabase.auth.getUser();
+    let user_id = user?.id;
+
+    // get user data
+    return user_id ?? undefined;
+}
+
 export async function getUserServer() {
     // get client
     const supabase = createClient();

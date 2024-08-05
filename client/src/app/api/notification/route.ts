@@ -1,7 +1,6 @@
 import { NextRequest } from "next/server";
 import { createClient } from "@/utils/supabase/server";
-import moment from 'moment';
-import { object, string, number, boolean } from 'yup';
+import { object, number, boolean } from 'yup';
 export const dynamic = 'force-dynamic';
 const PER_PAGE = 10;
 const paramSchema = object({
@@ -30,6 +29,19 @@ export async function GET(request : NextRequest) {
         if (!data || error) return Response.json({success: false, error:`Server Error: ${error.message}`});
         notifications = data;
     } catch (error : any) { return Response.json({success: false, error:`${error}`}); }
+
+    // set to read
+    try {
+        const { data: { user } } = await supabase.auth.getUser();
+        if (!user?.id) throw "no user found";
+        console.log(user?.id);
+
+        const { error } = await supabase
+            .from("notification")
+            .update({ read: true })
+            .eq('user_id', user.id);
+        if (error) throw error.message;
+    } catch(e) { console.error(e); }
 
     return Response.json({success:true, data:notifications});
 }

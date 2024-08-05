@@ -32,7 +32,7 @@ export default function PageScroller({title, route, options, type, optionSelecto
         else { setPage(new_page); }
     }
 
-    let { isPending, error, data } = useQuery({
+    let { isFetching, error, data } = useQuery({
         queryKey: [keyStart, page, values],
         queryFn: () => fetchReviews({pageParam:page})
     });
@@ -43,7 +43,7 @@ export default function PageScroller({title, route, options, type, optionSelecto
     return  <>
         <h1 className="text-scale-0 underline">{title}</h1>
         {optionSelectors && <SelectionOptions selectionState={[values, setValues]} optionSelectors={optionSelectors}/>}
-        <LoadingHandler isPending={isPending} error={error} data={data}>
+        <LoadingHandler isPending={isFetching} error={error} data={data}>
             {items && items.length ? items.map((item : any, index:number) => render(type, item, index, items.length)) : <p className='text-scale-0'>Nothing more to load</p>}
             {lastPage !== 0 && <div className='box-item w-auto gap-3 items-center'>
                 <button
