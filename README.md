@@ -5,14 +5,14 @@
 # ![logo](https://github.com/user-attachments/assets/133f84f3-4466-4862-bf53-216bd3417513) Gaming Review Site
 
 Welcome to [Leveler](https://levelr.vercel.app/), a community driven platform to share your thoughts on your favorite games.
-Whether you're a casual player or a hardcore enthusiast, Leveler allows you to connect with your friends. 
+Whether you're a casual player or a hardcore enthusiast, Leveler allows you to connect with your friends over what you love. 
 
 ## Feature Overview
 * **Share Reviews:** Write and publish your own reviews on a wide range of video games. Share your insights, experiences, and opinions with the community.
 * **Follow and Connect:** Follow your friends and stay updated on their latest posts.
 * **Engage with Content:** Like and comment on reviews to engage with the community. Share your thoughts and participate in discussions.
-* **Notifications:** Get notified when your posts have a new like or comment, or when a user follows you
-/mnt/c/Users/jackk/Desktop/Portfolio-Projects/Web-Projects/game-tracker/client/public/favicon.ico
+* **Notifications:** Get notified when your posts have a new like or comment, or when a user follows you.
+
 ## Technologies used
 * [React](https://react.dev/)
 * [NextJS](https://nextjs.org/)
@@ -31,10 +31,10 @@ Whether you're a casual player or a hardcore enthusiast, Leveler allows you to c
 
 Check out the newest posts from everyone on the site and filter by various metrics:
 
-* **Filter:** `[None/Following]` Either show posts from all users, or just those in your following list
-* **Order:** `[Created At/Likes/Rating]` Order by newest, most likes, or highest rating
-* **Last:** `[All/Day/Week/Month]` See posts from all time, the last day, week, or month
-* **Reverse:** `[True/False]` Whether to reverse the results
+* **Filter:** `[None/Following]` Either show posts from all users, or just those in your following list.
+* **Order:** `[Created At/Likes/Rating]` Order by newest, most likes, or highest rating.
+* **Last:** `[All/Day/Week/Month]` See posts from all time, the last day, week, or month.
+* **Reverse:** `[True/False]` Whether to reverse the results.
 
 ### Review Breakdown
 <p align="center">
@@ -42,12 +42,12 @@ Check out the newest posts from everyone on the site and filter by various metri
 </p>
 
 When you see a listed review it will contain the following information:
-* **Title:** The title of the review, as a link to that post's page
-* **Content:** The actual content of the review, with a `[See More/See Less]` option if the content exceeds a certain number of lines
-* **Game Title/Poster:** The poster and title of the game, with a link to that game's specific page
-* **Review author:** The username of the author of the post, along with a timestamp of when the review was created
-* **Options:** The three dots appear next to a post if you're the author, which gives you the option to edit or delete a post
-* **Rating:** The rating of the game given by the author out of 5 stars
+* **Title:** The title of the review, as a link to that post's page.
+* **Content:** The actual content of the review, with a `[See More/See Less]` option if the content exceeds a certain number of lines.
+* **Game Title/Poster:** The poster and title of the game, with a link to that game's specific page.
+* **Review author:** The username of the author of the post, along with a timestamp of when the review was created.
+* **Options:** The three dots appear next to a post if you're the author, which gives you the option to edit or delete the post.
+* **Rating:** The rating of the game given by the author out of 5 stars.
 * **Likes:** The amount of likes the post has received, as a button to like/unlike if you're signed in. The button is purple if you've liked the post, and black if not.
 
 ### Review Page
