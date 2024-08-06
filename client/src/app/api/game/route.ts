@@ -1,7 +1,7 @@
 // export const dynamic = 'force-dynamic' // defaults to auto
 import { headers } from "@/data/api";
 import { NextRequest } from "next/server";
-import { object, string, number, boolean } from 'yup';
+import { object, string, number } from 'yup';
 import moment from "moment";
 import axios from "axios";
 
