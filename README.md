@@ -1,4 +1,6 @@
 ![GitHub commit activity](https://img.shields.io/github/commit-activity/w/jack-kraus/game-tracker)
+![Users Endpoint Badge](https://img.shields.io/endpoint?url=https%3A%2F%2Flevelr.vercel.app%2Fapi%2Fbadge%2Fusers&color=6a5ad1&cacheSeconds=3600)
+![Users Endpoint Badge](https://img.shields.io/endpoint?url=https%3A%2F%2Flevelr.vercel.app%2Fapi%2Fbadge%2Freviews&color=ca80ff&cacheSeconds=3600)
 
 # ![logo](https://github.com/user-attachments/assets/133f84f3-4466-4862-bf53-216bd3417513) Gaming Review Site
 
@@ -10,7 +12,7 @@ Whether you're a casual player or a hardcore enthusiast, Leveler allows you to c
 * **Follow and Connect:** Follow your friends and stay updated on their latest posts.
 * **Engage with Content:** Like and comment on reviews to engage with the community. Share your thoughts and participate in discussions.
 * **Notifications:** Get notified when your posts have a new like or comment, or when a user follows you
-
+/mnt/c/Users/jackk/Desktop/Portfolio-Projects/Web-Projects/game-tracker/client/public/favicon.ico
 ## Technologies used
 * [React](https://react.dev/)
 * [NextJS](https://nextjs.org/)
