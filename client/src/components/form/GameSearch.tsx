@@ -1,7 +1,6 @@
 import { cn } from "@/data/utils";
 import { useQuery } from "@tanstack/react-query";
 import { useEffect, useState } from "react"
-import ClickAwayListener from "react-click-away-listener";
 
 interface GameDict {
     name : string,
@@ -37,12 +36,12 @@ export default function GameSearch({ val } : {val : Val}) {
 
     const loading = isPending && !!field && canRun;
 
-    if (value) return <h1 className="text-scale-0" onClick={() => setValue(null)}>Review for: {value.name} <span className="text-base font-normal italic text-scale-200">&#x28;Click to edit&#x29;</span></h1>;
+    if (value) return <h1 className="text-scale-0 text-center" onClick={() => setValue(null)}>Review for: {value.name} <span className="text-base font-normal italic text-scale-200">&#x28;Click to edit&#x29;</span></h1>;
     else {
-        return <div className="w-full">
+        return <div className="w-full relative">
             <input
-                onFocus={()=>setFocused(true)}
-                onBlur={()=>setTimeout(() => setFocused(false), 150)}
+                onFocus={() => setFocused(true)}
+                onBlur={()=> setTimeout(() => setFocused(false), 200)}
                 value={field}
                 onChange={(e) => { setCanRun(false); setField(e.target.value); }}
                 className={cn("z-10 w-full input-box", { "pl-9": loading })}
@@ -54,11 +53,11 @@ export default function GameSearch({ val } : {val : Val}) {
                     backgroundRepeat: "no-repeat"
                 }}
             />
-            {!isPending && !error && data && data.success && focused ? <ul className="absolute z-10 w-full">
+            {!isPending && !error && data && data.success && focused ? <ul className="absolute z-10 w-full h-96 overflow-y-scroll">
                 {data.data.map((item : GameDict, ind : number) => <li key={ind}>
                     <button 
                         onClick={() => setValue(item)}
-                        className="bg-scale-0 w-1/2 hover:bg-scale-300 flex flex-row p-2 items-center gap-3"
+                        className="bg-scale-0 w-full hover:bg-scale-300 flex flex-row p-2 items-center gap-3"
                     >
                         <img src={item.cover} className="w-8"></img>
                         <p className="truncate">{item.name} {item.first_release_date ? "(" + item.first_release_date + ")" : ""}</p>

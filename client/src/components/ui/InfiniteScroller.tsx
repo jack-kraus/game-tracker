@@ -47,7 +47,7 @@ export default function InfiniteScroller({title, route, options, type, optionSel
     if (!isFetchingNextPage && hasNextPage) { fetchNextPage() }
   }
 
-  return  <>
+  return  <div className='w-full flex flex-col gap-4 justify-center items-center'>
     <h1 className="text-scale-0 underline p-1">{title}</h1>
     {optionSelectors && <SelectionOptions selectionState={[values, setValues]} optionSelectors={optionSelectors} reverseSelector={reverseSelector}/>}
     <LoadingHandler isPending={status==="pending"} error={error} data={data?.pages ? data.pages[0] : undefined}>
@@ -61,5 +61,5 @@ export default function InfiniteScroller({title, route, options, type, optionSel
       </p>
       <BottomScrollListener offset={100} onBottom={nextPage} triggerOnNoScroll={true}/>
     </LoadingHandler>
-  </>;
+  </div>;
 }
