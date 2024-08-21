@@ -9,7 +9,7 @@ export const dynamic = 'force-dynamic';
 
 const PER_PAGE = 10;
 const paramSchema = object({
-  query : string().trim().transform((val) => val.replace("\"", "")).required(),
+  query : string().trim().transform((val) => val.replaceAll("\"", "")).required(),
   page : number().default(0).integer().min(0),
   perPage : number().default(PER_PAGE).integer().min(0),
   order : string().lowercase().trim().oneOf(["created_at", "likes"])
@@ -31,7 +31,7 @@ export async function GET(request : NextRequest) {
     limit ${perPage};
     ${order ? `order ${order};` : ""}
   `;
-  
+
   // get data
   let results : object[];
   try {

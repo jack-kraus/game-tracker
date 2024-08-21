@@ -1,4 +1,5 @@
 import { cn } from "@/data/utils";
+import { ReactNode } from "react";
 import { useFormContext } from "react-hook-form";
 
 interface InputProps {
@@ -9,10 +10,11 @@ interface InputProps {
     hookOptions : {[prop:string] : any},
     inputClass? : string,
     labelClass? : string,
+    children? : ReactNode | ReactNode[],
     [other:string]: any
 }
 
-export default function Input({ label, id, type, placeholder, hookOptions, inputClass, labelClass, ...props } : InputProps) {
+export default function Input({ label, id, type, placeholder, hookOptions, inputClass, labelClass, children, ...props } : InputProps) {
     const { register, formState: { errors } } = useFormContext();
     const thisError = errors[id] ? errors[id].message : "";
     
@@ -31,7 +33,10 @@ export default function Input({ label, id, type, placeholder, hookOptions, input
 
     return <>
         {label && <label htmlFor={id}>{label}</label>}
-        {type === "textarea" ? <textarea {...values} /> : <input {...values} />}
+        <div className="flex w-full">
+            {type === "textarea" ? <textarea {...values} /> : <input {...values} />}
+            {children}
+        </div>
         {thisError ? <p className={cn("text-red-500", labelClass)}>{thisError as string}</p> : <></>}
     </>;
 }

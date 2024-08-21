@@ -31,17 +31,17 @@ export default function CommentForm({ id }) {
     }
     
     return <FormProvider {...methods}>
-        <form className="flex w-full" onSubmit={handleSubmit(addReview)}>
+        <form className="flex flex-col w-full gap-1" onSubmit={handleSubmit(addReview)}>
             <Input
                 id="content"
                 placeholder="Share your thoughts on this review..."
                 type="textarea"
-                hookOptions={hook.required_validation("Content")}
+                hookOptions={hook.string_range_validation("Content", 5000)}
                 inputClass={cn("w-full input-box rounded-r-none min-h-12 grow")}
                 rows={3}
-                labelClass="flex w-24 justify-center items-center text-center px-5 bg-scale-800"
-            />
-            <button type="submit" disabled={loading} className='primary-button rounded-l-none'>Submit{loading && "..."}</button>
+            >
+                <button type="submit" disabled={loading} className='primary-button rounded-l-none'>Submit{loading && "..."}</button>
+            </Input>
         </form>
     </FormProvider>;
 }
