@@ -8,6 +8,7 @@ import { useState } from "react";
 import { ThreeDots } from "react-loader-spinner";
 import Stars from "../ui/Stars";
 import UnloadHook from "@/hooks/UnloadHook";
+import { cn } from "@/data/utils";
 
 interface PostSubmit {
     content : string,
@@ -68,6 +69,7 @@ export default function PostSubmit({game_id, review_id, defaultValues} : {game_i
                 placeholder="Share your thoughts..."
                 type="textarea"
                 hookOptions={hook.string_range_validation("Content", 10000)}
+                inputClass={"min-h-40"}
             />
             <Input
                 id="rating"
