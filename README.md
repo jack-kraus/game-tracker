@@ -62,6 +62,7 @@ You'll see all of the same items as found on the review card but with the full u
 <p align="center">
  <img src="https://github.com/user-attachments/assets/67054204-97e3-4d7a-83b1-6e784a894615" width="50%">
 </p>
+
 Scroll down to see all of the comments users have left on the post.
 These comments have a link to the user's page who posted it and the content of the comment.
 If you posted this comment, you can click on the three dots to edit (pictured above) or delete the comment.
