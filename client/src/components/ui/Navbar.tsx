@@ -43,7 +43,7 @@ export default function Navbar({ user_id, notification_count }) {
     </div>;
 
     return <ClickAwayListener onClickAway={() => setSearchOpen(false)}>
-        <nav className={cn("w-screen h-16 m-0 flex bg-scale-1000 text-scale-0 items-center justify-between fixed top-0 z-10 drop-shadow-md sm:py-12 sm:px-8 py-11 px-4 sm:gap-5 gap-5", { "gap-3" : searchOpen })}>
+        <nav className={cn("w-full h-16 m-0 flex bg-scale-1000 text-scale-0 items-center justify-between fixed top-0 z-10 drop-shadow-md sm:py-12 sm:px-8 py-11 px-4 sm:gap-5 gap-5", { "gap-3" : searchOpen })}>
             <div className="shrink-0 group w-10 sm:w-32 h-10 sm:grow-0">
                 <a href="/" className="h-full flex shrink-0">
                     <img className="shrink-0 object-cover purple group-hover:drop-shadow-white-md group-active:drop-shadow-white-xl group-active:invert group-active:hue-rotate-180" src={small ? "/images/logo_small.svg" : "/images/logo.svg"}/>
