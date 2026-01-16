@@ -25,7 +25,7 @@ export async function GET(request : NextRequest) {
   let { query, page, perPage, order } = searchParams;
   let body = `
     search "${query}";
-    fields id, name, summary, cover.image_id, first_release_date, platforms.name; where version_parent = null & category = 0;
+    fields id, name, summary, cover.image_id, first_release_date, platforms.name;
     offset ${page*perPage};
     limit ${perPage};
     ${order ? `order ${order};` : ""}
